@@ -8,6 +8,6 @@ class BookingController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('QSBookingBundle:Default:index.html.twig');
+        return $this->render('QSBookingBundle:Booking:index.html.twig');
     }
 }
