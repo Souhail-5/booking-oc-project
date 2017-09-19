@@ -1,3 +1,23 @@
 qs_booking_homepage:
     path:     /
-    defaults: { _controller: QSBookingBundle:Default:index }
+    defaults: { _controller: QSBookingBundle:Booking:index }
+
+qs_booking_shop:
+    path:     /boutique
+    defaults: { _controller: QSBookingBundle:Booking:index }
+
+qs_booking_information:
+    path:     /infos-visiteurs
+    defaults: { _controller: QSBookingBundle:Booking:information }
+
+qs_booking_checkout:
+    path:     /caisse
+    defaults: { _controller: QSBookingBundle:Booking:checkout }
+
+qs_booking_confirmation:
+    path:     /confirmation
+    defaults: { _controller: QSBookingBundle:Booking:confirmation }
+
+qs_booking_confirmation:
+    path:     /404
+    defaults: { _controller: QSBookingBundle:Booking:404 }
