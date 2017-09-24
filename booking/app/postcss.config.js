@@ -5,10 +5,10 @@ module.exports = {
 
         'postcss-import': {},
         'stylelint': {},
-        'postcss-reporter': {},
+        'postcss-reporter': { clearReportedMessages: true },
         'lost': {},
         // 'autoprefixer': {} // already included in postcss-cssnext
         'postcss-cssnext': {},
-        'cssnano': {} // cssnano has prefixes optimization which use autoprefixer
+        'cssnano': {}, // cssnano has prefixes optimization which use autoprefixer
     }
 }
