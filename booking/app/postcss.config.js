@@ -4,8 +4,11 @@ module.exports = {
         // but make sure you install these via yarn or npm!
 
         'postcss-import': {},
+        'stylelint': {},
+        'postcss-reporter': {},
         'lost': {},
+        // 'autoprefixer': {} // already included in postcss-cssnext
         'postcss-cssnext': {},
-        'cssnano': {}
+        'cssnano': {} // cssnano has prefixes optimization which use autoprefixer
     }
 }
