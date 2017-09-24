@@ -24,6 +24,12 @@ Encore
 
     // create hashed filenames (e.g. app.abc123.css)
     // .enableVersioning()
+
+    .enablePostCssLoader((options) => {
+        options.config = {
+            path: 'app/config/postcss.config.js'
+        };
+    })
 ;
 
 // fetch Encore config, then modify it!
