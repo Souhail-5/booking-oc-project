@@ -26,5 +26,9 @@ Encore
     // .enableVersioning()
 ;
 
+// fetch Encore config, then modify it!
+var config = Encore.getWebpackConfig();
+config.watchOptions = { poll: true, ignored: /node_modules/ };
+
 // export the final configuration
-module.exports = Encore.getWebpackConfig();
+module.exports = config;
