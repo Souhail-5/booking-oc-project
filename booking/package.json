@@ -2,7 +2,14 @@
   "devDependencies": {
     "@symfony/webpack-encore": "^0.15.0",
     "autoprefixer": "^7.1.4",
+    "cssnano": "^3.10.0",
+    "lost": "^8.2.0",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.6"
   },
-  "browserslist": [ "last 2 versions", "ios >= 8" ]
+  "browserslist": [
+    "last 2 versions",
+    "ios >= 8"
+  ]
 }
