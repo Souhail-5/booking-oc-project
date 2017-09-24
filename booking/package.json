@@ -3,5 +3,6 @@
     "@symfony/webpack-encore": "^0.15.0",
     "autoprefixer": "^7.1.4",
     "postcss-loader": "^2.0.6"
-  }
+  },
+  "browserslist": [ "last 2 versions", "ios >= 8" ]
 }
