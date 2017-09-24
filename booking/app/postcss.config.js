@@ -6,7 +6,6 @@ module.exports = {
         'postcss-import': {},
         'lost': {},
         'postcss-cssnext': {},
-        'autoprefixer': {},
         'cssnano': {}
     }
 }
