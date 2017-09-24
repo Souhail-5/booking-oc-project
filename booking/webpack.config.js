@@ -14,8 +14,8 @@ Encore
     // will output as web/build/app.js
     // .addEntry('app', './assets/js/main.js')
 
-    // will output as web/build/global.css
-    // .addStyleEntry('global', './assets/css/global.scss')
+    // will output as web/build/main.css
+    .addStyleEntry('main', './web/assets/css/main.css')
 
     // allow legacy applications to use $/jQuery as a global variable
     .autoProvidejQuery()
