@@ -6,7 +6,9 @@
     "lost": "^8.2.0",
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^11.0.0",
-    "postcss-loader": "^2.0.6"
+    "postcss-loader": "^2.0.6",
+    "postcss-reporter": "^5.0.0",
+    "stylelint": "^8.1.1"
   },
   "browserslist": [
     "last 2 versions",
