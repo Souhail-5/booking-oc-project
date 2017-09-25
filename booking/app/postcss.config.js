@@ -6,6 +6,7 @@ module.exports = {
         'postcss-import': {},
         'stylelint': {},
         'postcss-reporter': { clearReportedMessages: true },
+        'postcss-normalize': {},
         'lost': {},
         // 'autoprefixer': {} // already included in postcss-cssnext
         'postcss-cssnext': {},
