@@ -4,6 +4,7 @@
   grid-row: 1 / 2;
   background-color: #fff;
   border-bottom: 1px solid #ddd;
+  box-shadow: 0 8px 8px -6px rgba(0, 0, 0, 0.06);
 }
 
 #header {
@@ -11,6 +12,11 @@
   justify-content: space-between;
   align-items: center;
   height: 100px;
+  font-size: 0.9rem;
+
+  & nav a {
+    text-transform: uppercase;
+  }
 }
 
 #main {
@@ -19,11 +25,21 @@
 
 #footer-wrap {
   grid-row: 3 / 4;
-  background-color: gray;
+  font-size: 0.9rem;
+
+  & i {
+    margin-left: 15px;
+    font-size: 1.2rem;
+    color: color(#fff a(70%));
+
+    &:hover {
+      color: color(#fff a(100%));
+    }
+  }
 }
 
 #footer-top-wrap {
-  background-color: var(--secondary-color);
+  background-color: color(var(--primary-color) l(45%));
 }
 
 #footer-top {
@@ -31,6 +47,9 @@
   justify-content: space-between;
   align-items: center;
   height: 50px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: color(var(--primary-color) l(10%));
 }
 
 #footer-main-wrap {
@@ -41,7 +60,21 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
+  height: 80px;
+
+  & a {
+    margin-right: 25px;
+    color: color(var(--primary-color) l(50%));
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  & i {
+    font-size: 1.4rem;
+    color: color(#fff a(30%));
+  }
 }
 
 .boxed {

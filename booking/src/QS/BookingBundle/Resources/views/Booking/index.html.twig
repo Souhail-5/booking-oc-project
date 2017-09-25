@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Billetterie du Musée du Louvre</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('build/main.css') }}">
+    <script src="https://use.fontawesome.com/48ef1a8cd3.js"></script>
 </head>
 <body>
     <header id="header-wrap">
         <div id="header" class="boxed">
-            <img src="{{ asset('assets/images/logo-louvre.jpg') }}" alt="Logo du Musée du Louvre" height="80%">
+            <img src="{{ asset('assets/images/logo-louvre.jpg') }}" alt="Logo du Musée du Louvre" height="60%">
             <nav>
                 <a href="#">Informations pratiques</a>
             </nav>
@@ -22,26 +24,29 @@
     <footer id="footer-wrap">
         <div id="footer-top-wrap">
             <div id="footer-top" class="boxed">
-                <div class="follow-us">Suivez-nous pour recevoir toute l'actualité du Musée du Louvre</div>
+                <div class="follow-us">Rejoignez-nous et recevez toute l'actualité du Musée du Louvre</div>
                 <div class="social-links">
-                    <i>Facebook</i>
-                    <i>Twitter</i>
-                    <i>Snapchat</i>
+                    <a href="https://facebook.com" target="_blank"><i class="fa fa-facebook-official"></i></a>
+                    <a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a>
+                    <a href="https://snapchat.com" target="_blank"><i class="fa fa-snapchat-ghost"></i></a>
+                    <a href="#" target="_blank"><i class="fa fa-rss"></i></a>
                 </div>
             </div>
         </div>
         <div id="footer-main-wrap">
             <div id="footer-main" class="boxed">
-                <img src="#" alt="Logo du Musée du Louvre">
+                <img src="{{ asset('assets/images/logo-louvre.jpg') }}" alt="Logo du Musée du Louvre" height="60%">
                 <nav>
                     <a href="#">CGU</a>
                     <a href="#">CGV</a>
                     <a href="#">Mentions légales</a>
                 </nav>
                 <div class="payment-icons">
-                    <i>Paypal</i>
-                    <i>Stripe</i>
-                    <i>Sécurité</i>
+                    <i class="fa fa-cc-paypal"></i>
+                    <i class="fa fa-cc-stripe"></i>
+                    <i class="fa fa-cc-visa"></i>
+                    <i class="fa fa-cc-mastercard"></i>
+                    <i class="fa fa-lock"></i>
                 </div>
             </div>
         </div>
