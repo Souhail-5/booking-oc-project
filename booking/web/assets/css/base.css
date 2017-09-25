@@ -1,0 +1,35 @@
+:root {
+  --primary-color: #50394c;
+  --secondary-color: #ffef96;
+  --tertiary-color: #f4e1d2;
+  --dark-gray: DarkSlateGray;
+  --light-gray: #b2b2b2;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr auto;
+  margin: 0;
+  background-color: #fbfbfb;
+  color: #111;
+}
+
+.meta-color {
+  color: var(--light-gray);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+
+  &:hover {
+    text-decoration: underline;
+    color: color(var(--primary-color) l(20%));
+  }
+}
