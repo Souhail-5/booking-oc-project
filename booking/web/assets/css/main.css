@@ -90,5 +90,9 @@
   & i {
     font-size: 1.4rem;
     color: color(#fff a(30%));
+
+    &:hover {
+      color: color(#fff a(30%));
+    }
   }
 }
