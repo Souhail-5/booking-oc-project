@@ -21,6 +21,12 @@
 
 #main {
   grid-row: 2 / 3;
+  margin-top: 3rem;
+
+  & > h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
 }
 
 #footer-wrap {
@@ -75,9 +81,4 @@
     font-size: 1.4rem;
     color: color(#fff a(30%));
   }
-}
-
-.boxed {
-  width: 980px;
-  margin: auto;
 }

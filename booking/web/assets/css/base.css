@@ -21,6 +21,11 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.boxed {
+  width: 980px;
+  margin: auto;
+}
+
 .meta-color {
   color: var(--light-gray);
 }
