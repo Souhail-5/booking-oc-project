@@ -10,7 +10,9 @@
 <body>
     <header id="header-wrap">
         <div id="header" class="boxed">
-            <img src="{{ asset('assets/images/logo-louvre.jpg') }}" alt="Logo du Musée du Louvre" height="60%">
+            <a href="{{path('qs_booking_home')}}" class="logo">
+                <img src="{{ asset('assets/images/logo-louvre.jpg') }}" alt="Logo du Musée du Louvre" height="100%">
+            </a>
             <nav>
                 <a href="#">Informations pratiques</a>
             </nav>
@@ -37,11 +39,13 @@
         </div>
         <div id="footer-main-wrap">
             <div id="footer-main" class="boxed">
-                <img src="{{ asset('assets/images/logo-louvre.jpg') }}" alt="Logo du Musée du Louvre" height="60%">
+                <a href="{{path('qs_booking_home')}}" class="logo">
+                    <img src="{{ asset('assets/images/logo-louvre.jpg') }}" alt="Logo du Musée du Louvre" height="100%">
+                </a>
                 <nav>
-                    <a href="#">CGU</a>
-                    <a href="#">CGV</a>
-                    <a href="#">Mentions légales</a>
+                    <a href="{{path('qs_booking_cgv') }}">CGV</a>
+                    <a href="{{path('qs_booking_cgu') }}">CGU</a>
+                    <a href="{{path('qs_booking_legal') }}">Mentions légales</a>
                 </nav>
                 <div class="payment-icons">
                     <i class="fa fa-cc-paypal"></i>

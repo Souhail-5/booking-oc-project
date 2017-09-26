@@ -1,10 +1,10 @@
-qs_booking_homepage:
+qs_booking_home:
     path:     /
     defaults: { _controller: QSBookingBundle:Booking:index }
 
 qs_booking_shop:
     path:     /boutique
-    defaults: { _controller: QSBookingBundle:Booking:index }
+    defaults: { _controller: QSBookingBundle:Booking:guichet }
 
 qs_booking_information:
     path:     /infos-visiteurs
@@ -17,6 +17,18 @@ qs_booking_checkout:
 qs_booking_confirmation:
     path:     /confirmation
     defaults: { _controller: QSBookingBundle:Booking:confirmation }
+
+qs_booking_cgv:
+    path:     /cgv
+    defaults: { _controller: QSBookingBundle:Booking:cgv }
+
+qs_booking_cgu:
+    path:     /cgu
+    defaults: { _controller: QSBookingBundle:Booking:cgu }
+
+qs_booking_legal:
+    path:     /mentions-legales
+    defaults: { _controller: QSBookingBundle:Booking:legal }
 
 qs_booking_confirmation:
     path:     /404
