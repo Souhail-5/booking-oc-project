@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Billetterie du Musée du Louvre</title>
+    <title>{% block pageTitle %}Billetterie du Musée du Louvre{% endblock %}</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,900,900i" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('build/main.css') }}">
     <script src="https://use.fontawesome.com/48ef1a8cd3.js"></script>
@@ -18,7 +18,8 @@
     </header>
 
     <section id="main">
-        <p>lorem1500</p>
+        <h1>{% block mainTitle %}Billetterie{% endblock %}</h1>
+        {% block mainContent %}{% endblock %}
     </section>
 
     <footer id="footer-wrap">
