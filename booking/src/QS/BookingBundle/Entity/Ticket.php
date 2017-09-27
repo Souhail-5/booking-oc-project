@@ -28,6 +28,11 @@ class Ticket
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Price")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $price;
 
     /**
      * Get id
@@ -62,5 +67,28 @@ class Ticket
     {
         return $this->name;
     }
-}
 
+    /**
+     * Set price
+     *
+     * @param \QS\BookingBundle\Entity\Price $price
+     *
+     * @return Ticket
+     */
+    public function setPrice(\QS\BookingBundle\Entity\Price $price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return \QS\BookingBundle\Entity\Price
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+}
