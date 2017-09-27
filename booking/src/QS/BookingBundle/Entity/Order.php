@@ -56,6 +56,12 @@ class Order
      */
     private $status;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Event")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $event;
+
 
     /**
      * Get id
@@ -186,5 +192,28 @@ class Order
     {
         return $this->status;
     }
-}
 
+    /**
+     * Set event
+     *
+     * @param Event $event
+     *
+     * @return Order
+     */
+    public function setEvent(Event $event)
+    {
+        $this->event = $event;
+
+        return $this;
+    }
+
+    /**
+     * Get event
+     *
+     * @return Event
+     */
+    public function getEvent()
+    {
+        return $this->event;
+    }
+}
