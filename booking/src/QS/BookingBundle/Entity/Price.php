@@ -5,12 +5,12 @@ namespace QS\BookingBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Prices
+ * Price
  *
- * @ORM\Table(name="prices")
- * @ORM\Entity(repositoryClass="QS\BookingBundle\Repository\PricesRepository")
+ * @ORM\Table(name="price")
+ * @ORM\Entity(repositoryClass="QS\BookingBundle\Repository\PriceRepository")
  */
-class Prices
+class Price
 {
     /**
      * @var guid
