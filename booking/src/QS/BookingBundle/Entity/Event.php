@@ -54,6 +54,11 @@ class Event
      */
     private $tickets;
 
+    /**
+     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\EventPeriod", mappedBy="event")
+     */
+    private $periods;
+
 
     /**
      * Constructor
@@ -61,6 +66,7 @@ class Event
     public function __construct()
     {
         $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->periods = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -202,5 +208,41 @@ class Event
     public function getTickets()
     {
         return $this->tickets;
+    }
+
+    /**
+     * Add period
+     *
+     * @param EventPeriod $period
+     *
+     * @return Event
+     */
+    public function addPeriod(EventPeriod $period)
+    {
+        $this->periods[] = $period;
+
+        $period->setEvent($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove period
+     *
+     * @param EventPeriod $period
+     */
+    public function removePeriod(EventPeriod $period)
+    {
+        $this->periods->removeElement($period);
+    }
+
+    /**
+     * Get periods
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPeriods()
+    {
+        return $this->periods;
     }
 }
