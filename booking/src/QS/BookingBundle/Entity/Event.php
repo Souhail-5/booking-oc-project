@@ -50,6 +50,11 @@ class Event
     private $timeZone;
 
     /**
+     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\Order", mappedBy="event")
+     */
+    private $orders;
+
+    /**
      * @ORM\ManyToMany(targetEntity="QS\BookingBundle\Entity\Ticket")
      */
     private $tickets;
@@ -65,6 +70,7 @@ class Event
      */
     public function __construct()
     {
+        $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->periods = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -174,6 +180,40 @@ class Event
     public function getTimeZone()
     {
         return $this->timeZone;
+    }
+
+    /**
+     * Add order
+     *
+     * @param Order $order
+     *
+     * @return Event
+     */
+    public function addOrder(Order $order)
+    {
+        $this->orders[] = $order;
+
+        return $this;
+    }
+
+    /**
+     * Remove order
+     *
+     * @param Order $order
+     */
+    public function removeOrder(Order $order)
+    {
+        $this->orders->removeElement($order);
+    }
+
+    /**
+     * Get orders
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrders()
+    {
+        return $this->orders;
     }
 
     /**

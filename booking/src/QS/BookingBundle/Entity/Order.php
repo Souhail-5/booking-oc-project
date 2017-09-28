@@ -57,7 +57,7 @@ class Order
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Event")
+     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Event", inversedBy="orders")
      * @ORM\JoinColumn(nullable=false)
      */
     private $event;
