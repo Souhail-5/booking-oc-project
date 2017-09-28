@@ -42,6 +42,13 @@ class Event
      */
     private $maxResvDay;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="time_zone", type="string", length=255)
+     */
+    private $timeZone;
+
 
     /**
      * Get id
@@ -123,5 +130,29 @@ class Event
     public function getMaxResvDay()
     {
         return $this->maxResvDay;
+    }
+
+    /**
+     * Set timeZone
+     *
+     * @param string $timeZone
+     *
+     * @return Event
+     */
+    public function setTimeZone($timeZone)
+    {
+        $this->timeZone = $timeZone;
+
+        return $this;
+    }
+
+    /**
+     * Get timeZone
+     *
+     * @return string
+     */
+    public function getTimeZone()
+    {
+        return $this->timeZone;
     }
 }
