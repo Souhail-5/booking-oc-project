@@ -49,6 +49,20 @@ class Event
      */
     private $timeZone;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="QS\BookingBundle\Entity\Ticket")
+     */
+    private $tickets;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -154,5 +168,39 @@ class Event
     public function getTimeZone()
     {
         return $this->timeZone;
+    }
+
+    /**
+     * Add ticket
+     *
+     * @param Ticket $ticket
+     *
+     * @return Event
+     */
+    public function addTicket(Ticket $ticket)
+    {
+        $this->tickets[] = $ticket;
+
+        return $this;
+    }
+
+    /**
+     * Remove ticket
+     *
+     * @param Ticket $ticket
+     */
+    public function removeTicket(Ticket $ticket)
+    {
+        $this->tickets->removeElement($ticket);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 }
