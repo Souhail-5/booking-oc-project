@@ -35,7 +35,7 @@ class Ticket
     private $price;
 
     /**
-     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\EventPeriod", mappedBy="ticket")
+     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\TicketPeriod", mappedBy="ticket")
      */
     private $periods;
 
