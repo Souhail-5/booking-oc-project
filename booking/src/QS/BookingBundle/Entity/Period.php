@@ -31,9 +31,16 @@ class Period
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="string", length=255)
+     * @ORM\Column(name="start", type="string", length=255)
      */
-    private $value;
+    private $start;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="end", type="string", length=255)
+     */
+    private $end;
 
 
     /**
@@ -71,27 +78,50 @@ class Period
     }
 
     /**
-     * Set value
+     * Set start
      *
-     * @param string $value
+     * @param string $start
      *
-     * @return Periods
+     * @return Period
      */
-    public function setValue($value)
+    public function setStart($start)
     {
-        $this->value = $value;
+        $this->start = $start;
 
         return $this;
     }
 
     /**
-     * Get value
+     * Get start
      *
      * @return string
      */
-    public function getValue()
+    public function getStart()
     {
-        return $this->value;
+        return $this->start;
+    }
+
+    /**
+     * Set end
+     *
+     * @param string $end
+     *
+     * @return Period
+     */
+    public function setEnd($end)
+    {
+        $this->end = $end;
+
+        return $this;
+    }
+
+    /**
+     * Get end
+     *
+     * @return string
+     */
+    public function getEnd()
+    {
+        return $this->end;
     }
 }
-
