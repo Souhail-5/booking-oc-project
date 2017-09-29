@@ -3,24 +3,25 @@
 {% block qsbookingTitle %}{{ parent() }} - date et billets{% endblock %}
 {% block qsbookingContent %}
     <p>L'action est : {{ action|upper }}</p>
-    {% if event %}
+    {% for e in event %}
         <hr>
         <ul>
-            <li><b>id</b> : {{event.id}}</li>
-            <li><b>slug</b> : {{event.slug}}</li>
-            <li><b>name</b> : {{event.name}}</li>
-            <li><b>maxResvDay</b> : {{event.maxResvDay}}</li>
-            <li><b>timeZone</b> : {{event.timeZone}}</li>
+            <li><b>id</b> : {{e.id}}</li>
+            <li><b>slug</b> : {{e.slug}}</li>
+            <li><b>name</b> : {{e.name}}</li>
+            <li><b>maxResvDay</b> : {{e.maxResvDay}}</li>
+            <li><b>timeZone</b> : {{e.timeZone}}</li>
         </ul>
         <hr>
-    {% endif %}
-    {% for period in periods %}
+    {% endfor %}
+    {% for ep in event.periods %}
         <hr>
         <ul>
-            <li><b>id</b> : {{period.id}}</li>
-            <li><b>type</b> : {{period.type}}</li>
-            <li><b>start</b> : {{period.start}}</li>
-            <li><b>end</b> : {{period.end}}</li>
+            <li><b>id</b> : {{ep.period.id}}</li>
+            <li><b>type</b> : {{ep.period.type}}</li>
+            <li><b>start</b> : {{ep.period.start}}</li>
+            <li><b>end</b> : {{ep.period.end}}</li>
         </ul>
     {% endfor %}
+    {% dump event %}
 {% endblock %}

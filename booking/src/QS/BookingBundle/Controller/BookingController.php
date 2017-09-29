@@ -122,6 +122,16 @@ class BookingController extends Controller
                 $em->flush();
                 break;
 
+            case 'get-excluded-periods':
+                $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug('visite-musee-louvre');
+                $event = $em->getRepository('QSBookingBundle:Event')->getExcludedPeriods($event->getId());
+                break;
+
+            case 'get-included-periods':
+                $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug('visite-musee-louvre');
+                $event = $em->getRepository('QSBookingBundle:Event')->getIncludedPeriods($event->getId());
+                break;
+
             default:
                 break;
         }

@@ -10,4 +10,41 @@ namespace QS\BookingBundle\Repository;
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getExcludedPeriods($eventId)
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('e')
+            ->from('QSBookingBundle:Event', 'e')
+            ->where('e.id = :id')
+            ->setParameter('id', $eventId)
+        ;
+        return $qb
+            ->leftJoin('e.periods', 'ep', 'WITH', 'ep.action = :action')
+            ->addSelect('ep')
+            ->setParameter('action', 'exclude')
+            ->leftJoin('ep.period', 'p')
+            ->addSelect('p')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function getIncludedPeriods($eventId)
+    {
+        $qb = $this->_em->createQueryBuilder()
+            ->select('e')
+            ->from('QSBookingBundle:Event', 'e')
+            ->where('e.id = :id')
+            ->setParameter('id', $eventId)
+        ;
+        return $qb
+            ->leftJoin('e.periods', 'ep', 'WITH', 'ep.action = :action')
+            ->addSelect('ep')
+            ->setParameter('action', 'include')
+            ->leftJoin('ep.period', 'p')
+            ->addSelect('p')
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }
