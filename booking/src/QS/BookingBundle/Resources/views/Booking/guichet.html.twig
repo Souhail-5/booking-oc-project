@@ -1,4 +1,26 @@
 {% extends 'QSBookingBundle::layout.html.twig' %}
 
 {% block qsbookingTitle %}{{ parent() }} - date et billets{% endblock %}
-{% block qsbookingContent %}Ici choisir date + qtte billets{% endblock %}
+{% block qsbookingContent %}
+    <p>L'action est : {{ action|upper }}</p>
+    {% if event %}
+        <hr>
+        <ul>
+            <li><b>id</b> : {{event.id}}</li>
+            <li><b>slug</b> : {{event.slug}}</li>
+            <li><b>name</b> : {{event.name}}</li>
+            <li><b>maxResvDay</b> : {{event.maxResvDay}}</li>
+            <li><b>timeZone</b> : {{event.timeZone}}</li>
+        </ul>
+        <hr>
+    {% endif %}
+    {% for period in periods %}
+        <hr>
+        <ul>
+            <li><b>id</b> : {{period.id}}</li>
+            <li><b>type</b> : {{period.type}}</li>
+            <li><b>start</b> : {{period.start}}</li>
+            <li><b>end</b> : {{period.end}}</li>
+        </ul>
+    {% endfor %}
+{% endblock %}
