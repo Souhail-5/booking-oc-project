@@ -61,8 +61,8 @@
 							"containerExtending": false,
 							"left": 272,
 							"top": 816,
-							"width": 137,
-							"height": 96,
+							"width": 144,
+							"height": 83,
 							"autoResize": false,
 							"text": "methods:\n- getIncludedPeriod()\n- getExcludedPeriod()\n- isAvailablePeriod()",
 							"wordWrap": true
