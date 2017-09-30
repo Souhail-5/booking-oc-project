@@ -62,7 +62,7 @@ class Event
     /**
      * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\EventPeriod", mappedBy="event")
      */
-    private $periods;
+    private $eventPeriods;
 
 
     /**
@@ -72,7 +72,7 @@ class Event
     {
         $this->orders = new \Doctrine\Common\Collections\ArrayCollection();
         $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->periods = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventPeriods = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -251,38 +251,38 @@ class Event
     }
 
     /**
-     * Add period
+     * Add eventPeriod
      *
-     * @param EventPeriod $period
+     * @param EventPeriod $eventPeriod
      *
      * @return Event
      */
-    public function addPeriod(EventPeriod $period)
+    public function addEventPeriod(EventPeriod $eventPeriod)
     {
-        $this->periods[] = $period;
+        $this->eventPeriods[] = $eventPeriod;
 
-        $period->setEvent($this);
+        $eventPeriod->setEvent($this);
 
         return $this;
     }
 
     /**
-     * Remove period
+     * Remove eventPeriod
      *
-     * @param EventPeriod $period
+     * @param EventPeriod $eventPeriod
      */
-    public function removePeriod(EventPeriod $period)
+    public function removeEventPeriod(EventPeriod $eventPeriod)
     {
-        $this->periods->removeElement($period);
+        $this->eventPeriods->removeElement($eventPeriod);
     }
 
     /**
-     * Get periods
+     * Get eventPeriods
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPeriods()
+    public function getEventPeriods()
     {
-        return $this->periods;
+        return $this->eventPeriods;
     }
 }
