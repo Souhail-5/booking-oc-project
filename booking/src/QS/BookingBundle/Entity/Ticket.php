@@ -37,7 +37,7 @@ class Ticket
     /**
      * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\TicketPeriod", mappedBy="ticket")
      */
-    private $periods;
+    private $ticketPeriods;
 
 
     /**
@@ -45,7 +45,7 @@ class Ticket
      */
     public function __construct()
     {
-        $this->periods = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ticketPeriods = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -108,38 +108,38 @@ class Ticket
     }
 
     /**
-     * Add period
+     * Add ticketPeriod
      *
-     * @param EventPeriod $period
+     * @param TicketPeriod $ticketPeriod
      *
      * @return Ticket
      */
-    public function addPeriod(EventPeriod $period)
+    public function addTicketPeriod(TicketPeriod $ticketPeriod)
     {
-        $this->periods[] = $period;
+        $this->ticketPeriods[] = $ticketPeriod;
 
-        $period->setTicket($this);
+        $ticketPeriod->setTicket($this);
 
         return $this;
     }
 
     /**
-     * Remove period
+     * Remove ticketPeriod
      *
-     * @param EventPeriod $period
+     * @param TicketPeriod $ticketPeriod
      */
-    public function removePeriod(EventPeriod $period)
+    public function removeTicketPeriod(TicketPeriod $ticketPeriod)
     {
-        $this->periods->removeElement($period);
+        $this->ticketPeriods->removeElement($ticketPeriod);
     }
 
     /**
-     * Get periods
+     * Get ticketPeriods
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPeriods()
+    public function getTicketPeriods()
     {
-        return $this->periods;
+        return $this->ticketPeriods;
     }
 }

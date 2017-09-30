@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TicketPeriod
 {
+    const ACTION_EXCLUDE = 0;
+    const ACTION_INCLUDE = 1;
+    const ACTION_EXIT = 2;
+    const ACTION_ENTER = 3;
+
     /**
      * @var guid
      *
@@ -22,14 +27,14 @@ class TicketPeriod
     private $id;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="action", type="string", length=255)
+     * @ORM\Column(name="action", type="integer")
      */
     private $action;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Ticket", inversedBy="periods")
+     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Ticket", inversedBy="ticketPeriods")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ticket;
@@ -54,7 +59,7 @@ class TicketPeriod
     /**
      * Set action
      *
-     * @param string $action
+     * @param integer $action
      *
      * @return TicketPeriod
      */
@@ -68,7 +73,7 @@ class TicketPeriod
     /**
      * Get action
      *
-     * @return string
+     * @return integer
      */
     public function getAction()
     {
