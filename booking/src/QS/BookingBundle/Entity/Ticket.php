@@ -29,12 +29,6 @@ class Ticket
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Price")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $price;
-
-    /**
      * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\TicketPeriod", mappedBy="ticket")
      */
     private $ticketPeriods;
@@ -81,30 +75,6 @@ class Ticket
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set price
-     *
-     * @param Price $price
-     *
-     * @return Ticket
-     */
-    public function setPrice(Price $price)
-    {
-        $this->price = $price;
-
-        return $this;
-    }
-
-    /**
-     * Get price
-     *
-     * @return Price
-     */
-    public function getPrice()
-    {
-        return $this->price;
     }
 
     /**
