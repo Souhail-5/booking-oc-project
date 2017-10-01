@@ -28,9 +28,9 @@ class Reservation
     private $order;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Ticket")
+     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\TicketPrice")
      */
-    private $ticket;
+    private $ticketPrice;
 
     /**
      * @ORM\OneToOne(targetEntity="QS\BookingBundle\Entity\Visitor", cascade={"persist", "remove"})
@@ -73,27 +73,27 @@ class Reservation
     }
 
     /**
-     * Set ticket
+     * Set ticketPrice
      *
-     * @param Ticket $ticket
+     * @param TicketPrice $ticketPrice
      *
      * @return Reservation
      */
-    public function setTicket(Ticket $ticket = null)
+    public function setTicketPrice(TicketPrice $ticketPrice = null)
     {
-        $this->ticket = $ticket;
+        $this->ticketPrice = $ticketPrice;
 
         return $this;
     }
 
     /**
-     * Get ticket
+     * Get ticketPrice
      *
-     * @return Ticket
+     * @return TicketPrice
      */
-    public function getTicket()
+    public function getTicketPrice()
     {
-        return $this->ticket;
+        return $this->ticketPrice;
     }
 
     /**
