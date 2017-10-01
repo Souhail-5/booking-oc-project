@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TicketPeriod
 {
-    const ACTION_EXCLUDE = 0;
-    const ACTION_INCLUDE = 1;
-    const ACTION_EXIT = 2;
-    const ACTION_ENTER = 3;
+    const ACTION_EXCLUDE = 0; // Ordering this ticket IS NOT possible for this period
+    const ACTION_INCLUDE = 1; // Ordering this ticket IS possible for this period
+    const ACTION_EXIT = 2; // Access IS NOT possible with this ticket for this period
+    const ACTION_ENTER = 3; // Access IS possible with this ticket for this period
 
     /**
      * @var guid

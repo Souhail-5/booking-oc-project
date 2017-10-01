@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EventPeriod
 {
-    const ACTION_EXCLUDE = 0;
-    const ACTION_INCLUDE = 1;
+    const ACTION_EXCLUDE = 0; // Ordering this ticket IS NOT possible for this period
+    const ACTION_INCLUDE = 1; // Ordering this ticket IS possible for this period
 
     /**
      * @var guid
