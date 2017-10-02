@@ -27,65 +27,65 @@ class Fixtures extends Fixture
         // create periods
         // 0
         $period0 = new Period;
-        $period0>setType('date');
-        $period0>setStart('2017-01-01');
-        $period0>setEnd('infinite');
+        $period0->setType('date');
+        $period0->setStart('2017-01-01');
+        $period0->setEnd('infinite');
         $manager->persist($period0);
 
         // 1
         $period1 = new Period;
-        $period1>setType('date');
-        $period1>setStart('2017-06-28');
-        $period1>setEnd('infinite');
+        $period1->setType('date');
+        $period1->setStart('2017-06-28');
+        $period1->setEnd('infinite');
         $manager->persist($period1);
 
         // 2
         $period2 = new Period;
-        $period2>setType('day');
-        $period2>setStart('tuesday');
-        $period2>setEnd('tuesday');
+        $period2->setType('day');
+        $period2->setStart('tuesday');
+        $period2->setEnd('tuesday');
         $manager->persist($period2);
 
         // 3
         $period3 = new Period;
-        $period3>setType('day');
-        $period3>setStart('sunday');
-        $period3>setEnd('sunday');
-        $manager->persist($period3);;
+        $period3->setType('day');
+        $period3->setStart('sunday');
+        $period3->setEnd('sunday');
+        $manager->persist($period3);
 
         // 4
         $period4 = new Period;
-        $period4>setType('month-day_nbr');
-        $period4>setStart('05-01');
-        $period4>setEnd('05-01');
-        $manager->persist($period4);;
+        $period4->setType('month-day_nbr');
+        $period4->setStart('05-01');
+        $period4->setEnd('05-01');
+        $manager->persist($period4);
 
         // 5
         $period5 = new Period;
-        $period5>setType('month-day_nbr');
-        $period5>setStart('11-01');
-        $period5>setEnd('11-01');
-        $manager->persist($period5);;
+        $period5->setType('month-day_nbr');
+        $period5->setStart('11-01');
+        $period5->setEnd('11-01');
+        $manager->persist($period5);
 
         // 6
         $period6 = new Period;
-        $period6>setType('month-day_nbr');
-        $period6>setStart('12-25');
-        $period6>setEnd('12-25');
+        $period6->setType('month-day_nbr');
+        $period6->setStart('12-25');
+        $period6->setEnd('12-25');
         $manager->persist($period6);
 
         // 7
         $period7 = new Period;
-        $period7>setType('month-day_nbr');
-        $period7>setStart('12-25');
-        $period7>setEnd('12-25');
+        $period7->setType('month-day_nbr');
+        $period7->setStart('12-25');
+        $period7->setEnd('12-25');
         $manager->persist($period7);
 
         // 8
         $period8 = new Period;
-        $period8>setType('today');
-        $period8>setStart('14:00:00');
-        $period8>setEnd('23:59:59');
+        $period8->setType('today');
+        $period8->setStart('14:00:00');
+        $period8->setEnd('23:59:59');
         $manager->persist($period8);
 
         // Add prices
@@ -124,12 +124,12 @@ class Fixtures extends Fixture
         foreach ($event_period_numbers as $nbr) {
             ${'eventPeriod'.$nbr} = new EventPeriod;
             if ($nbr == 1) {
-                ${'eventPeriod'.$nbr}>setAction(${'eventPeriod'.$nbr}::ACTION_INCLUDE);
+                ${'eventPeriod'.$nbr}->setAction(${'eventPeriod'.$nbr}::ACTION_INCLUDE);
             } else {
-                ${'eventPeriod'.$nbr}>setAction(${'eventPeriod'.$nbr}::ACTION_EXCLUDE);
+                ${'eventPeriod'.$nbr}->setAction(${'eventPeriod'.$nbr}::ACTION_EXCLUDE);
             }
-            ${'eventPeriod'.$nbr}>setEvent($event);
-            ${'eventPeriod'.$nbr}>setPeriod(${'period'.$nbr});
+            ${'eventPeriod'.$nbr}->setEvent($event);
+            ${'eventPeriod'.$nbr}->setPeriod(${'period'.$nbr});
             $manager->persist(${'eventPeriod'.$nbr});
         }
 
@@ -149,11 +149,11 @@ class Fixtures extends Fixture
         $ticket1_period_numbers = [0, 3, 8];
         foreach ($ticket1_period_numbers as $nbr) {
             ${'ticket1Period'.$nbr} = new TicketPeriod;
-            if ($nbr == 0) ${'ticket1Period'.$nbr}>setAction(${'ticket1Period'.$nbr}::ACTION_INCLUDE);
-            if ($nbr == 3) ${'ticket1Period'.$nbr}>setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
-            if ($nbr == 8) ${'ticket1Period'.$nbr}>setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
-            ${'ticket1Period'.$nbr}>setTicket($ticket1);
-            ${'ticket1Period'.$nbr}>setPeriod(${'period'.$nbr});
+            if ($nbr == 0) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_INCLUDE);
+            if ($nbr == 3) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
+            if ($nbr == 8) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
+            ${'ticket1Period'.$nbr}->setTicket($ticket1);
+            ${'ticket1Period'.$nbr}->setPeriod(${'period'.$nbr});
             $manager->persist(${'ticket1Period'.$nbr});
         }
 
@@ -173,11 +173,11 @@ class Fixtures extends Fixture
         $ticket2_period_numbers = [0, 3, 8];
         foreach ($ticket2_period_numbers as $nbr) {
             ${'ticket2Period'.$nbr} = new TicketPeriod;
-            if ($nbr == 0) ${'ticket2Period'.$nbr}>setAction(${'ticket2Period'.$nbr}::ACTION_INCLUDE);
-            if ($nbr == 3) ${'ticket2Period'.$nbr}>setAction(${'ticket2Period'.$nbr}::ACTION_EXCLUDE);
-            if ($nbr == 8) ${'ticket2Period'.$nbr}>setAction(${'ticket2Period'.$nbr}::ACTION_EXCLUDE);
-            ${'ticket2Period'.$nbr}>setTicket($ticket2);
-            ${'ticket2Period'.$nbr}>setPeriod(${'period'.$nbr});
+            if ($nbr == 0) ${'ticket2Period'.$nbr}->setAction(${'ticket2Period'.$nbr}::ACTION_INCLUDE);
+            if ($nbr == 3) ${'ticket2Period'.$nbr}->setAction(${'ticket2Period'.$nbr}::ACTION_EXCLUDE);
+            if ($nbr == 8) ${'ticket2Period'.$nbr}->setAction(${'ticket2Period'.$nbr}::ACTION_EXCLUDE);
+            ${'ticket2Period'.$nbr}->setTicket($ticket2);
+            ${'ticket2Period'.$nbr}->setPeriod(${'period'.$nbr});
             $manager->persist(${'ticket2Period'.$nbr});
         }
 
