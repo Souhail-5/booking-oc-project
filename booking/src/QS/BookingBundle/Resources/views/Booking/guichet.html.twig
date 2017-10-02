@@ -2,26 +2,5 @@
 
 {% block qsbookingTitle %}{{ parent() }} - date et billets{% endblock %}
 {% block qsbookingContent %}
-    <p>L'action est : {{ action|upper }}</p>
-    {% for e in event %}
-        <hr>
-        <ul>
-            <li><b>id</b> : {{e.id}}</li>
-            <li><b>slug</b> : {{e.slug}}</li>
-            <li><b>name</b> : {{e.name}}</li>
-            <li><b>maxResvDay</b> : {{e.maxResvDay}}</li>
-            <li><b>timeZone</b> : {{e.timeZone}}</li>
-        </ul>
-        <hr>
-    {% endfor %}
-    {% for ep in event.periods %}
-        <hr>
-        <ul>
-            <li><b>id</b> : {{ep.period.id}}</li>
-            <li><b>type</b> : {{ep.period.type}}</li>
-            <li><b>start</b> : {{ep.period.start}}</li>
-            <li><b>end</b> : {{ep.period.end}}</li>
-        </ul>
-    {% endfor %}
-    {% dump event %}
+    <p>Hello!</p>
 {% endblock %}
