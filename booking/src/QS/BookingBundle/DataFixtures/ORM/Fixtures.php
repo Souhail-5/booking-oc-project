@@ -76,17 +76,10 @@ class Fixtures extends Fixture
 
         // 7
         $period7 = new Period;
-        $period7->setType('month-day_nbr');
-        $period7->setStart('12-25');
-        $period7->setEnd('12-25');
+        $period7->setType('today');
+        $period7->setStart('14:00:00');
+        $period7->setEnd('23:59:59');
         $manager->persist($period7);
-
-        // 8
-        $period8 = new Period;
-        $period8->setType('today');
-        $period8->setStart('14:00:00');
-        $period8->setEnd('23:59:59');
-        $manager->persist($period8);
 
         // Add prices
         // 1
@@ -120,7 +113,7 @@ class Fixtures extends Fixture
         $manager->persist($price5);
 
         // Create event period
-        $event_period_numbers = [1, 2, 4, 5, 6, 7];
+        $event_period_numbers = [1, 2, 4, 5, 6];
         foreach ($event_period_numbers as $nbr) {
             ${'eventPeriod'.$nbr} = new EventPeriod;
             if ($nbr == 1) {
@@ -146,12 +139,12 @@ class Fixtures extends Fixture
             $manager->persist(${'ticket1Price'.$nbr});
         }
 
-        $ticket1_period_numbers = [0, 3, 8];
+        $ticket1_period_numbers = [0, 3, 7];
         foreach ($ticket1_period_numbers as $nbr) {
             ${'ticket1Period'.$nbr} = new TicketPeriod;
             if ($nbr == 0) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_INCLUDE);
             if ($nbr == 3) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
-            if ($nbr == 8) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
+            if ($nbr == 7) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
             ${'ticket1Period'.$nbr}->setTicket($ticket1);
             ${'ticket1Period'.$nbr}->setPeriod(${'period'.$nbr});
             $manager->persist(${'ticket1Period'.$nbr});
@@ -170,12 +163,12 @@ class Fixtures extends Fixture
             $manager->persist(${'ticket2Price'.$nbr});
         }
 
-        $ticket2_period_numbers = [0, 3, 8];
+        $ticket2_period_numbers = [0, 3, 7];
         foreach ($ticket2_period_numbers as $nbr) {
             ${'ticket2Period'.$nbr} = new TicketPeriod;
             if ($nbr == 0) ${'ticket2Period'.$nbr}->setAction(${'ticket2Period'.$nbr}::ACTION_INCLUDE);
             if ($nbr == 3) ${'ticket2Period'.$nbr}->setAction(${'ticket2Period'.$nbr}::ACTION_EXCLUDE);
-            if ($nbr == 8) ${'ticket2Period'.$nbr}->setAction(${'ticket2Period'.$nbr}::ACTION_EXCLUDE);
+            if ($nbr == 7) ${'ticket2Period'.$nbr}->setAction(${'ticket2Period'.$nbr}::ACTION_EXCLUDE);
             ${'ticket2Period'.$nbr}->setTicket($ticket2);
             ${'ticket2Period'.$nbr}->setPeriod(${'period'.$nbr});
             $manager->persist(${'ticket2Period'.$nbr});
