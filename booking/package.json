@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@fengyuanchen/datepicker": "^0.6.3",
     "@symfony/webpack-encore": "^0.15.0",
     "autoprefixer": "^7.1.4",
     "cssnano": "^3.10.0",
