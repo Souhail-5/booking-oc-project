@@ -2,9 +2,12 @@ qs_booking_home:
     path:     /
     defaults: { _controller: QSBookingBundle:Booking:index }
 
-qs_booking_shop:
-    path:     /boutique
-    defaults: { _controller: QSBookingBundle:Booking:guichet }
+qs_booking_guichet:
+    path:     /guichet/{slug}
+    defaults:
+        _controller: QSBookingBundle:Booking:guichet
+    requirements:
+        slug: '[\w-]+'
 
 qs_booking_information:
     path:     /infos-visiteurs
@@ -30,6 +33,6 @@ qs_booking_legal:
     path:     /mentions-legales
     defaults: { _controller: QSBookingBundle:Booking:legal }
 
-qs_booking_confirmation:
+qs_booking_404:
     path:     /404
     defaults: { _controller: QSBookingBundle:Booking:404 }
