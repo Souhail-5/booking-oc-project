@@ -19,6 +19,7 @@
     "ios >= 8"
   ],
   "stylelint": {
-    "extends": "stylelint-config-standard"
+    "extends": "stylelint-config-standard",
+    "ignoreFiles": ["node_modules/@fengyuanchen/datepicker/dist/datepicker.css"]
   }
 }
