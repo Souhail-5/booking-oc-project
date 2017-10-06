@@ -16,6 +16,7 @@ $(document).ready(function() {
   $('[data-toggle="datepicker"]').datepicker({
     language: 'fr-FR',
     inline: true,
-    container: datepickerContainer
+    container: datepickerContainer,
+    startDate: new Date()
   });
 });

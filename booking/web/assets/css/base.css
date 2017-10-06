@@ -6,6 +6,10 @@
   --light-gray: #b2b2b2;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   height: 100%;
 }
@@ -16,7 +20,6 @@ body {
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
   margin: 0;
-  background-color: #fbfbfb;
   color: #111;
   font-family: 'Roboto', sans-serif;
 }
@@ -30,12 +33,44 @@ body {
   color: var(--light-gray);
 }
 
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
 a {
   text-decoration: none;
   color: var(--primary-color);
 
   &:hover {
     text-decoration: underline;
+    color: color(var(--primary-color) l(20%));
+  }
+}
+
+input {
+  padding: 0.5rem 0.7rem;
+  font-size: 1rem;
+}
+
+.primary-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5rem;
+  background-color: var(--secondary-color);
+  color: color(var(--secondary-color) b(95%));
+  font-size: 1rem;
+
+  &:hover {
+    cursor: pointer;
+    background-color: color(var(--secondary-color) b(3%));
     color: color(var(--primary-color) l(20%));
   }
 }
