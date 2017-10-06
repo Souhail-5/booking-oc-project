@@ -7,11 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Order
  *
- * @ORM\Table(name="order")
+ * @ORM\Table(name="qs_order")
  * @ORM\Entity(repositoryClass="QS\BookingBundle\Repository\OrderRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Order
 {
+    const STATUS_CANCELED = 0; // Ordering this ticket IS NOT possible for this period
+    const STATUS_PENDING = 1; // Ordering this ticket IS possible for this period
+    const STATUS_PAID = 2; // Access IS possible with this ticket for this period
+
     /**
      * @var guid
      *
@@ -43,16 +48,32 @@ class Order
     private $createdAt;
 
     /**
+     * @ORM\PrePersist
+     */
+    public function onPrePersistSetCreatedAt()
+    {
+        $this->setCreatedAt(new \Datetime());
+    }
+
+    /**
      * @var \DateTime
      *
-     * @ORM\Column(name="modified_at", type="datetime")
+     * @ORM\Column(name="modified_at", type="datetime", nullable=true)
      */
     private $modifiedAt;
 
     /**
-     * @var string
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdateSetModifiedAt()
+    {
+        $this->setModifiedAt(new \Datetime());
+    }
+
+    /**
+     * @var int
      *
-     * @ORM\Column(name="status", type="string", length=255)
+     * @ORM\Column(name="status", type="integer")
      */
     private $status;
 
@@ -172,7 +193,7 @@ class Order
     /**
      * Set status
      *
-     * @param string $status
+     * @param integer $status
      *
      * @return Orders
      */
@@ -186,7 +207,7 @@ class Order
     /**
      * Get status
      *
-     * @return string
+     * @return int
      */
     public function getStatus()
     {
