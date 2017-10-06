@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block pageTitle %}Musée du Louvre{% endblock %}</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,900,900i" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('build/main.css') }}">
-    <script src="https://use.fontawesome.com/48ef1a8cd3.js"></script>
-    {% block headAssets %}{% endblock %}
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,900,900i" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{{ asset('build/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    {% endblock %}
+    {% block javascripts %}
+        <script src="https://use.fontawesome.com/48ef1a8cd3.js"></script>
+        <script src="{{ asset('build/app.js') }}"></script>
+    {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 </head>
 <body>
