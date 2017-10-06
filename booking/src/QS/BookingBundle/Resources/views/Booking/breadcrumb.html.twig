@@ -1,0 +1,25 @@
+<div class="breadcrumb">
+    {% if route == 'qs_booking_guichet' %}
+        <span class="active">Guichet</span>
+    {% else %}
+        <a href="{{ path('qs_booking_guichet') }}">Guichet</a>
+    {% endif %}
+
+    {% if route == 'qs_booking_information' %}
+        <span class="active">Informations visiteurs</span>
+    {% else %}
+        <a href="{{ path('qs_booking_information') }}">Informations visiteurs</a>
+    {% endif %}
+
+    {% if route == 'qs_booking_checkout' %}
+        <span class="active">Paiement</span>
+    {% else %}
+        <a href="{{ path('qs_booking_checkout') }}">Paiement</a>
+    {% endif %}
+
+    {% if route == 'qs_booking_confirmation' %}
+        <span class="active">Confirmation</span>
+    {% else %}
+        <a href="{{ path('qs_booking_confirmation') }}">Confirmation</a>
+    {% endif %}
+</div>

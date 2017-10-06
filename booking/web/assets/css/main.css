@@ -29,6 +29,7 @@
   margin-bottom: 6rem;
 
   & > h1 {
+    margin-top: 3rem;
     margin-bottom: 3rem;
     font-size: 2rem;
     text-align: center;
@@ -93,6 +94,26 @@
 
     &:hover {
       color: color(#fff a(30%));
+    }
+  }
+}
+
+.breadcrumb {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid color(var(--light-gray) l(90%));
+  border-radius: 100px;
+
+  & a,
+  & span {
+    flex: 1;
+    padding: 0.8rem 0.5rem;
+    border-radius: 100px;
+    text-align: center;
+
+    &.active {
+      color: #fff;
+      background-color: var(--primary-color);
     }
   }
 }

@@ -1,5 +1,8 @@
 {% extends 'QSBookingBundle::layout.html.twig' %}
 
+{% block breadcrumb %}
+    {{ include('QSBookingBundle:Booking:breadcrumb.html.twig', {route: 'qs_booking_guichet'}) }}
+{% endblock %}
 {% block qsbookingTitle %}{{ event.name }}{% endblock %}
 {% block qsbookingContent %}
     <input data-toggle="datepicker">
