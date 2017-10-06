@@ -10,11 +10,11 @@ qs_booking_guichet:
         slug: '[\w-]+'
 
 qs_booking_information:
-    path:     /infos-visiteurs
+    path:     /informations-visiteurs
     defaults: { _controller: QSBookingBundle:Booking:information }
 
 qs_booking_checkout:
-    path:     /caisse
+    path:     /paiement
     defaults: { _controller: QSBookingBundle:Booking:checkout }
 
 qs_booking_confirmation:
