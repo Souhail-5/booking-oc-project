@@ -11,6 +11,7 @@ use QS\BookingBundle\Entity\Ticket;
 use QS\BookingBundle\Entity\Price;
 use QS\BookingBundle\Entity\TicketPrice;
 use QS\BookingBundle\Entity\TicketPeriod;
+use QS\BookingBundle\Entity\Order;
 
 class Fixtures extends Fixture
 {
@@ -172,6 +173,27 @@ class Fixtures extends Fixture
             ${'ticket2Period'.$nbr}->setTicket($ticket2);
             ${'ticket2Period'.$nbr}->setPeriod(${'period'.$nbr});
             $manager->persist(${'ticket2Period'.$nbr});
+        }
+
+        // create orders
+        $orders = [];
+        for ($i=0; $i < 10; $i++) {
+            $orders[] = new Order;
+            $orders[$i]->setEventDate(new \Datetime('2017-10-07'));
+            $orders[$i]->setQtyResv(100);
+            $orders[$i]->setStatus(2);
+            $orders[$i]->setEvent($event);
+            $manager->persist($orders[$i]);
+        }
+
+        for ($i=10; $i < 16; $i++) {
+            $orders[] = new Order;
+            $date = new \Datetime('2017-11-11');
+            $orders[$i]->setEventDate($date);
+            $orders[$i]->setQtyResv(50);
+            $orders[$i]->setStatus(2);
+            $orders[$i]->setEvent($event);
+            $manager->persist($orders[$i]);
         }
 
         // Flush all
