@@ -91,7 +91,7 @@ class Event
      *
      * @param string $slug
      *
-     * @return Events
+     * @return Event
      */
     public function setSlug($slug)
     {
@@ -115,7 +115,7 @@ class Event
      *
      * @param string $name
      *
-     * @return Events
+     * @return Event
      */
     public function setName($name)
     {
@@ -139,7 +139,7 @@ class Event
      *
      * @param integer $maxResvDay
      *
-     * @return Events
+     * @return Event
      */
     public function setMaxResvDay($maxResvDay)
     {
