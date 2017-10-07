@@ -39,7 +39,7 @@ class TicketPeriod
     private $ticket;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Period")
+     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Period", inversedBy="tickets")
      * @ORM\JoinColumn(nullable=false)
      */
     private $period;

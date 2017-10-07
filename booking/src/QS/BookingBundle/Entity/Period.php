@@ -42,6 +42,26 @@ class Period
      */
     private $end;
 
+    /**
+     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\EventPeriod", mappedBy="period")
+     */
+    private $events;
+
+    /**
+     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\TicketPeriod", mappedBy="period")
+     */
+    private $tickets;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -123,5 +143,73 @@ class Period
     public function getEnd()
     {
         return $this->end;
+    }
+
+    /**
+     * Add event
+     *
+     * @param \QS\BookingBundle\Entity\EventPeriod $event
+     *
+     * @return Period
+     */
+    public function addEvent(\QS\BookingBundle\Entity\EventPeriod $event)
+    {
+        $this->events[] = $event;
+
+        return $this;
+    }
+
+    /**
+     * Remove event
+     *
+     * @param \QS\BookingBundle\Entity\EventPeriod $event
+     */
+    public function removeEvent(\QS\BookingBundle\Entity\EventPeriod $event)
+    {
+        $this->events->removeElement($event);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * Add ticket
+     *
+     * @param \QS\BookingBundle\Entity\TicketPeriod $ticket
+     *
+     * @return Period
+     */
+    public function addTicket(\QS\BookingBundle\Entity\TicketPeriod $ticket)
+    {
+        $this->tickets[] = $ticket;
+
+        return $this;
+    }
+
+    /**
+     * Remove ticket
+     *
+     * @param \QS\BookingBundle\Entity\TicketPeriod $ticket
+     */
+    public function removeTicket(\QS\BookingBundle\Entity\TicketPeriod $ticket)
+    {
+        $this->tickets->removeElement($ticket);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
     }
 }

@@ -38,7 +38,7 @@ class EventPeriod
     private $event;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Period")
+     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Period", inversedBy="events")
      * @ORM\JoinColumn(nullable=false)
      */
     private $period;
