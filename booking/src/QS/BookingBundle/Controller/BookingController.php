@@ -3,8 +3,6 @@
 namespace QS\BookingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Doctrine\ORM\EntityManagerInterface;
 use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\Period;
 use QS\BookingBundle\Entity\EventPeriod;
@@ -28,6 +26,7 @@ class BookingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
+
         return $this->render('QSBookingBundle:Booking:guichet.html.twig', [
             'event' => $event,
         ]);
