@@ -36,3 +36,10 @@ qs_booking_legal:
 qs_booking_404:
     path:     /404
     defaults: { _controller: QSBookingBundle:Booking:404 }
+
+qs_booking_ajax_event_unavailability:
+    path:     /ajax/event/{slug}/unavailability
+    defaults:
+        _controller: QSBookingBundle:Ajax:getUnavailabilityForEvent
+    requirements:
+        slug: '[\w-]+'

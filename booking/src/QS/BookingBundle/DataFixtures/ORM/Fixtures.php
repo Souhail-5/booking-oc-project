@@ -179,7 +179,7 @@ class Fixtures extends Fixture
         $orders = [];
         for ($i=0; $i < 10; $i++) {
             $orders[] = new Order;
-            $orders[$i]->setEventDate(new \Datetime('2017-10-07'));
+            $orders[$i]->setEventDate(new \Datetime('2017-10-26'));
             $orders[$i]->setQtyResv(100);
             $orders[$i]->setStatus(2);
             $orders[$i]->setEvent($event);

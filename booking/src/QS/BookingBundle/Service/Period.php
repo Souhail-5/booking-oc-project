@@ -29,11 +29,12 @@ class Period
         $qb = $this->em->createQueryBuilder()
             ->addSelect('o.eventDate fullDate')
             ->from('QSBookingBundle:Order', 'o')
-            ->andWhere('o.event = :event')
+            ->andWhere('o.event = :event AND o.eventDate >= :today')
             ->addGroupBy('o.eventDate')
             ->andHaving('SUM(o.qtyResv) >= :maxResvDay')
                 ->setParameters([
                     'event' => $event,
+                    'today' => new \Datetime(),
                     'maxResvDay' => $event->getMaxResvDay(),
                 ])
         ;

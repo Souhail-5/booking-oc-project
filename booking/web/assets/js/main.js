@@ -1,3 +1,4 @@
+var moment = require('moment/moment.js');
 require('@fengyuanchen/datepicker/dist/datepicker.css');
 require('@fengyuanchen/datepicker/dist/datepicker.js');
 
@@ -12,11 +13,48 @@ $.fn.datepicker.languages['fr-FR'] = {
 };
 
 $(document).ready(function() {
+  var unavailableEventPeriods;
   var datepickerContainer = $('[data-toggle="datepicker-container"]');
-  $('[data-toggle="datepicker"]').datepicker({
-    language: 'fr-FR',
-    inline: true,
-    container: datepickerContainer,
-    startDate: new Date()
+  $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( data ) {
+    unavailableEventPeriods = data;
+    $('[data-toggle="datepicker"]').datepicker({
+      language: 'fr-FR',
+      inline: true,
+      container: datepickerContainer,
+      startDate: new Date(),
+      filter: function(date) {
+        var r = true;
+
+        $( unavailableEventPeriods ).each(function (i, period) {
+          if (
+            period.fullDate
+            && moment( period.fullDate, 'YYYY-MM-DD' ).isSame( moment( date ) )
+          ) {
+            r = false;
+            return false;
+          }
+          if (
+            period.p_type
+            && period.p_type == 'month-day_nbr'
+          ) {
+            let dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+            let mm = date.getMonth() < 10 ? '0' + (date.getMonth()+1) : date.getMonth()+1;
+            let mmdd = mm + '-' + dd;
+            r = mmdd != period.p_start;
+            return r;
+          }
+          if (
+            period.p_type
+            && period.p_type == 'day'
+            && date.getDay() == period.p_start
+          ) {
+            r = false;
+            return false;
+          }
+        });
+
+        return r;
+      }
+    });
   });
 });
