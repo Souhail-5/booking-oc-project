@@ -28,14 +28,14 @@ class Fixtures extends Fixture
         // create periods
         // 0
         $period0 = new Period;
-        $period0->setType('date');
+        $period0->setType('range-date');
         $period0->setStart('2017-01-01');
         $period0->setEnd('infinite');
         $manager->persist($period0);
 
         // 1
         $period1 = new Period;
-        $period1->setType('date');
+        $period1->setType('range-date');
         $period1->setStart('2017-06-28');
         $period1->setEnd('infinite');
         $manager->persist($period1);
@@ -43,15 +43,15 @@ class Fixtures extends Fixture
         // 2
         $period2 = new Period;
         $period2->setType('day');
-        $period2->setStart('tuesday');
-        $period2->setEnd('tuesday');
+        $period2->setStart('2');
+        $period2->setEnd('2');
         $manager->persist($period2);
 
         // 3
         $period3 = new Period;
         $period3->setType('day');
-        $period3->setStart('sunday');
-        $period3->setEnd('sunday');
+        $period3->setStart('0');
+        $period3->setEnd('0');
         $manager->persist($period3);
 
         // 4
@@ -77,7 +77,7 @@ class Fixtures extends Fixture
 
         // 7
         $period7 = new Period;
-        $period7->setType('today');
+        $period7->setType('range-todaytime');
         $period7->setStart('14:00:00');
         $period7->setEnd('23:59:59');
         $manager->persist($period7);
