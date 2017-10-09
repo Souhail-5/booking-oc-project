@@ -16,7 +16,7 @@ class Period
     }
 
     /**
-     * Get all unavailabale Period for an event
+     * Get all unavailable Period for an event
      *
      * @param Event $event
      *
