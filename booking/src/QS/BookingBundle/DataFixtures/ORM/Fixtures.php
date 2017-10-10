@@ -131,6 +131,7 @@ class Fixtures extends Fixture
         $ticket1 = new Ticket;
         $ticket1->setName('journée');
         $manager->persist($ticket1);
+        $event->addTicket($ticket1);
 
         $ticket1_price_numbers = [1, 2, 3, 4, 5];
         foreach ($ticket1_price_numbers as $nbr) {
@@ -140,12 +141,11 @@ class Fixtures extends Fixture
             $manager->persist(${'ticket1Price'.$nbr});
         }
 
-        $ticket1_period_numbers = [0, 3, 7];
+        $ticket1_period_numbers = [0, 3];
         foreach ($ticket1_period_numbers as $nbr) {
             ${'ticket1Period'.$nbr} = new TicketPeriod;
             if ($nbr == 0) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_INCLUDE);
             if ($nbr == 3) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
-            if ($nbr == 7) ${'ticket1Period'.$nbr}->setAction(${'ticket1Period'.$nbr}::ACTION_EXCLUDE);
             ${'ticket1Period'.$nbr}->setTicket($ticket1);
             ${'ticket1Period'.$nbr}->setPeriod(${'period'.$nbr});
             $manager->persist(${'ticket1Period'.$nbr});
@@ -155,6 +155,7 @@ class Fixtures extends Fixture
         $ticket2 = new Ticket;
         $ticket2->setName('demi-journée');
         $manager->persist($ticket2);
+        $event->addTicket($ticket2);
 
         $ticket2_price_numbers = [1, 2, 3, 4, 5];
         foreach ($ticket2_price_numbers as $nbr) {
