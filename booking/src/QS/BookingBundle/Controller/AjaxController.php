@@ -16,15 +16,47 @@ class AjaxController extends Controller
 {
     public function getUnavailabilityForEventAction(Request $request, $slug)
     {
-        dump('ok');
-        $em = $this->getDoctrine()->getManager();
-        $sPeriod = $this->get('qs_booking.period');
-        $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
-
         if ('POST' !== $request->getMethod() || !$request->isXmlHttpRequest()) {
             throw $this->createNotFoundException('Sorry not existing');
         }
 
+        $em = $this->getDoctrine()->getManager();
+        $sPeriod = $this->get('qs_booking.period');
+        $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
+
         return new JsonResponse($sPeriod->getUnavailabilityForEvent($event));
+    }
+
+    public function getAvailableTicketsByEventDateAction(Request $request, $slug, $date)
+    {
+        if ('POST' !== $request->getMethod() || !$request->isXmlHttpRequest()) {
+            throw $this->createNotFoundException('Sorry not existing');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $sPeriod = $this->get('qs_booking.period');
+        $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
+        $eventTickets = $event->getTickets();
+        dump($eventTickets->toArray());
+
+        $now = new \Datetime(null, new \DateTimeZone($event->getTimeZone()));
+        $date = $now->modify($date);
+        $availableTickets = [];
+        foreach ($eventTickets as $ticket) {
+            $ticketExcludedPeriods = $em->getRepository('QSBookingBundle:Period')->getExcludedPeriodByTicket($ticket);
+            foreach ($ticketExcludedPeriods as $period) {
+                if ($sPeriod->isDateMatchPeriod($date, $period)) {
+                    continue 2;
+                }
+            }
+            $availableTickets[] = $ticket;
+        }
+        $tickets = [];
+        foreach ($availableTickets as $key => $ticket) {
+            $tickets[$key]['id'] = $ticket->getId();
+            $tickets[$key]['name'] = $ticket->getName();
+        }
+
+        return new JsonResponse($tickets);
     }
 }

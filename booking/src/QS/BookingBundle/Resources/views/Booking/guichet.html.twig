@@ -6,47 +6,23 @@
 {% block qsbookingTitle %}{{ event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Choisissez votre date et vos billets</h3>
-    <div id="guichet-wrap">
+    <form method="post" id="guichet-wrap">
         <div id="guichet-date">
-            <input data-toggle="datepicker">
+            <input data-toggle="datepicker" name="event_date" required>
             <div data-toggle="datepicker-container"></div>
         </div>
         <div id="guichet-tickets">
-            <div class="ticket">
-                Billet journée
-                <select name="journee">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-            </div>
-            <div class="ticket">
-                Billet demi-journée
-                <select name="demiJournee">
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
+            <div class="ticket hide">
+                Ticket <span class="ticket-name"></span>
+                <select name="" class="ticket-qty" required>
+                    {% for i in 0..10 %}
+                        <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>
-    </div>
+    </form>
     <div class="text-right">
-        <button class="primary-btn">Valider mon choix</button>
+        <button type="submit" form="guichet-wrap" value="submit" class="primary-btn">Valider mon choix</button>
     </div>
 {% endblock %}

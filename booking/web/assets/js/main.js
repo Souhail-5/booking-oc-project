@@ -3,7 +3,7 @@ require('@fengyuanchen/datepicker/dist/datepicker.css');
 require('@fengyuanchen/datepicker/dist/datepicker.js');
 
 $.fn.datepicker.languages['fr-FR'] = {
-  format: 'dd/mm/yyyy',
+  format: 'dd-mm-yyyy',
   days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
   daysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
   daysMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
@@ -12,7 +12,11 @@ $.fn.datepicker.languages['fr-FR'] = {
   monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']
 };
 
+var ticketElement;
 $(document).ready(function() {
+  ticketElement = $('#guichet-tickets .ticket');
+  ticketElement.detach();
+  ticketElement.removeClass('hide');
   var unavailableEventPeriods;
   var datepickerContainer = $('[data-toggle="datepicker-container"]');
   $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( data ) {
@@ -55,6 +59,19 @@ $(document).ready(function() {
 
         return r;
       }
+    });
+  });
+});
+
+$(document).on('pick.datepicker', function (e) {
+  if (e.view != 'day') { return false; }
+  $('#guichet-tickets .ticket').remove();
+  $.post( "/billetterie/ajax/event/visite-musee-louvre/"+ moment(e.date).format('YYYY-MM-DD') +"/tickets", function( data ) {
+    $(data).each(function (i, ticket) {
+      var te = ticketElement.clone();
+      te.children('select.ticket-qty').attr('name', 'ticket['+ ticket.id +'][qty]');
+      te.children('span').text(ticket.name);
+      te.appendTo('#guichet-tickets');
     });
   });
 });

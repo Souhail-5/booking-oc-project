@@ -24,6 +24,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+.hide {
+  display: none;
+}
+
 .boxed {
   width: 980px;
   margin: auto;
