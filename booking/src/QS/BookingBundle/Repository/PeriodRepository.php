@@ -2,6 +2,9 @@
 
 namespace QS\BookingBundle\Repository;
 
+use QS\BookingBundle\Entity\Ticket;
+use QS\BookingBundle\Entity\TicketPeriod;
+
 /**
  * PeriodRepository
  *
@@ -10,4 +13,18 @@ namespace QS\BookingBundle\Repository;
  */
 class PeriodRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getExcludedPeriodByTicket(Ticket $ticket)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->innerJoin('p.tickets', 'tp', 'WITH', 'tp.ticket = :ticket AND tp.action = :action')
+            ->setParameters([
+                ':ticket' => $ticket,
+                ':action' => TicketPeriod::ACTION_EXCLUDE,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $qb;
+    }
 }
