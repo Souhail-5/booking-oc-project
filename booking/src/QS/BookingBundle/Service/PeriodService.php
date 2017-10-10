@@ -5,8 +5,9 @@ namespace QS\BookingBundle\Service;
 use Doctrine\ORM\EntityManager;
 use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\EventPeriod;
+use QS\BookingBundle\Entity\Period;
 
-class Period
+class PeriodService
 {
     private $em;
 
@@ -34,7 +35,7 @@ class Period
             ->andHaving('SUM(o.qtyResv) >= :maxResvDay')
                 ->setParameters([
                     'event' => $event,
-                    'today' => new \Datetime(),
+                    'today' => new \Datetime(null, new \DateTimeZone($event->getTimeZone())),
                     'maxResvDay' => $event->getMaxResvDay(),
                 ])
         ;
@@ -55,5 +56,32 @@ class Period
         $periods = array_merge($periods, $qb->getQuery()->getScalarResult());
 
         return $periods;
+    }
+
+    /**
+     * Check if date match a period
+     *
+     * @param Date   $date
+     * @param Period $period
+     *
+     * @return boolean
+     */
+    public function isDateMatchPeriod(\Datetime $date, Period $period)
+    {
+        switch ($period->getType()) {
+            case 'day':
+                return $date->format('w') == $period->getStart();
+                break;
+
+            case 'range-todaytime':
+                $start = new \DateTime($period->getStart(), new \DateTimeZone('Europe/Paris'));
+                $end = new \DateTime($period->getEnd(), new \DateTimeZone('Europe/Paris'));
+                return ($date >= $start && $date <= $end) ;
+                break;
+
+            default:
+                return null;
+                break;
+        }
     }
 }
