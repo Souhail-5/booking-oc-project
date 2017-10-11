@@ -6,9 +6,10 @@
 {% block qsbookingTitle %}{{ event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Choisissez votre date et vos billets</h3>
-    <form method="post" id="guichet-wrap">
+    <form method="post" action="{{ path('qs_booking_information') }}" id="guichet-wrap">
         <div id="guichet-date">
-            <input data-toggle="datepicker" name="event_date" required>
+            <input type="hidden" name="eventId" value="{{ event.id }}">
+            <input data-toggle="datepicker" name="eventDate" required>
             <div data-toggle="datepicker-container"></div>
         </div>
         <div id="guichet-tickets">

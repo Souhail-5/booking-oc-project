@@ -3,6 +3,7 @@
 namespace QS\BookingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\Period;
 use QS\BookingBundle\Entity\EventPeriod;
@@ -28,6 +29,21 @@ class BookingController extends Controller
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
 
         return $this->render('QSBookingBundle:Booking:guichet.html.twig', [
+            'event' => $event,
+        ]);
+    }
+
+    public function informationAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug('visite-musee-louvre');
+
+        if ($request->isMethod('POST')) {
+            // verify date, ticket and qty
+            // verify if sum(qty) < $event->maxQty THEN redirect or message
+        }
+
+        return $this->render('QSBookingBundle:Booking:information.html.twig', [
             'event' => $event,
         ]);
     }

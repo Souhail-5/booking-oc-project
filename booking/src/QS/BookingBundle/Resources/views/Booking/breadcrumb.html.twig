@@ -1,12 +1,14 @@
+{# To-do : améliorer // faire en sorte que l'on puisse revenir #}
 <div class="breadcrumb">
     {% if route == 'qs_booking_guichet' %}
         <span class="active">Guichet</span>
     {% else %}
-        <a href="{{ path('qs_booking_guichet') }}">Guichet</a>
+        <span>Guichet</span>
+        {# <a href="{{ path('qs_booking_guichet') }}">Guichet</a> #}
     {% endif %}
 
-    {% if route == 'qs_booking_information' %}
-        <span class="active">Informations visiteurs</span>
+    {% if route == 'qs_booking_guichet' or route == 'qs_booking_information' %}
+        <span {% if route == 'qs_booking_information' %}class="active"{% endif %}>Informations visiteurs</span>
     {% else %}
         <a href="{{ path('qs_booking_information') }}">Informations visiteurs</a>
     {% endif %}
