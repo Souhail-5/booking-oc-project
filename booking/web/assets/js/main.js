@@ -69,7 +69,7 @@ $(document).on('pick.datepicker', function (e) {
   $.post( "/billetterie/ajax/event/visite-musee-louvre/"+ moment(e.date).format('YYYY-MM-DD') +"/tickets", function( data ) {
     $(data).each(function (i, ticket) {
       var te = ticketElement.clone();
-      te.children('select.ticket-qty').attr('name', 'ticket["'+ ticket.id +'"]["qty"]');
+      te.children('select.ticket-qty').attr('name', 'ticket['+ ticket.id +'][qty]');
       te.children('span').text(ticket.name);
       te.appendTo('#guichet-tickets');
     });
