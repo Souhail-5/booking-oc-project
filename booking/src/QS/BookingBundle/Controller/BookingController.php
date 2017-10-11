@@ -35,13 +35,19 @@ class BookingController extends Controller
 
     public function informationAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug('visite-musee-louvre');
-
-        if ($request->isMethod('POST')) {
-            // verify date, ticket and qty
-            // verify if sum(qty) < $event->maxQty THEN redirect or message
+        if (!$request->isMethod('POST')) {
+            throw $this->createNotFoundException('Sorry not existing');
         }
+        $em = $this->getDoctrine()->getManager();
+        $event = $em->getRepository('QSBookingBundle:Event')->find($request->request->get('eventId'));
+
+        // VERIFY DATE
+        // $periodService = $this->get('qs_booking.period');
+        // $now = new \Datetime(null, new \DateTimeZone($event->getTimeZone()));
+        // $date = $now->modify($request->request->get('eventDate'));
+        // $bool = $periodService->isDateMatchEvent($date, $event);
+        // VERIFY TICKET
+        // VERIFY QTY
 
         return $this->render('QSBookingBundle:Booking:information.html.twig', [
             'event' => $event,

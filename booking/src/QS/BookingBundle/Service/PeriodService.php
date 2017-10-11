@@ -69,6 +69,20 @@ class PeriodService
     public function isDateMatchPeriod(\Datetime $date, Period $period)
     {
         switch ($period->getType()) {
+            case 'range-date':
+                $start = new \DateTime($period->getStart(), new \DateTimeZone('Europe/Paris'));
+                if ($period->getEnd() == 'infinite') {
+                    return ($date >= $start);
+                    break;
+                }
+                $end = new \DateTime($period->getEnd(), new \DateTimeZone('Europe/Paris'));
+                return ($date >= $start && $date <= $end);
+                break;
+
+            case 'month-day_nbr':
+                return $date->format('m-d') == $period->getStart();
+                break;
+
             case 'day':
                 return $date->format('w') == $period->getStart();
                 break;
@@ -76,12 +90,34 @@ class PeriodService
             case 'range-todaytime':
                 $start = new \DateTime($period->getStart(), new \DateTimeZone('Europe/Paris'));
                 $end = new \DateTime($period->getEnd(), new \DateTimeZone('Europe/Paris'));
-                return ($date >= $start && $date <= $end) ;
+                return ($date >= $start && $date <= $end);
                 break;
 
             default:
-                return null;
+                return false;
                 break;
         }
+    }
+
+    /**
+     * Check if date match an Event
+     *
+     * @param Date   $date
+     * @param Event  $event
+     *
+     * @return boolean
+     */
+    public function isDateMatchEvent(\Datetime $date, Event $event)
+    {
+        $eps = $event->getEventPeriods();
+        foreach ($eps as $ep) {
+            if (
+                ($ep->getAction() == EventPeriod::ACTION_INCLUDE && !$this->isDateMatchPeriod($date, $ep->getPeriod()))
+                || ($ep->getAction() == EventPeriod::ACTION_EXCLUDE && $this->isDateMatchPeriod($date, $ep->getPeriod()))
+            ) {
+                return false;
+            }
+        }
+        return true;
     }
 }
