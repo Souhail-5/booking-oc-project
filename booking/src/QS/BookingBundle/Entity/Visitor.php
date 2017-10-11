@@ -49,6 +49,13 @@ class Visitor
      */
     private $country;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="discount", type="boolean", options={"default" : 0})
+     */
+    private $discount = false;
+
 
     /**
      * Get id
@@ -154,5 +161,29 @@ class Visitor
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set discount
+     *
+     * @param boolean $discount
+     *
+     * @return Visitor
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return boolean
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
     }
 }
