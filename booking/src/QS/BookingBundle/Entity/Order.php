@@ -91,7 +91,7 @@ class Order
     private $event;
 
     /**
-     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\Reservation", mappedBy="reservation")
+     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\Reservation", mappedBy="order")
      */
     private $reservations;
 
