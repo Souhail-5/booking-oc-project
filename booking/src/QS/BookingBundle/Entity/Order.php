@@ -80,7 +80,7 @@ class Order
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
 
@@ -89,6 +89,20 @@ class Order
      * @ORM\JoinColumn(nullable=false)
      */
     private $event;
+
+    /**
+     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\Reservation", mappedBy="reservation")
+     */
+    private $reservations;
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
 
     /**
@@ -267,5 +281,39 @@ class Order
     public function getEvent()
     {
         return $this->event;
+    }
+
+    /**
+     * Add reservation
+     *
+     * @param \QS\BookingBundle\Entity\Reservation $reservation
+     *
+     * @return Order
+     */
+    public function addReservation(\QS\BookingBundle\Entity\Reservation $reservation)
+    {
+        $this->reservations[] = $reservation;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservation
+     *
+     * @param \QS\BookingBundle\Entity\Reservation $reservation
+     */
+    public function removeReservation(\QS\BookingBundle\Entity\Reservation $reservation)
+    {
+        $this->reservations->removeElement($reservation);
+    }
+
+    /**
+     * Get reservations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservations()
+    {
+        return $this->reservations;
     }
 }

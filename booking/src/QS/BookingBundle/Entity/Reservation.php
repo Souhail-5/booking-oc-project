@@ -22,7 +22,7 @@ class Reservation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Order")
+     * @ORM\ManyToOne(targetEntity="QS\BookingBundle\Entity\Order", inversedBy="reservations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $order;
