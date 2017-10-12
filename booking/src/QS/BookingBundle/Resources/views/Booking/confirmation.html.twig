@@ -1,0 +1,19 @@
+{% extends 'QSBookingBundle::layout.html.twig' %}
+
+{% block breadcrumb %}
+    {{ include('QSBookingBundle:Booking:breadcrumb.html.twig', {route: 'qs_booking_confirmation'}) }}
+{% endblock %}
+{% block qsbookingTitle %}{{ event.name }}{% endblock %}
+{% block qsbookingContent %}
+    <h3 class="text-center meta-color">Votre paiement a bien été pris en compte</h3>
+    <form method="POST" id="confirmation-wrap">
+        {% for reservation in reservations %}
+            <h3>{{ reservation.visitor.firstName }}</h3>
+            <p>{{ reservation.ticketPrice.ticket.name }} - {{ reservation.ticketPrice.price.eur }}</p>
+            <hr>
+        {% endfor %}
+    </form>
+    <div class="text-right">
+        <button type="submit" form="confirmation-wrap" value="submit" class="primary-btn">Valider mon choix</button>
+    </div>
+{% endblock %}

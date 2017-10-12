@@ -4,6 +4,7 @@ namespace QS\BookingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Stripe;
 use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\Period;
 use QS\BookingBundle\Entity\Ticket;
@@ -97,7 +98,67 @@ class BookingController extends Controller
 
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
 
+        if ($request->isMethod('POST')) {
+            // stripe
+            $stripe = array(
+              "secret_key"      => "sk_test_Ykxr69WDKpbHjWWq4v6Zw8Lm",
+              "publishable_key" => "pk_test_fdVRc4edwV2ceJjan6KzQFQT"
+            );
+
+            Stripe\Stripe::setApiKey($stripe['secret_key']);
+
+            $token  = $_POST['stripeToken'];
+
+            $customer = Stripe\Customer::create(array(
+                'email' => 'customer@example.com',
+                'source'  => $token
+            ));
+
+            $charge = Stripe\Charge::create(array(
+                'customer' => $customer->id,
+                'amount'   => 1600,
+                'currency' => 'eur'
+            ));
+
+            return $this->redirectToRoute('qs_booking_confirmation', [
+                'orderId' => $order->getId(),
+            ]);
+        }
+
         return $this->render('QSBookingBundle:Booking:checkout.html.twig', [
+            'event' => $order->getEvent(),
+            'reservations' => $order->getReservations(),
+        ]);
+    }
+
+    public function confirmationAction(Request $request, $orderId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
+
+        $message = (new \Swift_Message('Hello Email'))
+            ->setFrom('send@example.com')
+            ->setTo('recipient@example.com')
+            ->setBody(
+                'TEST',
+                'text/html'
+            )
+            /*
+             * If you also want to include a plaintext version of the message
+            ->addPart(
+                $this->renderView(
+                    'Emails/registration.txt.twig',
+                    array('name' => $name)
+                ),
+                'text/plain'
+            )
+            */
+        ;
+
+        $this->get('mailer')->send($message);
+
+        return $this->render('QSBookingBundle:Booking:confirmation.html.twig', [
             'event' => $order->getEvent(),
             'reservations' => $order->getReservations(),
         ]);

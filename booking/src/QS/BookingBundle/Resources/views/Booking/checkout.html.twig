@@ -6,14 +6,21 @@
 {% block qsbookingTitle %}{{ event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Vos coordonnées de paiement</h3>
-    <div id="checkout-wrap">
+    <form method="POST" id="checkout-wrap">
         {% for reservation in reservations %}
             <h3>{{ reservation.visitor.firstName }}</h3>
             <p>{{ reservation.ticketPrice.ticket.name }} - {{ reservation.ticketPrice.price.eur }}</p>
             <hr>
         {% endfor %}
-    </div>
+        <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_fdVRc4edwV2ceJjan6KzQFQT"
+            data-description="Widget"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto">
+        </script>
+    </form>
     <div class="text-right">
-        <button type="submit" form="information-wrap" value="submit" class="primary-btn">Valider mon choix</button>
+        <button type="submit" form="checkout-wrap" value="submit" class="primary-btn">Valider mon choix</button>
     </div>
 {% endblock %}
