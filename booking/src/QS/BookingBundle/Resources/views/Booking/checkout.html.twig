@@ -1,0 +1,19 @@
+{% extends 'QSBookingBundle::layout.html.twig' %}
+
+{% block breadcrumb %}
+    {{ include('QSBookingBundle:Booking:breadcrumb.html.twig', {route: 'qs_booking_checkout'}) }}
+{% endblock %}
+{% block qsbookingTitle %}{{ event.name }}{% endblock %}
+{% block qsbookingContent %}
+    <h3 class="text-center meta-color">Vos coordonnées de paiement</h3>
+    <div id="checkout-wrap">
+        {% for reservation in reservations %}
+            <h3>{{ reservation.visitor.firstName }}</h3>
+            <p>{{ reservation.ticketPrice.ticket.name }} - {{ reservation.ticketPrice.price.eur }}</p>
+            <hr>
+        {% endfor %}
+    </div>
+    <div class="text-right">
+        <button type="submit" form="information-wrap" value="submit" class="primary-btn">Valider mon choix</button>
+    </div>
+{% endblock %}

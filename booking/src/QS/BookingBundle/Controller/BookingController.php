@@ -80,14 +80,26 @@ class BookingController extends Controller
             $em->persist($order);
             $em->flush();
 
-            return $this->redirectToRoute('qs_booking_guichet', [
-                'slug' => $order->getEvent()->getSlug(),
+            return $this->redirectToRoute('qs_booking_checkout', [
+                'orderId' => $order->getId(),
             ]);
         }
 
         return $this->render('QSBookingBundle:Booking:information.html.twig', [
             'event' => $order->getEvent(),
             'form' => $form->createView(),
+        ]);
+    }
+
+    public function checkoutAction(Request $request, $orderId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
+
+        return $this->render('QSBookingBundle:Booking:checkout.html.twig', [
+            'event' => $order->getEvent(),
+            'reservations' => $order->getReservations(),
         ]);
     }
 

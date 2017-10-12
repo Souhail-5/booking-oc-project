@@ -16,8 +16,10 @@ qs_booking_information:
         orderId: '[\w-]+'
 
 qs_booking_checkout:
-    path:     /paiement
+    path:     /paiement/{orderId}
     defaults: { _controller: QSBookingBundle:Booking:checkout }
+    requirements:
+        orderId: '[\w-]+'
 
 qs_booking_confirmation:
     path:     /confirmation
