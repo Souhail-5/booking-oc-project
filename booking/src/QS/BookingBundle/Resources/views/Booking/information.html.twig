@@ -6,7 +6,8 @@
 {% block qsbookingTitle %}{{ event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Renseignez les coordonnées de chaque billet</h3>
-    <div method="post" id="information-wrap">
+    <div id="information-wrap">
+        {{ form(form) }}
     </div>
     <div class="text-right">
         <button type="submit" form="information-wrap" value="submit" class="primary-btn">Valider mon choix</button>

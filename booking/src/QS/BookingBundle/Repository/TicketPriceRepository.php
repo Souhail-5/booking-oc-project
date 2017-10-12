@@ -2,6 +2,8 @@
 
 namespace QS\BookingBundle\Repository;
 
+use QS\BookingBundle\Entity\Ticket;
+
 /**
  * TicketPriceRepository
  *
@@ -10,4 +12,16 @@ namespace QS\BookingBundle\Repository;
  */
 class TicketPriceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getOneByTicket(Ticket $ticket)
+    {
+        return $qb = $this->createQueryBuilder('tp')
+            ->andWhere('tp.ticket = :ticket')
+            ->setParameters([
+                'ticket' => $ticket,
+            ])
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
 }
