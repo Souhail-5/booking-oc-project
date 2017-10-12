@@ -91,7 +91,7 @@ class Order
     private $event;
 
     /**
-     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\Reservation", mappedBy="order")
+     * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\Reservation", mappedBy="order", cascade={"persist", "remove"})
      */
     private $reservations;
 
@@ -293,6 +293,8 @@ class Order
     public function addReservation(\QS\BookingBundle\Entity\Reservation $reservation)
     {
         $this->reservations[] = $reservation;
+
+        $reservation->setOrder($this);
 
         return $this;
     }

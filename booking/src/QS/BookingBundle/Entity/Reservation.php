@@ -13,11 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 class Reservation
 {
     /**
-     * @var int
+     * @var guid
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="id", type="guid")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $id;
 
@@ -41,7 +41,7 @@ class Reservation
     /**
      * Get id
      *
-     * @return int
+     * @return guid
      */
     public function getId()
     {
