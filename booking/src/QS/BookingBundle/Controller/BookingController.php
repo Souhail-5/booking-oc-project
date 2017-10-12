@@ -138,22 +138,12 @@ class BookingController extends Controller
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
 
         $message = (new \Swift_Message('Hello Email'))
-            ->setFrom('send@example.com')
-            ->setTo('recipient@example.com')
+            ->setFrom('contact@qanops.com')
+            ->setTo('smsouhail@gmail.com')
             ->setBody(
                 'TEST',
                 'text/html'
             )
-            /*
-             * If you also want to include a plaintext version of the message
-            ->addPart(
-                $this->renderView(
-                    'Emails/registration.txt.twig',
-                    array('name' => $name)
-                ),
-                'text/plain'
-            )
-            */
         ;
 
         $this->get('mailer')->send($message);
