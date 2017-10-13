@@ -11,20 +11,18 @@ $.fn.datepicker.languages['fr-FR'] = {
   months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
   monthsShort: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Jun', 'Jui', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec']
 };
+$.fn.datepicker.setDefaults({
+  language: 'fr-FR'
+});
 
-var ticketElement;
+var $collectionHolder;
 $(document).ready(function() {
-  ticketElement = $('#guichet-tickets .ticket');
-  ticketElement.detach();
-  ticketElement.removeClass('hide');
-  var unavailableEventPeriods;
-  var datepickerContainer = $('[data-toggle="datepicker-container"]');
-  $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( data ) {
-    unavailableEventPeriods = data;
+  $collectionHolder = $('#guichet-tickets');
+  $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
+  $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( unavailableEventPeriods ) {
     $('[data-toggle="datepicker"]').datepicker({
-      language: 'fr-FR',
       inline: true,
-      container: datepickerContainer,
+      container: $('[data-toggle="datepicker-container"]'),
       startDate: new Date(),
       filter: function(date) {
         var r = true;
@@ -65,13 +63,23 @@ $(document).ready(function() {
 
 $(document).on('pick.datepicker', function (e) {
   if (e.view != 'day') { return false; }
-  $('#guichet-tickets .ticket').remove();
+  $collectionHolder.empty();
   $.post( "/billetterie/ajax/event/visite-musee-louvre/"+ moment(e.date).format('YYYY-MM-DD') +"/tickets", function( data ) {
     $(data).each(function (i, ticket) {
-      var te = ticketElement.clone();
-      te.children('select.ticket-qty').attr('name', 'ticket['+ ticket.id +'][qty]');
-      te.children('span').text(ticket.name);
-      te.appendTo('#guichet-tickets');
+      addTicketForm($collectionHolder, ticket)
     });
   });
 });
+
+function addTicketForm($collectionHolder, ticket) {
+    var prototype = $collectionHolder.data('prototype');
+    var index = $collectionHolder.data('index');
+    var newForm = prototype;
+
+    $newForm = $(newForm.replace(/__name__/g, index));
+    $collectionHolder.data('index', index + 1);
+
+    $newForm.addClass('ticket');
+    $newForm.prepend('<h3>Ticket '+ ticket.name +'</h3>');
+    $newForm.appendTo($collectionHolder);
+}

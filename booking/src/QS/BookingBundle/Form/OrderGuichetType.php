@@ -6,8 +6,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type as FT;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
 
-class OrderType extends AbstractType
+class OrderGuichetType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -15,11 +17,16 @@ class OrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('reservations', FT\CollectionType::class, [
-                'entry_type' => ReservationType::class,
+            ->add('email', FT\EmailType::class)
+            ->add('tickets', FT\CollectionType::class, [
+                'entry_type' => TicketType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'mapped' => false,
+                'label' => false,
             ])
-            ->add('save', FT\SubmitType::class, array('label' => 'Procéder au paiement'))
         ;
+        $builder->addEventSubscriber(new EventListener\AddDateFieldToOrderSubscriber());
     }
 
     /**

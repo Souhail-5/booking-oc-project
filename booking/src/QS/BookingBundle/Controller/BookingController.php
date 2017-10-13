@@ -14,7 +14,8 @@ use QS\BookingBundle\Entity\Reservation;
 use QS\BookingBundle\Entity\EventPeriod;
 use QS\BookingBundle\Entity\TicketPrice;
 use QS\BookingBundle\Entity\EventTicket;
-use QS\BookingBundle\Form\OrderType;
+use QS\BookingBundle\Form\OrderGuichetType;
+use QS\BookingBundle\Form\OrderInformationType;
 use QS\BookingBundle\Form\ReservationType;
 
 class BookingController extends Controller
@@ -23,7 +24,6 @@ class BookingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $events = $em->getRepository('QSBookingBundle:Event')->findAll();
-        dump($events);
         return $this->render('QSBookingBundle:Booking:index.html.twig', [
             'events' => $events,
         ]);
@@ -34,38 +34,45 @@ class BookingController extends Controller
         $em = $this->getDoctrine()->getManager();
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
 
-        if ($request->isMethod('POST')) {
-            // VERIFY DATE
-            $periodService = $this->get('qs_booking.period');
-            $now = new \Datetime(null, new \DateTimeZone($event->getTimeZone()));
-            $date = $now->modify($request->request->get('eventDate'));
-            // $bool = $periodService->isDateMatchEvent($date, $event);
-            // VERIFY TICKET
-            // VERIFY QTY
-            $order = new Order;
-            $order->setEvent($event);
-            $order->setEventDate($date);
-            foreach ($request->request->get('ticket') as $ticketId => $ticket) {
-                $qty = $ticket['qty'];
-                $order->setQtyResv($order->getQtyResv() + $qty);
-                $ticket = $em->getRepository('QSBookingBundle:Ticket')->find($ticketId);
-                $ticketPrice = $em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicket($ticket);
-                for ($i=0; $i < $qty; $i++) {
-                    $reservation = (new Reservation)->setTicketPrice($ticketPrice);
-                    $order->addReservation($reservation);
-                }
-            }
-            $order->setStatus(Order::STATUS_PENDING);
-            $em->persist($order);
-            $em->flush();
+        $order = new Order;
+        $order->setEvent($event);
+        $order->setStatus(Order::STATUS_PENDING);
+        $form = $this->createForm(OrderGuichetType::class, $order);
+        $form->handleRequest($request);
 
-            return $this->redirectToRoute('qs_booking_information', [
-                'orderId' => $order->getId(),
-            ]);
-        }
+        // if ($request->isMethod('POST')) {
+        //     // VERIFY DATE
+        //     $periodService = $this->get('qs_booking.period');
+        //     $now = new \Datetime(null, new \DateTimeZone($event->getTimeZone()));
+        //     $date = $now->modify($request->request->get('eventDate'));
+        //     // $bool = $periodService->isDateMatchEvent($date, $event);
+        //     // VERIFY TICKET
+        //     // VERIFY QTY
+        //     $order = new Order;
+        //     $order->setEvent($event);
+        //     $order->setEventDate($date);
+        //     foreach ($request->request->get('ticket') as $ticketId => $ticket) {
+        //         $qty = $ticket['qty'];
+        //         $order->setQtyResv($order->getQtyResv() + $qty);
+        //         $ticket = $em->getRepository('QSBookingBundle:Ticket')->find($ticketId);
+        //         $ticketPrice = $em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicket($ticket);
+        //         for ($i=0; $i < $qty; $i++) {
+        //             $reservation = (new Reservation)->setTicketPrice($ticketPrice);
+        //             $order->addReservation($reservation);
+        //         }
+        //     }
+        //     $order->setStatus(Order::STATUS_PENDING);
+        //     $em->persist($order);
+        //     $em->flush();
+
+        //     return $this->redirectToRoute('qs_booking_information', [
+        //         'orderId' => $order->getId(),
+        //     ]);
+        // }
 
         return $this->render('QSBookingBundle:Booking:guichet.html.twig', [
             'event' => $event,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -74,7 +81,8 @@ class BookingController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
-        $form = $this->createForm(OrderType::class, $order);
+        $form = $this->createForm(OrderInformationType::class, $order);
+        $form = $this->createForm(OrderInformationType::class, $order);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
