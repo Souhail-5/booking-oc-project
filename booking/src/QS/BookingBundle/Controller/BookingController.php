@@ -40,6 +40,16 @@ class BookingController extends Controller
         $form = $this->createForm(OrderGuichetType::class, $order);
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            dump($form['tickets']->getData());
+            // $em->persist($order);
+            // $em->flush();
+
+            // return $this->redirectToRoute('qs_booking_information', [
+            //     'orderId' => $order->getId(),
+            // ]);
+        }
+
         // if ($request->isMethod('POST')) {
         //     // VERIFY DATE
         //     $periodService = $this->get('qs_booking.period');
@@ -48,9 +58,6 @@ class BookingController extends Controller
         //     // $bool = $periodService->isDateMatchEvent($date, $event);
         //     // VERIFY TICKET
         //     // VERIFY QTY
-        //     $order = new Order;
-        //     $order->setEvent($event);
-        //     $order->setEventDate($date);
         //     foreach ($request->request->get('ticket') as $ticketId => $ticket) {
         //         $qty = $ticket['qty'];
         //         $order->setQtyResv($order->getQtyResv() + $qty);
@@ -61,13 +68,6 @@ class BookingController extends Controller
         //             $order->addReservation($reservation);
         //         }
         //     }
-        //     $order->setStatus(Order::STATUS_PENDING);
-        //     $em->persist($order);
-        //     $em->flush();
-
-        //     return $this->redirectToRoute('qs_booking_information', [
-        //         'orderId' => $order->getId(),
-        //     ]);
         // }
 
         return $this->render('QSBookingBundle:Booking:guichet.html.twig', [

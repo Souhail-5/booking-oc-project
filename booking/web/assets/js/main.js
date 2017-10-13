@@ -3,7 +3,7 @@ require('@fengyuanchen/datepicker/dist/datepicker.css');
 require('@fengyuanchen/datepicker/dist/datepicker.js');
 
 $.fn.datepicker.languages['fr-FR'] = {
-  format: 'dd-mm-yyyy',
+  format: 'yyyy-mm-dd',
   days: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
   daysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
   daysMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
@@ -81,5 +81,6 @@ function addTicketForm($collectionHolder, ticket) {
 
     $newForm.addClass('ticket');
     $newForm.prepend('<h3>Ticket '+ ticket.name +'</h3>');
+    $newForm.children('#qs_bookingbundle_order_tickets_'+ index +'_id').val(ticket.id)
     $newForm.appendTo($collectionHolder);
 }

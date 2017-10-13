@@ -14,11 +14,14 @@ class TicketType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('qty', FT\ChoiceType::class, [
-            'choices' => range(0, 10),
-            'mapped' => false,
-            'label' => 'Quantité'
-        ]);
+        $builder
+            ->add('id', FT\HiddenType::class)
+            ->add('qty', FT\ChoiceType::class, [
+                'choices' => range(0, 10),
+                'mapped' => false,
+                'label' => 'Quantité'
+            ])
+        ;
     }
 
     /**
