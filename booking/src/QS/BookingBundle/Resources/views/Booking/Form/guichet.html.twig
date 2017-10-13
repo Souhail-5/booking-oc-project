@@ -1,0 +1,35 @@
+{{ form_start(form, {'attr': {'id': 'guichet-wrap'}}) }}
+    {{ form_errors(form) }}
+    <div id="guichet-date">
+        {{ form_widget(form.eventDate) }}
+        <div data-toggle="datepicker-container"></div>
+    </div>
+    <div id="guichet-user">
+        {{ form_row(form.email) }}
+    </div>
+    <div id="guichet-tickets" data-prototype="{{ form_widget(form.tickets.vars.prototype)|e('html_attr') }}"></div>
+    {{ form_rest(form) }}
+{{ form_end(form) }}
+<div class="text-right">
+    <button type="submit" form="guichet-wrap" value="submit" class="primary-btn">Valider mon choix</button>
+</div>
+{# <div>
+    <div id="qs_bookingbundle_order_tickets___name__">
+        <div>
+            <label for="qs_bookingbundle_order_tickets___name___qty" class="required">Qty</label>
+            <select id="qs_bookingbundle_order_tickets___name___qty" name="qs_bookingbundle_order[tickets][__name__][qty]">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+    </div>
+</div> #}

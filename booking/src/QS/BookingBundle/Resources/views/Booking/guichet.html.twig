@@ -6,24 +6,5 @@
 {% block qsbookingTitle %}{{ event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Choisissez votre date et vos billets</h3>
-    <form method="post" id="guichet-wrap">
-        <div id="guichet-date">
-            <input type="hidden" name="eventId" value="{{ event.id }}">
-            <input data-toggle="datepicker" name="eventDate" required class="hide">
-            <div data-toggle="datepicker-container"></div>
-        </div>
-        <div id="guichet-tickets">
-            <div class="ticket hide">
-                Ticket <span class="ticket-name"></span>
-                <select name="" class="ticket-qty" required>
-                    {% for i in 0..10 %}
-                        <option value="{{ i }}">{{ i }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-    </form>
-    <div class="text-right">
-        <button type="submit" form="guichet-wrap" value="submit" class="primary-btn">Valider mon choix</button>
-    </div>
+    {{ include('QSBookingBundle:Booking/Form:guichet.html.twig') }}
 {% endblock %}
