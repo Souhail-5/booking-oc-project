@@ -21,7 +21,7 @@ class AjaxController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $sPeriod = $this->get('qs_booking.period');
+        $sPeriod = $this->get('qs_booking.periodService');
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
 
         return new JsonResponse($sPeriod->getUnavailabilityForEvent($event));
@@ -34,7 +34,7 @@ class AjaxController extends Controller
         }
 
         $em = $this->getDoctrine()->getManager();
-        $sPeriod = $this->get('qs_booking.period');
+        $sPeriod = $this->get('qs_booking.periodService');
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
         $eventTickets = $event->getTickets();
         dump($eventTickets->toArray());
