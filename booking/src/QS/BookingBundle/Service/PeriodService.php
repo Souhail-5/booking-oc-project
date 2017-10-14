@@ -3,9 +3,11 @@
 namespace QS\BookingBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use QS\BookingBundle\Entity\Period;
 use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\EventPeriod;
-use QS\BookingBundle\Entity\Period;
+use QS\BookingBundle\Entity\Ticket;
+use QS\BookingBundle\Entity\TicketPeriod;
 
 class PeriodService
 {
@@ -109,11 +111,34 @@ class PeriodService
      */
     public function isDateMatchEvent(\Datetime $date, Event $event)
     {
-        $eps = $event->getEventPeriods();
-        foreach ($eps as $ep) {
+        $ps = $event->getEventPeriods();
+        foreach ($ps as $p) {
             if (
-                ($ep->getAction() == EventPeriod::ACTION_INCLUDE && !$this->isDateMatchPeriod($date, $ep->getPeriod()))
-                || ($ep->getAction() == EventPeriod::ACTION_EXCLUDE && $this->isDateMatchPeriod($date, $ep->getPeriod()))
+                ($p->getAction() == EventPeriod::ACTION_INCLUDE && !$this->isDateMatchPeriod($date, $p->getPeriod()))
+                || ($p->getAction() == EventPeriod::ACTION_EXCLUDE && $this->isDateMatchPeriod($date, $p->getPeriod()))
+            ) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if date match an Ticket
+     *
+     * @param Date   $date
+     * @param Ticket  $ticket
+     *
+     * @return boolean
+     */
+    public function isDateMatchTicket(\Datetime $date, Ticket $ticket)
+    {
+        $ticket = $this->em->getRepository('QSBookingBundle:Ticket')->find($ticket->getId());
+        $ps = $ticket->getTicketPeriods();
+        foreach ($ps as $p) {
+            if (
+                ($p->getAction() == TicketPeriod::ACTION_INCLUDE && !$this->isDateMatchPeriod($date, $p->getPeriod()))
+                || ($p->getAction() == TicketPeriod::ACTION_EXCLUDE && $this->isDateMatchPeriod($date, $p->getPeriod()))
             ) {
                 return false;
             }

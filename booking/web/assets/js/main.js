@@ -19,46 +19,51 @@ var $collectionHolder;
 $(document).ready(function() {
   $collectionHolder = $('#guichet-tickets');
   $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
-  $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( unavailableEventPeriods ) {
-    $('[data-toggle="datepicker"]').datepicker({
-      inline: true,
-      container: $('[data-toggle="datepicker-container"]'),
-      startDate: new Date(),
-      filter: function(date) {
-        var r = true;
-
-        $( unavailableEventPeriods ).each(function (i, period) {
-          if (
-            period.fullDate
-            && moment( period.fullDate, 'YYYY-MM-DD' ).isSame( moment( date ) )
-          ) {
-            r = false;
-            return false;
-          }
-          if (
-            period.p_type
-            && period.p_type == 'month-day_nbr'
-          ) {
-            let dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-            let mm = date.getMonth() < 10 ? '0' + (date.getMonth()+1) : date.getMonth()+1;
-            let mmdd = mm + '-' + dd;
-            r = mmdd != period.p_start;
-            return r;
-          }
-          if (
-            period.p_type
-            && period.p_type == 'day'
-            && date.getDay() == period.p_start
-          ) {
-            r = false;
-            return false;
-          }
-        });
-
-        return r;
-      }
-    });
+  $('[data-toggle="datepicker"]').datepicker({
+    inline: true,
+    container: $('[data-toggle="datepicker-container"]'),
+    startDate: new Date()
   });
+  // $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( unavailableEventPeriods ) {
+  //   $('[data-toggle="datepicker"]').datepicker({
+  //     inline: true,
+  //     container: $('[data-toggle="datepicker-container"]'),
+  //     startDate: new Date(),
+  //     filter: function(date) {
+  //       var r = true;
+
+  //       $( unavailableEventPeriods ).each(function (i, period) {
+  //         if (
+  //           period.fullDate
+  //           && moment( period.fullDate, 'YYYY-MM-DD' ).isSame( moment( date ) )
+  //         ) {
+  //           r = false;
+  //           return false;
+  //         }
+  //         if (
+  //           period.p_type
+  //           && period.p_type == 'month-day_nbr'
+  //         ) {
+  //           let dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  //           let mm = date.getMonth() < 10 ? '0' + (date.getMonth()+1) : date.getMonth()+1;
+  //           let mmdd = mm + '-' + dd;
+  //           r = mmdd != period.p_start;
+  //           return r;
+  //         }
+  //         if (
+  //           period.p_type
+  //           && period.p_type == 'day'
+  //           && date.getDay() == period.p_start
+  //         ) {
+  //           r = false;
+  //           return false;
+  //         }
+  //       });
+
+  //       return r;
+  //     }
+  //   });
+  // });
 });
 
 $(document).on('pick.datepicker', function (e) {

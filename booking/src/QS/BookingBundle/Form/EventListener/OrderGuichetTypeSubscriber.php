@@ -7,11 +7,14 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type as FT;
 
-class AddDateFieldToOrderSubscriber implements EventSubscriberInterface
+class OrderGuichetTypeSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents()
     {
-        return array(FormEvents::PRE_SET_DATA => 'preSetData');
+        return [
+            FormEvents::PRE_SET_DATA => 'preSetData',
+            FormEvents::SUBMIT => 'submit',
+        ];
     }
 
     public function preSetData(FormEvent $event)
@@ -31,5 +34,17 @@ class AddDateFieldToOrderSubscriber implements EventSubscriberInterface
             'model_timezone' => $order->getEvent()->getTimeZone(),
             'view_timezone' => $order->getEvent()->getTimeZone(),
         ]);
+    }
+
+    public function submit(FormEvent $event)
+    {
+        $form = $event->getForm();
+        $order = $event->getData();
+
+        if (null === $order) return;
+
+        foreach ($form->get('tickets') as $ticket) {
+            $order->setQtyResv($order->getQtyResv() + $ticket->get('qty')->getData());
+        }
     }
 }

@@ -26,7 +26,7 @@ class OrderGuichetType extends AbstractType
                 'label' => false,
             ])
         ;
-        $builder->addEventSubscriber(new EventListener\AddDateFieldToOrderSubscriber());
+        $builder->addEventSubscriber(new EventListener\OrderGuichetTypeSubscriber());
     }
 
     /**

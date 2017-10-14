@@ -39,10 +39,19 @@ class BookingController extends Controller
         $order->setStatus(Order::STATUS_PENDING);
         $form = $this->createForm(OrderGuichetType::class, $order);
         $form->handleRequest($request);
+        dump($order);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($form['tickets']->getData());
-            // $em->persist($order);
+            $periodService = $this->get('qs_booking.periodService');
+
+            $em->persist($order);
+            // foreach ($form->get('tickets') as $ticket) {
+            //     dump( $periodService->isDateMatchTicket($order->getEventDate(), $ticket->getData()) );
+            //     dump( $periodService->isDateMatchTicket($order->getCreatedAt(), $ticket->getData()) );
+            // }
+
+            // dump( $periodService->isDateMatchEvent($order->getEventDate(), $event) );
+            // dump($order);
             // $em->flush();
 
             // return $this->redirectToRoute('qs_booking_information', [
@@ -51,11 +60,6 @@ class BookingController extends Controller
         }
 
         // if ($request->isMethod('POST')) {
-        //     // VERIFY DATE
-        //     $periodService = $this->get('qs_booking.period');
-        //     $now = new \Datetime(null, new \DateTimeZone($event->getTimeZone()));
-        //     $date = $now->modify($request->request->get('eventDate'));
-        //     // $bool = $periodService->isDateMatchEvent($date, $event);
         //     // VERIFY TICKET
         //     // VERIFY QTY
         //     foreach ($request->request->get('ticket') as $ticketId => $ticket) {

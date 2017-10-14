@@ -37,18 +37,17 @@ class AjaxController extends Controller
         $sPeriod = $this->get('qs_booking.periodService');
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
         $eventTickets = $event->getTickets();
-        dump($eventTickets->toArray());
 
         $now = new \Datetime(null, new \DateTimeZone($event->getTimeZone()));
         $date = $now->modify($date);
         $availableTickets = [];
         foreach ($eventTickets as $ticket) {
-            $ticketExcludedPeriods = $em->getRepository('QSBookingBundle:Period')->getExcludedPeriodByTicket($ticket);
-            foreach ($ticketExcludedPeriods as $period) {
-                if ($sPeriod->isDateMatchPeriod($date, $period)) {
-                    continue 2;
-                }
-            }
+            // $ticketExcludedPeriods = $em->getRepository('QSBookingBundle:Period')->getExcludedPeriodByTicket($ticket);
+            // foreach ($ticketExcludedPeriods as $period) {
+            //     if ($sPeriod->isDateMatchPeriod($date, $period)) {
+            //         continue 2;
+            //     }
+            // }
             $availableTickets[] = $ticket;
         }
         $tickets = [];

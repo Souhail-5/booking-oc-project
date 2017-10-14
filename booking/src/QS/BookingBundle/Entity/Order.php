@@ -3,6 +3,8 @@
 namespace QS\BookingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use QS\BookingBundle\Validator\Constraints as QSAssert;
 
 /**
  * Order
@@ -10,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="qs_order")
  * @ORM\Entity(repositoryClass="QS\BookingBundle\Repository\OrderRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @QSAssert\BookOrder
  */
 class Order
 {
@@ -30,6 +33,9 @@ class Order
      * @var \DateTime
      *
      * @ORM\Column(name="event_date", type="date")
+     * @Assert\Date(
+     *     message = "La date indiquée ({{ value }}) est erronée."
+     * )
      */
     private $eventDate;
 
@@ -81,6 +87,9 @@ class Order
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * @Assert\Email(
+     *     message = "Le format de l'email '{{ value }}' n'est pas valide.",
+     * )
      */
     private $email;
 
@@ -92,6 +101,7 @@ class Order
 
     /**
      * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\Reservation", mappedBy="order", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $reservations;
 
