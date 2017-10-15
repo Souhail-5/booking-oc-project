@@ -10,4 +10,15 @@ namespace QS\BookingBundle\Repository;
  */
 class TicketRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function areExists($tickets)
+    {
+        $qb = $this->createQueryBuilder('t')->select('COUNT(t)');
+        foreach ($tickets as $ticket) {
+            $test = "t.id = '".$ticket->getId()."'";
+            $qb->orWhere($test);
+        }
+        $r = $qb->getQuery()->getSingleScalarResult();
+
+        return count($tickets) == $r;
+    }
 }

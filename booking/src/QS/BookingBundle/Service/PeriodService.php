@@ -90,9 +90,10 @@ class PeriodService
                 break;
 
             case 'range-todaytime':
+                $today = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
                 $start = new \DateTime($period->getStart(), new \DateTimeZone('Europe/Paris'));
                 $end = new \DateTime($period->getEnd(), new \DateTimeZone('Europe/Paris'));
-                return ($date >= $start && $date <= $end);
+                return ($today >= $start && $today <= $end);
                 break;
 
             default:
@@ -133,7 +134,6 @@ class PeriodService
      */
     public function isDateMatchTicket(\Datetime $date, Ticket $ticket)
     {
-        $ticket = $this->em->getRepository('QSBookingBundle:Ticket')->find($ticket->getId());
         $ps = $ticket->getTicketPeriods();
         foreach ($ps as $p) {
             if (
@@ -142,6 +142,22 @@ class PeriodService
             ) {
                 return false;
             }
+        }
+        return true;
+    }
+
+    /**
+     * Check if date match multiple Tickets
+     *
+     * @param Date   $date
+     * @param Array  $tickets
+     *
+     * @return boolean
+     */
+    public function isDateMatchTickets(\Datetime $date, Array $tickets)
+    {
+        foreach ($tickets as $ticket) {
+            if (!$this->isDateMatchTicket($date, $ticket)) return false;
         }
         return true;
     }

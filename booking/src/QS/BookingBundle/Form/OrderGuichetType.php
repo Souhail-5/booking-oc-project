@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type as FT;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use QS\BookingBundle\Validator\Constraints\BookTicket;
 
 class OrderGuichetType extends AbstractType
 {
@@ -24,6 +25,9 @@ class OrderGuichetType extends AbstractType
                 'allow_delete' => true,
                 'mapped' => false,
                 'label' => false,
+                'constraints' => array(
+                    new BookTicket(),
+                ),
             ])
         ;
         $builder->addEventSubscriber(new EventListener\OrderGuichetTypeSubscriber());

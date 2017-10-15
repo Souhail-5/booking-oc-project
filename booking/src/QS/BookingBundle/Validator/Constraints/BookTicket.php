@@ -7,13 +7,13 @@ use Symfony\Component\Validator\Constraint;
 /**
  * @Annotation
  */
-class BookOrder extends Constraint
+class BookTicket extends Constraint
 {
-    public $message = "Quantité indisponible.";
+    public $message = "Une erreur est survenue lors du choix des billets.";
 
     public function validatedBy()
     {
-        return 'qs_booking_bookOrder';
+        return 'qs_booking_bookTicket';
     }
 
     public function getTargets()

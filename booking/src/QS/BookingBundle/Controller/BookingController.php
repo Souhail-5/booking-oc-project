@@ -39,10 +39,10 @@ class BookingController extends Controller
         $order->setStatus(Order::STATUS_PENDING);
         $form = $this->createForm(OrderGuichetType::class, $order);
         $form->handleRequest($request);
-        dump($order);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $periodService = $this->get('qs_booking.periodService');
+            $isTicketsAvailable = $periodService->isDateMatchTickets($order->getEventDate(), $form->get('tickets')->getData());
 
             $em->persist($order);
             // foreach ($form->get('tickets') as $ticket) {
@@ -60,8 +60,9 @@ class BookingController extends Controller
         }
 
         // if ($request->isMethod('POST')) {
-        //     // VERIFY TICKET
-        //     // VERIFY QTY
+        //     // VERIFY TICKET (exist and available) - semidone
+        //     // VERIFY Date - done
+        //     // VERIFY QTY - done
         //     foreach ($request->request->get('ticket') as $ticketId => $ticket) {
         //         $qty = $ticket['qty'];
         //         $order->setQtyResv($order->getQtyResv() + $qty);
