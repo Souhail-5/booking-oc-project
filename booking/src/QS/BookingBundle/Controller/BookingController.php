@@ -111,7 +111,7 @@ class BookingController extends Controller
             );
             Stripe\Stripe::setApiKey($stripe['secret_key']);
 
-            $token  = $_POST['stripeToken'];
+            $token  = $request->request->get('stripeToken');
             $customer = Stripe\Customer::create(array(
                 'email' => $order->getEmail(),
                 'source'  => $token
