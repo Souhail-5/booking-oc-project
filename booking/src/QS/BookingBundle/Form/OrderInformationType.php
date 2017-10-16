@@ -15,17 +15,31 @@ class OrderInformationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->remove('email')
-            ->remove('eventDate')
-            ->remove('tickets')
             ->add('reservations', FT\CollectionType::class, [
+                'label' => false,
                 'entry_type' => ReservationType::class,
+                'entry_options' => [
+                    'label' => false,
+                ],
             ])
         ;
     }
 
-    public function getParent()
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
-        return OrderGuichetType::class;
+        $resolver->setDefaults(array(
+            'data_class' => 'QS\BookingBundle\Entity\Order'
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getBlockPrefix()
+    {
+        return 'qs_bookingbundle_order';
     }
 }

@@ -1,0 +1,22 @@
+{% form_theme form _self %}
+<div class="information-errors">
+    {{ form_errors(form) }} <br>
+</div>
+{{ form_start(form, {'attr': {'id': 'information-wrap'}}) }}
+        {% for reservation in form.reservations %}
+            {% set reservationNbr = loop.index %}
+            {% for visitor in reservation.children %}
+                <div class="reservation">
+                    <h4><span class="primary-color font-900">Réservation {{ reservationNbr }} - </span><span class="primary-color">Billet {{ reservation.vars.data.ticketPrice.ticket.name }}</span></h4>
+                    {{ form_row(visitor.lastName) }}
+                    {{ form_row(visitor.firstName) }}
+                    {{ form_row(visitor.birthDate) }}
+                    {{ form_row(visitor.country) }}
+                    {{ form_row(visitor.discount) }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+{{ form_end(form) }}
+<div class="text-right">
+    <button type="submit" form="information-wrap" value="submit" class="primary-btn font-900">Valider mon choix</button>
+</div>

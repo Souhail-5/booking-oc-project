@@ -203,3 +203,20 @@
     margin-top: 0;
   }
 }
+
+#information-wrap {
+  margin-bottom: 3rem;
+
+  & .reservation {
+    border-bottom: 1px solid color(var(--light-gray) l(95%));
+
+    & label {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    & > div {
+      margin-bottom: 1rem;
+    }
+  }
+}
