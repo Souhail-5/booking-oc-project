@@ -4,6 +4,7 @@ namespace QS\BookingBundle\Form\EventListener;
 
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\Extension\Core\Type as FT;
 
@@ -13,7 +14,7 @@ class OrderGuichetTypeSubscriber implements EventSubscriberInterface
     {
         return [
             FormEvents::PRE_SET_DATA => 'preSetData',
-            FormEvents::SUBMIT => 'submit',
+            FormEvents::POST_SUBMIT => 'submit',
         ];
     }
 
@@ -33,6 +34,9 @@ class OrderGuichetTypeSubscriber implements EventSubscriberInterface
             ],
             'model_timezone' => $order->getEvent()->getTimeZone(),
             'view_timezone' => $order->getEvent()->getTimeZone(),
+            'invalid_message' => 'La date indiquée est erronée',
+            'data' => new \DateTime(null, new \DateTimeZone($order->getEvent()->getTimeZone())),
+            'error_bubbling' => true,
         ]);
     }
 
@@ -46,5 +50,7 @@ class OrderGuichetTypeSubscriber implements EventSubscriberInterface
         foreach ($form->get('tickets') as $ticket) {
             $order->setQtyResv($order->getQtyResv() + $ticket->get('qty')->getData());
         }
+
+        if ($order->getQtyResv() <= 0 || $order->getQtyResv() >= 20) $form->addError(new FormError('Le nombre total de billet doit être compris entre 1 et 20.'));
     }
 }

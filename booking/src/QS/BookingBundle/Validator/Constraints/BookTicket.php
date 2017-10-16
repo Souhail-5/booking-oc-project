@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class BookTicket extends Constraint
 {
-    public $message = "Une erreur est survenue lors du choix des billets.";
+    public $message = "Vous devez sélectionner vos billets.";
 
     public function validatedBy()
     {

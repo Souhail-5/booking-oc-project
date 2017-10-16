@@ -19,62 +19,58 @@ var $collectionHolder;
 $(document).ready(function() {
   $collectionHolder = $('#guichet-tickets');
   $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
-  $('[data-toggle="datepicker"]').datepicker({
-    inline: true,
-    container: $('[data-toggle="datepicker-container"]'),
-    startDate: new Date()
+  $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( unavailableEventPeriods ) {
+    $('[data-toggle="datepicker"]').datepicker({
+      inline: true,
+      container: $('[data-toggle="datepicker-container"]'),
+      startDate: new Date(),
+      filter: function(date) {
+        var r = true;
+
+        $( unavailableEventPeriods ).each(function (i, period) {
+          if (
+            period.p_type
+            && period.p_type == 'month-day_nbr'
+          ) {
+            let dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+            let mm = date.getMonth() < 10 ? '0' + (date.getMonth()+1) : date.getMonth()+1;
+            let mmdd = mm + '-' + dd;
+            r = mmdd != period.p_start;
+            return r;
+          }
+          if (
+            period.p_type
+            && period.p_type == 'day'
+            && date.getDay() == period.p_start
+          ) {
+            r = false;
+            return false;
+          }
+        });
+
+        return r;
+      }
+    });
+    $initialDate = $('[data-toggle="datepicker"]').datepicker('getDate');
+    getTickets($initialDate);
   });
-  // $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( unavailableEventPeriods ) {
-  //   $('[data-toggle="datepicker"]').datepicker({
-  //     inline: true,
-  //     container: $('[data-toggle="datepicker-container"]'),
-  //     startDate: new Date(),
-  //     filter: function(date) {
-  //       var r = true;
-
-  //       $( unavailableEventPeriods ).each(function (i, period) {
-  //         if (
-  //           period.fullDate
-  //           && moment( period.fullDate, 'YYYY-MM-DD' ).isSame( moment( date ) )
-  //         ) {
-  //           r = false;
-  //           return false;
-  //         }
-  //         if (
-  //           period.p_type
-  //           && period.p_type == 'month-day_nbr'
-  //         ) {
-  //           let dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-  //           let mm = date.getMonth() < 10 ? '0' + (date.getMonth()+1) : date.getMonth()+1;
-  //           let mmdd = mm + '-' + dd;
-  //           r = mmdd != period.p_start;
-  //           return r;
-  //         }
-  //         if (
-  //           period.p_type
-  //           && period.p_type == 'day'
-  //           && date.getDay() == period.p_start
-  //         ) {
-  //           r = false;
-  //           return false;
-  //         }
-  //       });
-
-  //       return r;
-  //     }
-  //   });
-  // });
 });
 
 $(document).on('pick.datepicker', function (e) {
   if (e.view != 'day') { return false; }
-  $collectionHolder.empty();
-  $.post( "/billetterie/ajax/event/visite-musee-louvre/"+ moment(e.date).format('YYYY-MM-DD') +"/tickets", function( data ) {
+  getTickets(e.date);
+});
+
+function getTickets(date) {
+  $.post( "/billetterie/ajax/event/visite-musee-louvre/"+ moment(date).format('YYYY-MM-DD') +"/tickets", function( data ) {
+    $collectionHolder.children('.ticket').remove();
+    $collectionHolder.children('.alert').addClass('hide');
+    if (!data.length) $collectionHolder.children('.alert').removeClass('hide');
     $(data).each(function (i, ticket) {
       addTicketForm($collectionHolder, ticket)
     });
   });
-});
+}
 
 function addTicketForm($collectionHolder, ticket) {
     var prototype = $collectionHolder.data('prototype');
@@ -85,7 +81,7 @@ function addTicketForm($collectionHolder, ticket) {
     $collectionHolder.data('index', index + 1);
 
     $newForm.addClass('ticket');
-    $newForm.prepend('<h3>Ticket '+ ticket.name +'</h3>');
+    $newForm.prepend('<h4 class="font-700">Billet '+ ticket.name +'</h4>');
     $newForm.children('#qs_bookingbundle_order_tickets_'+ index +'_id').val(ticket.id)
     $newForm.appendTo($collectionHolder);
 }

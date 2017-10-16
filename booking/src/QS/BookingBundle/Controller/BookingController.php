@@ -4,6 +4,7 @@ namespace QS\BookingBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormError;
 use Stripe;
 use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\Period;
@@ -40,23 +41,19 @@ class BookingController extends Controller
         $form = $this->createForm(OrderGuichetType::class, $order);
         $form->handleRequest($request);
 
+        $isTicketsAvailable = false;
+
         if ($form->isSubmitted() && $form->isValid()) {
             $periodService = $this->get('qs_booking.periodService');
             $isTicketsAvailable = $periodService->isDateMatchTickets($order->getEventDate(), $form->get('tickets')->getData());
 
-            $em->persist($order);
-            // foreach ($form->get('tickets') as $ticket) {
-            //     dump( $periodService->isDateMatchTicket($order->getEventDate(), $ticket->getData()) );
-            //     dump( $periodService->isDateMatchTicket($order->getCreatedAt(), $ticket->getData()) );
-            // }
-
-            // dump( $periodService->isDateMatchEvent($order->getEventDate(), $event) );
-            // dump($order);
-            // $em->flush();
-
-            // return $this->redirectToRoute('qs_booking_information', [
-            //     'orderId' => $order->getId(),
-            // ]);
+            if ($isTicketsAvailable) {
+                $em->persist($order);
+                // $em->flush();
+                // return $this->redirectToRoute('qs_booking_information', [
+                //     'orderId' => $order->getId(),
+                // ]);
+            }
         }
 
         // if ($request->isMethod('POST')) {
@@ -78,6 +75,7 @@ class BookingController extends Controller
         return $this->render('QSBookingBundle:Booking:guichet.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
+            'isTicketsAvailable' => $isTicketsAvailable,
         ]);
     }
 

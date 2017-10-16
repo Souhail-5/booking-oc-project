@@ -33,9 +33,8 @@ class Order
      * @var \DateTime
      *
      * @ORM\Column(name="event_date", type="date")
-     * @Assert\Date(
-     *     message = "La date indiquée ({{ value }}) est erronée."
-     * )
+     * @Assert\NotBlank(message = "Veuillez sélectionner une date.")
+     * @Assert\Date(message = "La date indiquée est erronée.")
      */
     private $eventDate;
 
@@ -87,9 +86,8 @@ class Order
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\Email(
-     *     message = "Le format de l'email '{{ value }}' n'est pas valide.",
-     * )
+     * @Assert\NotBlank(message = "Veuillez indiquer votre e-mail. Vous receverez de cette façon vos billets.")
+     * @Assert\Email(message = "Le format de l'email {{ value }} n'est pas valide.")
      */
     private $email;
 

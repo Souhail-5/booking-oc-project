@@ -18,7 +18,12 @@ class OrderGuichetType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', FT\EmailType::class)
+            ->add('email', FT\EmailType::class, [
+                'error_bubbling' => true,
+                'attr' => [
+                    'placeholder' => 'email@lorem.com',
+                ]
+            ])
             ->add('tickets', FT\CollectionType::class, [
                 'entry_type' => TicketType::class,
                 'allow_add' => true,
@@ -28,6 +33,7 @@ class OrderGuichetType extends AbstractType
                 'constraints' => array(
                     new BookTicket(),
                 ),
+                'error_bubbling' => true,
             ])
         ;
         $builder->addEventSubscriber(new EventListener\OrderGuichetTypeSubscriber());
