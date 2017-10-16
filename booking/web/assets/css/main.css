@@ -179,6 +179,7 @@
   & .ticket {
     flex: 0 0 calc(50% - 1rem);
     margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
     padding-right: 1rem;
     padding-left: 1rem;
     border: 1px solid color(var(--light-gray) l(95%));
