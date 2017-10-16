@@ -240,6 +240,8 @@
 #checkout-wrap {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 
   & .reservation {
     flex: 0 0 calc(50% - 1rem);

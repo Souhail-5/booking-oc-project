@@ -129,6 +129,7 @@ class BookingController extends Controller
 
         return $this->render('QSBookingBundle:Booking:checkout.html.twig', [
             'event' => $order->getEvent(),
+            'order' => $order,
             'reservations' => $order->getReservations(),
             'orderPrice' => $orderPrice,
         ]);

@@ -11,22 +11,30 @@
             <div class="reservation">
                 <h4><span class="primary-color font-900">Réservation {{ loop.index }} - </span><span class="primary-color">Billet {{ reservation.ticketPrice.ticket.name }}</span></h4>
                 <div class="information-reservation">
-                    <p>Au nom de {{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }} et au tarif {{ reservation.ticketPrice.price.name }} de {{ reservation.ticketPrice.price.eur }} €</p>
+                    <p>Au nom de {{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }} et au tarif {{ reservation.ticketPrice.price.name }} de {{ reservation.ticketPrice.price.eur|number_format(2, ',') }} €</p>
                 </div>
             </div>
         {% endfor %}
     </form>
     <div class="text-right">
-        <script
-            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        <span>Total à payer : {{ orderPrice|number_format(2, ',') }} €</span>
+        <button
             data-key="pk_test_fdVRc4edwV2ceJjan6KzQFQT"
             data-amount="{{ orderPrice * 100 }}"
             data-name="Musée du Louvre"
             data-description="{{ event.name }}"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
             data-locale="auto"
-            data-currency="eur">
-        </script>
-        <button type="submit" form="checkout-wrap" value="submit" class="primary-btn">Valider mon choix</button>
+            data-currency="eur"
+            data-email="{{ order.email }}"
+            type="submit"
+            form="checkout-wrap"
+            value="submit"
+            class="primary-btn stripe-checkout ml-1 font-900">Procéder au paiement</button>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://checkout.stripe.com/checkout.js"></script>
 {% endblock %}

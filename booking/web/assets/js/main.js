@@ -54,6 +54,17 @@ $(document).ready(function() {
     $initialDate = $('[data-toggle="datepicker"]').datepicker('getDate');
     getTickets($initialDate);
   });
+
+  $(':submit.stripe-checkout').on('click', function(event) {
+      event.preventDefault();
+      var $button = $(this);
+      var opts = $.extend({}, $button.data(), {
+          token: function(result) {
+              $('#checkout-wrap').append($('<input>').attr({ type: 'hidden', name: 'stripeToken', value: result.id })).submit();
+          }
+      });
+      StripeCheckout.open(opts);
+  });
 });
 
 $(document).on('pick.datepicker', function (e) {
