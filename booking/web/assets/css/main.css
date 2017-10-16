@@ -3,7 +3,7 @@
 #header-wrap {
   grid-row: 1 / 2;
   background-color: #fff;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #f3f3f3;
   box-shadow: 0 5px 40px -6px rgba(0, 0, 0, 0.06);
 }
 
@@ -178,7 +178,6 @@
 
   & .ticket {
     flex: 0 0 calc(50% - 1rem);
-    height: 100px;
     margin-bottom: 2rem;
     padding-right: 1rem;
     padding-left: 1rem;
@@ -222,6 +221,7 @@
     line-height: 1.5rem;
   }
 }
+
 #information-wrap .reservation .information-form {
   display: flex;
   flex-wrap: wrap;
@@ -234,5 +234,29 @@
     &:nth-child(4) {
       margin-right: 0;
     }
+  }
+}
+
+#checkout-wrap {
+  display: flex;
+  flex-wrap: wrap;
+
+  & .reservation {
+    flex: 0 0 calc(50% - 1rem);
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+
+    &:nth-child(odd) {
+      margin-right: 2rem;
+    }
+
+    &:last-child,
+    &:nth-last-child(2) {
+      margin-bottom: 0;
+    }
+  }
+
+  & .reservation:not(:last-child, :nth-last-child(2)) {
+    border-bottom: 1px solid color(var(--light-gray) l(95%));
   }
 }

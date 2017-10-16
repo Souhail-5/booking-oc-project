@@ -8,10 +8,15 @@
     <h3 class="text-center meta-color">Vos coordonnées de paiement</h3>
     <form method="POST" id="checkout-wrap">
         {% for reservation in reservations %}
-            <h3>{{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }}</h3>
-            <p>Billet {{ reservation.ticketPrice.ticket.name }} - {{ reservation.ticketPrice.price.eur }} €</p>
-            <hr>
+            <div class="reservation">
+                <h4><span class="primary-color font-900">Réservation {{ loop.index }} - </span><span class="primary-color">Billet {{ reservation.ticketPrice.ticket.name }}</span></h4>
+                <div class="information-reservation">
+                    <p>Au nom de {{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }} et au tarif {{ reservation.ticketPrice.price.name }} de {{ reservation.ticketPrice.price.eur }} €</p>
+                </div>
+            </div>
         {% endfor %}
+    </form>
+    <div class="text-right">
         <script
             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="pk_test_fdVRc4edwV2ceJjan6KzQFQT"
@@ -22,8 +27,6 @@
             data-locale="auto"
             data-currency="eur">
         </script>
-    </form>
-    <div class="text-right">
         <button type="submit" form="checkout-wrap" value="submit" class="primary-btn">Valider mon choix</button>
     </div>
 {% endblock %}
