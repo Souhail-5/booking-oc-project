@@ -12,7 +12,11 @@
                     {{ form_row(visitor.firstName) }}
                     {{ form_row(visitor.birthDate) }}
                     {{ form_row(visitor.country) }}
-                    {{ form_row(visitor.discount) }}
+                    <div>
+                        {{ form_label(visitor.discount) }}
+                        {{ form_widget(visitor.discount) }}
+                        <p class="meta-color">Cochez cette case et bénéficier du tarif réduit si vous étudiant, employé du musée, d’un service du Ministère de la Culture ou militaire. <b class="font-700">Un jusitificatif vous sera demandé.</b></p>
+                    </div>
                 </div>
             {% endfor %}
         {% endfor %}

@@ -23,6 +23,12 @@ class VisitorType extends AbstractType
             ])
             ->add('birthDate', FT\BirthdayType::class, [
                 'label' => 'Date de naissance',
+                'placeholder' => [
+                    'year' => 'Année',
+                    'month' => 'Mois',
+                    'day' => 'Jour',
+                ],
+                'format' => 'dd MM yyyy',
             ])
             ->add('country', FT\ChoiceType::class , [
                 'label' => 'Pays de résidence',
