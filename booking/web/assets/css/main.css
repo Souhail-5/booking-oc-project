@@ -244,21 +244,24 @@
   margin-bottom: 3rem;
 
   & .reservation {
-    flex: 0 0 calc(50% - 1rem);
-    padding-bottom: 1rem;
-    padding-top: 1rem;
-
-    &:nth-child(odd) {
-      margin-right: 2rem;
-    }
+    flex: 0 0 50%;
+    padding: 1rem;
 
     &:last-child,
     &:nth-last-child(2) {
       margin-bottom: 0;
     }
-  }
 
-  & .reservation:not(:last-child, :nth-last-child(2)) {
-    border-bottom: 1px solid color(var(--light-gray) l(95%));
+    border: 1px solid color(var(--light-gray) l(95%));
+    border-top: none;
+
+    &:nth-child(even) {
+      border-left: none;
+    }
+
+    &:nth-child(1),
+    &:nth-child(2) {
+      border-top: 1px solid color(var(--light-gray) l(95%));
+    }
   }
 }
