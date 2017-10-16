@@ -36,6 +36,11 @@ h6 {
   font-weight: 400;
 }
 
+p,
+span {
+  line-height: 1.5rem;
+}
+
 .hide {
   display: none;
 }
@@ -43,6 +48,18 @@ h6 {
 .boxed {
   width: 980px;
   margin: auto;
+}
+
+.display-i {
+  display: inline !important;
+}
+
+.display-ib {
+  display: inline-block !important;
+}
+
+.display-b {
+  display: block !important;
 }
 
 .primary-color {
@@ -92,6 +109,10 @@ input {
   padding: 0.5rem 0.7rem;
   font-size: 1rem;
   border: 1px solid color(var(--light-gray) l(80%));
+
+  &[type=checkbox] {
+    width: auto;
+  }
 
   &:not([type=checkbox]):focus {
     outline: 2px solid color(var(--light-gray) l(50%));

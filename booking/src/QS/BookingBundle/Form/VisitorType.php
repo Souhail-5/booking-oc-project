@@ -17,9 +17,15 @@ class VisitorType extends AbstractType
         $builder
             ->add('lastName', FT\TextType::class, [
                 'label' => 'Nom',
+                'attr' => [
+                    'placeholder' => 'Nom du visiteur',
+                ]
             ])
             ->add('firstName', FT\TextType::class, [
                 'label' => 'Prénom',
+                'attr' => [
+                    'placeholder' => 'Prénom du visiteur',
+                ]
             ])
             ->add('birthDate', FT\BirthdayType::class, [
                 'label' => 'Date de naissance',

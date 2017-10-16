@@ -8,14 +8,16 @@
             {% for visitor in reservation.children %}
                 <div class="reservation">
                     <h4><span class="primary-color font-900">Réservation {{ reservationNbr }} - </span><span class="primary-color">Billet {{ reservation.vars.data.ticketPrice.ticket.name }}</span></h4>
-                    {{ form_row(visitor.lastName) }}
-                    {{ form_row(visitor.firstName) }}
-                    {{ form_row(visitor.birthDate) }}
-                    {{ form_row(visitor.country) }}
-                    <div>
-                        {{ form_label(visitor.discount) }}
-                        {{ form_widget(visitor.discount) }}
-                        <p class="meta-color">Cochez cette case et bénéficier du tarif réduit si vous étudiant, employé du musée, d’un service du Ministère de la Culture ou militaire. <b class="font-700">Un jusitificatif vous sera demandé.</b></p>
+                    <div class="information-form">
+                        {{ form_row(visitor.lastName) }}
+                        {{ form_row(visitor.firstName) }}
+                        {{ form_row(visitor.birthDate) }}
+                        {{ form_row(visitor.country) }}
+                        <div>
+                            {{ form_label(visitor.discount) }}
+                            {{ form_widget(visitor.discount) }}
+                            <label for="{{ visitor.discount.vars.id }}" class="meta-color display-i">Cochez cette case et bénéficier du tarif réduit si vous étudiant, employé du musée, d’un service du Ministère de la Culture ou militaire. <b class="font-700">Un jusitificatif vous sera demandé.</b></label>
+                        </div>
                     </div>
                 </div>
             {% endfor %}

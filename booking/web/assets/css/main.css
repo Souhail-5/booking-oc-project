@@ -208,15 +208,31 @@
   margin-bottom: 3rem;
 
   & .reservation {
+    padding-bottom: 2rem;
+    padding-top: 2rem;
+  }
+
+  & .reservation:not(:nth-last-child(2)) {
     border-bottom: 1px solid color(var(--light-gray) l(95%));
+  }
 
-    & label {
-      display: block;
-      margin-bottom: 0.5rem;
-    }
+  & .reservation label {
+    display: block;
+    margin-bottom: 0.5rem;
+    line-height: 1.5rem;
+  }
+}
+#information-wrap .reservation .information-form {
+  display: flex;
+  flex-wrap: wrap;
 
-    & > div {
-      margin-bottom: 1rem;
+  & > div {
+    flex: 1 1 calc(25% - 2rem);
+    margin-bottom: 1.5rem;
+    margin-right: 2rem;
+
+    &:nth-child(4) {
+      margin-right: 0;
     }
   }
 }
