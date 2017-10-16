@@ -101,26 +101,24 @@ class BookingController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
+        $bookingService = $this->get('qs_booking.bookingService');
+        $orderPrice = $bookingService->setOrderPrice($order);
 
         if ($request->isMethod('POST')) {
-            // stripe
             $stripe = array(
               "secret_key"      => "sk_test_Ykxr69WDKpbHjWWq4v6Zw8Lm",
               "publishable_key" => "pk_test_fdVRc4edwV2ceJjan6KzQFQT"
             );
-
             Stripe\Stripe::setApiKey($stripe['secret_key']);
 
             $token  = $_POST['stripeToken'];
-
             $customer = Stripe\Customer::create(array(
-                'email' => 'customer@example.com',
+                'email' => $order->getEmail(),
                 'source'  => $token
             ));
-
             $charge = Stripe\Charge::create(array(
                 'customer' => $customer->id,
-                'amount'   => 1600,
+                'amount'   => $orderPrice * 100,
                 'currency' => 'eur'
             ));
 
@@ -132,6 +130,7 @@ class BookingController extends Controller
         return $this->render('QSBookingBundle:Booking:checkout.html.twig', [
             'event' => $order->getEvent(),
             'reservations' => $order->getReservations(),
+            'orderPrice' => $orderPrice,
         ]);
     }
 
@@ -143,7 +142,7 @@ class BookingController extends Controller
 
         $message = (new \Swift_Message('Hello Email'))
             ->setFrom('contact@qanops.com')
-            ->setTo('smsouhail@gmail.com')
+            ->setTo($order->getEmail())
             ->setBody(
                 'TEST',
                 'text/html'

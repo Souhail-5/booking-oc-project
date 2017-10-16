@@ -1,4 +1,7 @@
 services:
+  qs_booking.bookingService:
+    class: QS\BookingBundle\Service\BookingService
+    arguments: ["@doctrine.orm.entity_manager"]
   qs_booking.periodService:
     class: QS\BookingBundle\Service\PeriodService
     arguments: ["@doctrine.orm.entity_manager"]

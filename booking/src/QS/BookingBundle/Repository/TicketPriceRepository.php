@@ -3,6 +3,7 @@
 namespace QS\BookingBundle\Repository;
 
 use QS\BookingBundle\Entity\Ticket;
+use QS\BookingBundle\Entity\Price;
 
 /**
  * TicketPriceRepository
@@ -18,6 +19,21 @@ class TicketPriceRepository extends \Doctrine\ORM\EntityRepository
             ->andWhere('tp.ticket = :ticket')
             ->setParameters([
                 'ticket' => $ticket,
+            ])
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+        ;
+    }
+
+    public function getOneByTicketPrice(Ticket $ticket, Price $price)
+    {
+        return $qb = $this->createQueryBuilder('tp')
+            ->andWhere('tp.ticket = :ticket')
+            ->andWhere('tp.price = :price')
+            ->setParameters([
+                'ticket' => $ticket,
+                'price' => $price,
             ])
             ->setMaxResults(1)
             ->getQuery()
