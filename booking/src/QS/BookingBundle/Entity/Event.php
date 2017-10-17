@@ -55,7 +55,7 @@ class Event
     private $orders;
 
     /**
-     * @ORM\ManyToMany(targetEntity="QS\BookingBundle\Entity\Ticket")
+     * @ORM\ManyToMany(targetEntity="QS\BookingBundle\Entity\Ticket", inversedBy="events")
      */
     private $tickets;
 

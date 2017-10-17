@@ -33,6 +33,11 @@ class Ticket
      */
     private $ticketPeriods;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="QS\BookingBundle\Entity\Event", mappedBy="tickets")
+     */
+    private $events;
+
 
     /**
      * Constructor
@@ -40,6 +45,7 @@ class Ticket
     public function __construct()
     {
         $this->ticketPeriods = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->events = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
 
@@ -125,5 +131,39 @@ class Ticket
     public function getTicketPeriods()
     {
         return $this->ticketPeriods;
+    }
+
+    /**
+     * Add event
+     *
+     * @param \QS\BookingBundle\Entity\Event $event
+     *
+     * @return Ticket
+     */
+    public function addEvent(\QS\BookingBundle\Entity\Event $event)
+    {
+        $this->events[] = $event;
+
+        return $this;
+    }
+
+    /**
+     * Remove event
+     *
+     * @param \QS\BookingBundle\Entity\Event $event
+     */
+    public function removeEvent(\QS\BookingBundle\Entity\Event $event)
+    {
+        $this->events->removeElement($event);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 }
