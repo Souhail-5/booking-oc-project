@@ -37,6 +37,7 @@ class BookingController extends Controller
 
         $order = new Order;
         $order->setEvent($event);
+        $order->setEventDate(new \DateTime(null, new \DateTimeZone($event->getTimeZone())));
         $order->setStatus(Order::STATUS_PENDING);
         $form = $this->createForm(OrderGuichetType::class, $order);
         $form->handleRequest($request);

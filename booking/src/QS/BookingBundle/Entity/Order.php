@@ -12,6 +12,7 @@ use QS\BookingBundle\Validator\Constraints as QSAssert;
  * @ORM\Table(name="qs_order")
  * @ORM\Entity(repositoryClass="QS\BookingBundle\Repository\OrderRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Assert\GroupSequence({"guichet", "Order"})
  * @QSAssert\BookOrder
  */
 class Order
@@ -33,8 +34,8 @@ class Order
      * @var \DateTime
      *
      * @ORM\Column(name="event_date", type="date")
-     * @Assert\NotBlank(message = "Veuillez sélectionner une date.")
-     * @Assert\Date(message = "La date indiquée est erronée.")
+     * @Assert\NotBlank(message = "Veuillez sélectionner une date.", groups = {"guichet"})
+     * @Assert\Date(message = "La date choisie n'est pas au bon format.", groups = {"guichet"})
      */
     private $eventDate;
 
@@ -93,8 +94,8 @@ class Order
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
-     * @Assert\NotBlank(message = "Veuillez indiquer votre e-mail. Vous receverez de cette façon vos billets.")
-     * @Assert\Email(message = "Le format de l'email {{ value }} n'est pas valide.")
+     * @Assert\NotBlank(message = "Vous devez obligatoirement indiquer votre e-mail, nous vous enverrons de cette façon vos billets.", groups = {"guichet"})
+     * @Assert\Email(message = "L' e-mail fourni {{ value }} n'est pas au bon format.", groups = {"guichet"})
      */
     private $email;
 

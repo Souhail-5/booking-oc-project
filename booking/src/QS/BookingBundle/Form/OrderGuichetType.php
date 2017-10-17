@@ -17,6 +17,7 @@ class OrderGuichetType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $order = $builder->getData();
         $builder
             ->add('email', FT\EmailType::class, [
                 'error_bubbling' => true,
@@ -24,15 +25,28 @@ class OrderGuichetType extends AbstractType
                     'placeholder' => 'email@lorem.com',
                 ]
             ])
+            ->add('eventDate', FT\DateType::class, [
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => [
+                    'data-toggle' => 'datepicker',
+                    'format' => 'yyyy-MM-dd',
+                    // 'class' => 'hide',
+                ],
+                'model_timezone' => $order->getEvent()->getTimeZone(),
+                'view_timezone' => $order->getEvent()->getTimeZone(),
+                'invalid_message' => "La date fournie \"{{ value }}\" n'est pas au bon format et n'a pas pu être évaluée.",
+                'error_bubbling' => true,
+            ])
             ->add('tickets', FT\CollectionType::class, [
                 'entry_type' => TicketType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'mapped' => false,
                 'label' => false,
-                'constraints' => array(
+                'constraints' => [
                     new BookTicket(),
-                ),
+                ],
                 'error_bubbling' => true,
             ])
         ;
@@ -44,9 +58,9 @@ class OrderGuichetType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'QS\BookingBundle\Entity\Order'
-        ));
+        ]);
     }
 
     /**
