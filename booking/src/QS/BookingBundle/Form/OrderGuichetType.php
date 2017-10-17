@@ -31,7 +31,7 @@ class OrderGuichetType extends AbstractType
                 'attr' => [
                     'data-toggle' => 'datepicker',
                     'format' => 'yyyy-MM-dd',
-                    // 'class' => 'hide',
+                    'class' => 'hide',
                 ],
                 'model_timezone' => $order->getEvent()->getTimeZone(),
                 'view_timezone' => $order->getEvent()->getTimeZone(),
