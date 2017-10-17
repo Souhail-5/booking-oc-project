@@ -2,6 +2,8 @@
 
 namespace QS\BookingBundle\Repository;
 
+use QS\BookingBundle\Entity\Event;
+
 /**
  * TicketRepository
  *
@@ -20,5 +22,21 @@ class TicketRepository extends \Doctrine\ORM\EntityRepository
         $r = $qb->getQuery()->getSingleScalarResult();
 
         return count($tickets) == $r;
+    }
+
+    public function getAllByEvent(Event $event)
+    {
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.events', 'e', 'WITH', 'e = :event')
+            ->innerJoin('t.ticketPeriods', 'tp')
+            ->addSelect('tp')
+            ->innerJoin('tp.period', 'p')
+            ->addSelect('p')
+            ->setParameters([
+                'event' => $event,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }
