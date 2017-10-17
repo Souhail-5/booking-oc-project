@@ -102,7 +102,10 @@ class BookingController extends Controller
 
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
         $bookingService = $this->get('qs_booking.bookingService');
-        $orderPrice = $bookingService->setOrderPrice($order);
+        $bookingService->calcOrderPrice($order);
+
+        $em->persist($order);
+        $em->flush();
 
         if ($request->isMethod('POST')) {
             $stripe = array(
@@ -118,7 +121,7 @@ class BookingController extends Controller
             ));
             $charge = Stripe\Charge::create(array(
                 'customer' => $customer->id,
-                'amount'   => $orderPrice * 100,
+                'amount'   => $order->getTotalResv() * 100,
                 'currency' => 'eur'
             ));
 
@@ -131,7 +134,6 @@ class BookingController extends Controller
             'event' => $order->getEvent(),
             'order' => $order,
             'reservations' => $order->getReservations(),
-            'orderPrice' => $orderPrice,
         ]);
     }
 

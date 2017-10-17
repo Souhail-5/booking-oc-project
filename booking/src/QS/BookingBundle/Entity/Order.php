@@ -46,6 +46,13 @@ class Order
     private $qtyResv;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="total_resv", type="integer")
+     */
+    private $totalResv;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
@@ -109,6 +116,7 @@ class Order
      */
     public function __construct()
     {
+        $this->totalResv = 0;
         $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -169,6 +177,30 @@ class Order
     public function getQtyResv()
     {
         return $this->qtyResv;
+    }
+
+    /**
+     * Set totalResv
+     *
+     * @param integer $totalResv
+     *
+     * @return Order
+     */
+    public function setTotalResv($totalResv)
+    {
+        $this->totalResv = $totalResv;
+
+        return $this;
+    }
+
+    /**
+     * Get totalResv
+     *
+     * @return integer
+     */
+    public function getTotalResv()
+    {
+        return $this->totalResv;
     }
 
     /**

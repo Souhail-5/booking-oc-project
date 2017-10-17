@@ -15,22 +15,17 @@ class BookingService
         $this->em = $em;
     }
 
-    public function setOrderPrice(Order $order)
+    public function calcOrderPrice(Order $order)
     {
-        $orderPrice = 0;
-        $order->getReservations();
         foreach ($order->getReservations() as $reservation) {
             $visitor = $reservation->getVisitor();
             $ticket = $reservation->getTicketPrice()->getTicket();
             $age = ((new \DateTime(null, new \DateTimeZone($order->getEvent()->getTimeZone())))->diff($visitor->getBirthDate()))->y;
-            $orderPrice += $this->getPriceFromAge($age);
+            $order->setTotalResv($order->getTotalResv() + $this->getPriceFromAge($age));
             $price = $this->em->getRepository('QSBookingBundle:Price')->findOneByEur($this->getPriceFromAge($age));
             $ticketPrice = $this->em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicketPrice($ticket, $price);
             $reservation->setTicketPrice($ticketPrice);
         }
-        $this->em->persist($order);
-        $this->em->flush();
-        return $orderPrice;
     }
 
     public function getPriceFromAge($age)
