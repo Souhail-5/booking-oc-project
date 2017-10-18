@@ -43,17 +43,14 @@ qs_booking_404:
     path:     /404
     defaults: { _controller: QSBookingBundle:Booking:404 }
 
+qs_booking_ajax:
+    path:     /ajax
+    defaults:
+        _controller: QSBookingBundle:Ajax:root
+
 qs_booking_ajax_event_unavailability:
     path:     /ajax/event/{slug}/unavailability
     defaults:
         _controller: QSBookingBundle:Ajax:getUnavailabilityForEvent
     requirements:
         slug: '[\w-]+'
-
-qs_booking_ajax_event_date_tickets:
-    path:     /ajax/event/{slug}/{date}/tickets
-    defaults:
-        _controller: QSBookingBundle:Ajax:getAvailableTicketsByEventDate
-    requirements:
-        slug: '[\w-]+'
-        slug: '[\d-]{10}'

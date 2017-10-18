@@ -14,6 +14,17 @@ use QS\BookingBundle\Entity\EventTicket;
 
 class AjaxController extends Controller
 {
+    public function rootAction(Request $request)
+    {
+        $method = $request->request->get('action').'Action';
+        if (!$request->isMethod('POST')
+            || !$request->isXmlHttpRequest()
+            || !$method
+            || method_exists($this, $method) == false
+        ) throw $this->createNotFoundException('Sorry not existing');
+        return $this->$method($request);
+    }
+
     public function getUnavailabilityForEventAction(Request $request, $slug)
     {
         if ('POST' !== $request->getMethod() || !$request->isXmlHttpRequest()) {
@@ -27,35 +38,21 @@ class AjaxController extends Controller
         return new JsonResponse($sPeriod->getUnavailabilityForEvent($event));
     }
 
-    public function getAvailableTicketsByEventDateAction(Request $request, $slug, $date)
+    public function getTicketsAction(Request $request)
     {
-        if ('POST' !== $request->getMethod() || !$request->isXmlHttpRequest()) {
-            throw $this->createNotFoundException('Sorry not existing');
-        }
-
         $em = $this->getDoctrine()->getManager();
-        $sPeriod = $this->get('qs_booking.periodService');
-        $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
-        $eventTickets = $event->getTickets();
 
+        $date = $request->request->get('date');
+        $slug = $request->request->get('eventSlug');
+        $bookingService = $this->get('qs_booking.bookingService');
+        $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
         $date = (new \Datetime(null, new \DateTimeZone($event->getTimeZone())))->modify($date);
-        $availableTickets = [];
-        foreach ($eventTickets as $ticket) {
-            $ticketExcludedPeriods = $em->getRepository('QSBookingBundle:Period')->getExcludedPeriodByTicket($ticket);
-            foreach ($ticketExcludedPeriods as $period) {
-                if ($sPeriod->isDateMatchPeriod($date, $period)) {
-                    continue 2;
-                }
-            }
-            $availableTickets[] = $ticket;
-        }
         $tickets = [];
-        foreach ($availableTickets as $key => $ticket) {
+        foreach ($bookingService->getAvailableTicketsByEventDate($event, $date) as $key => $ticket) {
             $tickets[$key]['id'] = $ticket->getId();
             $tickets[$key]['name'] = $ticket->getName();
             $tickets[$key]['description'] = $ticket->getDescription();
         }
-
         return new JsonResponse($tickets);
     }
 }

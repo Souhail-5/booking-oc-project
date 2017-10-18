@@ -15,17 +15,18 @@ $.fn.datepicker.setDefaults({
   language: 'fr-FR'
 });
 
+var guichetEventRegex = new RegExp(/\/billetterie\/guichet\/([\w-]{1,})\/?\??/, 'i');
 var $collectionHolder;
 $(document).ready(function() {
   $collectionHolder = $('#guichet-tickets');
   $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
-  $('[data-toggle="datepicker"]').datepicker({
+  $('#qs_bookingbundle_order_eventDate').datepicker({
     inline: true,
     container: $('[data-toggle="datepicker-container"]'),
     startDate: new Date()
   });
   // $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( unavailableEventPeriods ) {
-  //   $('[data-toggle="datepicker"]').datepicker({
+  //   $('#qs_bookingbundle_order_eventDate').datepicker({
   //     inline: true,
   //     container: $('[data-toggle="datepicker-container"]'),
   //     startDate: new Date(),
@@ -57,7 +58,7 @@ $(document).ready(function() {
   //     }
   //   });
   // });
-  $initialDate = $('[data-toggle="datepicker"]').datepicker('getDate');
+  $initialDate = $('#qs_bookingbundle_order_eventDate').datepicker('getDate');
   getTickets($initialDate);
 
   $(':submit.stripe-checkout').on('click', function(event) {
@@ -72,20 +73,26 @@ $(document).ready(function() {
   });
 });
 
-// $(document).on('pick.datepicker', function (e) {
-//   if (e.view != 'day') { return false; }
-//   getTickets(e.date);
-// });
+$(document).on('pick.datepicker', function (e) {
+  if (e.view != 'day') { return false; }
+  getTickets(e.date);
+});
 
 function getTickets(date) {
-  $.post( "/billetterie/ajax/event/visite-musee-louvre/"+ moment(date).format('YYYY-MM-DD') +"/tickets", function( data ) {
-    $collectionHolder.children('.ticket').remove();
-    $collectionHolder.children('.alert').addClass('hide');
-    if (!data.length) $collectionHolder.children('.alert').removeClass('hide');
-    $(data).each(function (i, ticket) {
-      addTicketForm($collectionHolder, ticket)
-    });
-  });
+  if (!window.location.href.match(guichetEventRegex)[1]) return false;
+  $.post("/billetterie/ajax", {
+      eventSlug: window.location.href.match(guichetEventRegex)[1],
+      date: moment(date).format('YYYY-MM-DD'),
+      action: 'getTickets'
+    }, function( data ) {
+      $collectionHolder.children('.ticket').remove();
+      $collectionHolder.children('.alert').addClass('hide');
+      if (!data.length) $collectionHolder.children('.alert').removeClass('hide');
+      $(data).each(function (i, ticket) {
+        addTicketForm($collectionHolder, ticket)
+      });
+    }
+  );
 }
 
 function addTicketForm($collectionHolder, ticket) {
