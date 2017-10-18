@@ -20,7 +20,7 @@ class AjaxController extends Controller
         if (!$request->isMethod('POST')
             || !$request->isXmlHttpRequest()
             || !$method
-            || method_exists($this, $method) == false
+            || method_exists($this, $method) === false
         ) throw $this->createNotFoundException('Sorry not existing');
         return $this->$method($request);
     }
