@@ -103,7 +103,7 @@ class BookingController extends Controller
             ));
             $charge = Stripe\Charge::create(array(
                 'customer' => $customer->id,
-                'amount'   => $order->getTotalResv() * 100,
+                'amount'   => $order->getTotalPrice() * 100,
                 'currency' => 'eur'
             ));
 

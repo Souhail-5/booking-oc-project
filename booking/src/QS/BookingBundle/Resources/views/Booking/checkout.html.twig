@@ -17,10 +17,10 @@
         {% endfor %}
     </form>
     <div class="text-right">
-        <span>Total à payer : {{ order.totalResv|number_format(2, ',') }} €</span>
+        <span>Total à payer : {{ order.totalPrice|number_format(2, ',') }} €</span>
         <button
             data-key="pk_test_fdVRc4edwV2ceJjan6KzQFQT"
-            data-amount="{{ order.totalResv * 100 }}"
+            data-amount="{{ order.totalPrice * 100 }}"
             data-name="Musée du Louvre"
             data-description="{{ event.name }}"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"

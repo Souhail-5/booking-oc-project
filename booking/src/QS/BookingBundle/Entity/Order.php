@@ -49,9 +49,9 @@ class Order
     /**
      * @var int
      *
-     * @ORM\Column(name="total_resv", type="integer")
+     * @ORM\Column(name="total_price", type="integer")
      */
-    private $totalResv;
+    private $totalPrice;
 
     /**
      * @var \DateTime
@@ -117,7 +117,7 @@ class Order
      */
     public function __construct()
     {
-        $this->totalResv = 0;
+        $this->totalPrice = 0;
         $this->reservations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -181,27 +181,27 @@ class Order
     }
 
     /**
-     * Set totalResv
+     * Set totalPrice
      *
-     * @param integer $totalResv
+     * @param integer $totalPrice
      *
      * @return Order
      */
-    public function setTotalResv($totalResv)
+    public function setTotalPrice($totalPrice)
     {
-        $this->totalResv = $totalResv;
+        $this->totalPrice = $totalPrice;
 
         return $this;
     }
 
     /**
-     * Get totalResv
+     * Get totalPrice
      *
      * @return integer
      */
-    public function getTotalResv()
+    public function getTotalPrice()
     {
-        return $this->totalResv;
+        return $this->totalPrice;
     }
 
     /**

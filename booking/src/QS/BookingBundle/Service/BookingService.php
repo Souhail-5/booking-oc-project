@@ -28,7 +28,7 @@ class BookingService
             $visitor = $reservation->getVisitor();
             $ticket = $reservation->getTicketPrice()->getTicket();
             $age = ((new \DateTime(null, new \DateTimeZone($order->getEvent()->getTimeZone())))->diff($visitor->getBirthDate()))->y;
-            $order->setTotalResv($order->getTotalResv() + $this->getPriceFromAge($age));
+            $order->setTotalPrice($order->getTotalPrice() + $this->getPriceFromAge($age));
             $price = $this->em->getRepository('QSBookingBundle:Price')->findOneByEur($this->getPriceFromAge($age));
             $ticketPrice = $this->em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicketPrice($ticket, $price);
             $reservation->setTicketPrice($ticketPrice);
