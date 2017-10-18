@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class BookOrder extends Constraint
 {
-    public $message = "Quantité indisponible.";
+    public $message = "Impossible de continuer la commande. Veuillez réessayer.";
 
     public function validatedBy()
     {

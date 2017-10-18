@@ -28,12 +28,16 @@ class BookOrderValidator extends ConstraintValidator
             ->getTotalQtyResvByEventDate($order->getEvent(), $order->getEventDate())
         ;
 
-        if (
-            !$this->periodService->isDateMatchEvent($order->getEventDate(), $order->getEvent())
-            || ($totalResvDate + $order->getQtyResv()) > $order->getEvent()->getMaxResvDay()
-        ) {
+        if (!$this->periodService->isDateMatchEvent($order->getEventDate(), $order->getEvent())) {
             $this->context
-                ->buildViolation($constraint->message)
+                ->buildViolation("La date choisie n'est pas disponible pour cet évenement.")
+                ->addViolation()
+            ;
+        }
+
+        if (($totalResvDate + $order->getQtyResv()) > $order->getEvent()->getMaxResvDay()) {
+            $this->context
+                ->buildViolation("Malheureusement tous les billets ont été vendus pour cette date. Merci de choisir une autre date si possible.")
                 ->addViolation()
             ;
         }
