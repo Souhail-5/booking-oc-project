@@ -15,69 +15,6 @@ $.fn.datepicker.setDefaults({
   language: 'fr-FR'
 });
 
-var guichetEventRegex = new RegExp(/\/billetterie\/guichet\/([\w-]{1,})\/?\??/, 'i');
-var $collectionHolder;
-$(document).ready(function() {
-  $collectionHolder = $('#guichet-tickets');
-  $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
-  $('#qs_bookingbundle_order_eventDate').datepicker({
-    inline: true,
-    container: $('[data-toggle="datepicker-container"]'),
-    startDate: new Date()
-  });
-  // $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( unavailableEventPeriods ) {
-  //   $('#qs_bookingbundle_order_eventDate').datepicker({
-  //     inline: true,
-  //     container: $('[data-toggle="datepicker-container"]'),
-  //     startDate: new Date(),
-  //     filter: function(date) {
-  //       var r = true;
-
-  //       $( unavailableEventPeriods ).each(function (i, period) {
-  //         if (
-  //           period.p_type
-  //           && period.p_type == 'month-day_nbr'
-  //         ) {
-  //           let dd = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
-  //           let mm = date.getMonth() < 10 ? '0' + (date.getMonth()+1) : date.getMonth()+1;
-  //           let mmdd = mm + '-' + dd;
-  //           r = mmdd != period.p_start;
-  //           return r;
-  //         }
-  //         if (
-  //           period.p_type
-  //           && period.p_type == 'day'
-  //           && date.getDay() == period.p_start
-  //         ) {
-  //           r = false;
-  //           return false;
-  //         }
-  //       });
-
-  //       return r;
-  //     }
-  //   });
-  // });
-  $initialDate = $('#qs_bookingbundle_order_eventDate').datepicker('getDate');
-  getTickets($initialDate);
-
-  $(':submit.stripe-checkout').on('click', function(event) {
-      event.preventDefault();
-      var $button = $(this);
-      var opts = $.extend({}, $button.data(), {
-          token: function(result) {
-              $('#checkout-wrap').append($('<input>').attr({ type: 'hidden', name: 'stripeToken', value: result.id })).submit();
-          }
-      });
-      StripeCheckout.open(opts);
-  });
-});
-
-$(document).on('pick.datepicker', function (e) {
-  if (e.view != 'day') { return false; }
-  getTickets(e.date);
-});
-
 function getTickets(date) {
   if (!window.location.href.match(guichetEventRegex)[1]) return false;
   $.post("/billetterie/ajax", {
@@ -112,3 +49,69 @@ function addTicketForm($collectionHolder, ticket) {
     $newForm.children('#qs_bookingbundle_order_tickets_'+ index +'_id').val(ticket.id)
     $newForm.appendTo($collectionHolder);
 }
+
+function isDateMatchPeriods(date, periods) {
+  var r = true;
+  if (!$.isArray(periods)) return true;
+  $(periods).each(function (i, period) {
+    if (
+      period.p_type
+      && period.p_type == 'month-day_nbr'
+    ) {
+      let mmdd =
+          ((date.getMonth() < 10) ? '0' + (date.getMonth()+1) : date.getMonth()+1)
+          + '-'
+          + ((date.getDate() < 10) ? '0' + date.getDate() : date.getDate());
+      return r = mmdd != period.p_start;
+    }
+    if (
+      period.p_type
+      && period.p_type == 'day'
+      && date.getDay() == period.p_start
+    ) {
+      return r = false;
+    }
+  });
+  return r;
+}
+
+var guichetEventRegex = new RegExp(/\/billetterie\/guichet\/([\w-]{1,})\/?\??/, 'i');
+var $collectionHolder;
+
+$(document).ready(function() {
+  $collectionHolder = $('#guichet-tickets');
+  $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
+  $.post( "/billetterie/ajax", {
+      eventSlug: window.location.href.match(guichetEventRegex)[1],
+      action: 'getUnavailablePeriodsByEvent'
+    },
+    function( periods ) {
+      $('#qs_bookingbundle_order_eventDate').datepicker({
+        inline: true,
+        container: $('[data-toggle="datepicker-container"]'),
+        startDate: new Date(),
+        filter: function (date) {
+          return isDateMatchPeriods(date, periods);
+        }
+      });
+      $initialDate = $('#qs_bookingbundle_order_eventDate').datepicker('getDate');
+      getTickets($initialDate);
+    }
+  );
+
+  $(':submit.stripe-checkout').on('click', function(event) {
+      event.preventDefault();
+      var $button = $(this);
+      var opts = $.extend({}, $button.data(), {
+          token: function(result) {
+              $('#checkout-wrap').append($('<input>').attr({ type: 'hidden', name: 'stripeToken', value: result.id })).submit();
+          }
+      });
+      StripeCheckout.open(opts);
+  });
+});
+
+$(document).on('pick.datepicker', function (e) {
+  if (e.view != 'day') { return false; }
+  getTickets(e.date);
+});

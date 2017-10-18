@@ -25,17 +25,13 @@ class AjaxController extends Controller
         return $this->$method($request);
     }
 
-    public function getUnavailabilityForEventAction(Request $request, $slug)
+    public function getUnavailablePeriodsByEventAction(Request $request)
     {
-        if ('POST' !== $request->getMethod() || !$request->isXmlHttpRequest()) {
-            throw $this->createNotFoundException('Sorry not existing');
-        }
-
         $em = $this->getDoctrine()->getManager();
-        $sPeriod = $this->get('qs_booking.periodService');
+        $slug = $request->request->get('eventSlug');
+        $periodService = $this->get('qs_booking.periodService');
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
-
-        return new JsonResponse($sPeriod->getUnavailabilityForEvent($event));
+        return new JsonResponse($periodService->getUnavailablePeriodsByEvent($event));
     }
 
     public function getTicketsAction(Request $request)

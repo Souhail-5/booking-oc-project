@@ -25,39 +25,11 @@ class PeriodService
      *
      * @return Array
      */
-    public function getUnavailabilityForEvent(Event $event)
+    public function getUnavailablePeriodsByEvent(Event $event)
     {
-        $periods = [];
-
-        $qb = $this->em->createQueryBuilder()
-            ->addSelect('o.eventDate fullDate')
-            ->from('QSBookingBundle:Order', 'o')
-            ->andWhere('o.event = :event AND o.eventDate >= :today')
-            ->addGroupBy('o.eventDate')
-            ->andHaving('SUM(o.qtyResv) >= :maxResvDay')
-                ->setParameters([
-                    'event' => $event,
-                    'today' => new \Datetime(null, new \DateTimeZone($event->getTimeZone())),
-                    'maxResvDay' => $event->getMaxResvDay(),
-                ])
-        ;
-
-        $periods = array_merge($periods, $qb->getQuery()->getScalarResult());
-
-        $qb = $this->em->createQueryBuilder()
-            ->addSelect('p')
-            ->from('QSBookingBundle:Period', 'p')
-            ->leftJoin('p.events', 'ep', 'WITH', 'ep.event = :event')
-            ->andWhere('ep.action = :action')
-                ->setParameters([
-                    'event' => $event,
-                    'action' => EventPeriod::ACTION_EXCLUDE,
-                ])
-        ;
-
-        $periods = array_merge($periods, $qb->getQuery()->getScalarResult());
-
-        return $periods;
+        return $this->em->getRepository('QSBookingBundle:Period')->getAllByEventActions($event, [
+            EventPeriod::ACTION_EXCLUDE,
+        ], true);
     }
 
     /**

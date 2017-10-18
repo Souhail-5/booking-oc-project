@@ -2,8 +2,8 @@
 
 namespace QS\BookingBundle\Repository;
 
-use QS\BookingBundle\Entity\Ticket;
-use QS\BookingBundle\Entity\TicketPeriod;
+use QS\BookingBundle\Entity\Event;
+use QS\BookingBundle\Entity\EventPeriod;
 
 /**
  * PeriodRepository
@@ -13,18 +13,18 @@ use QS\BookingBundle\Entity\TicketPeriod;
  */
 class PeriodRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getExcludedPeriodByTicket(Ticket $ticket)
+    public function getAllByEventActions(Event $event, array $actions, $scalar = false)
     {
         $qb = $this->createQueryBuilder('p')
-            ->innerJoin('p.tickets', 'tp', 'WITH', 'tp.ticket = :ticket AND tp.action = :action')
-            ->setParameters([
-                ':ticket' => $ticket,
-                ':action' => TicketPeriod::ACTION_EXCLUDE,
-            ])
+            ->select('p')
+            ->innerJoin('p.events', 'ep', 'WITH', 'ep.event = :event AND ep.action IN (:actions)')
+                ->setParameters([
+                    'event' => $event,
+                    'actions' => $actions,
+                ])
             ->getQuery()
-            ->getResult()
         ;
-
-        return $qb;
+        if ($scalar) return $qb->getScalarResult();
+        return $qb->getResult();
     }
 }

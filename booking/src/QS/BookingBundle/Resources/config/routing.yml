@@ -47,10 +47,3 @@ qs_booking_ajax:
     path:     /ajax
     defaults:
         _controller: QSBookingBundle:Ajax:root
-
-qs_booking_ajax_event_unavailability:
-    path:     /ajax/event/{slug}/unavailability
-    defaults:
-        _controller: QSBookingBundle:Ajax:getUnavailabilityForEvent
-    requirements:
-        slug: '[\w-]+'
