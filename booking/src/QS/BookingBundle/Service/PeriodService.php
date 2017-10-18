@@ -90,10 +90,9 @@ class PeriodService
                 break;
 
             case 'range-todaytime':
-                $today = new \DateTime(null, new \DateTimeZone('Europe/Paris'));
                 $start = new \DateTime($period->getStart(), new \DateTimeZone('Europe/Paris'));
                 $end = new \DateTime($period->getEnd(), new \DateTimeZone('Europe/Paris'));
-                return ($today >= $start && $today <= $end);
+                return ($date >= $start && $date <= $end);
                 break;
 
             default:
