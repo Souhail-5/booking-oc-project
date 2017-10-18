@@ -82,7 +82,7 @@ var $collectionHolder;
 $(document).ready(function() {
   $collectionHolder = $('#guichet-tickets');
   $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
-  $.post( "/billetterie/ajax", {
+  if (window.location.href.match(guichetEventRegex)) $.post( "/billetterie/ajax", {
       eventSlug: window.location.href.match(guichetEventRegex)[1],
       action: 'getUnavailablePeriodsByEvent'
     },

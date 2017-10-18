@@ -24,11 +24,12 @@ class BookingService
 
     public function calcOrderPrice(Order $order)
     {
+        $order->setTotalPrice(0);
         foreach ($order->getReservations() as $reservation) {
             $visitor = $reservation->getVisitor();
             $ticket = $reservation->getTicketPrice()->getTicket();
             $age = ((new \DateTime(null, new \DateTimeZone($order->getEvent()->getTimeZone())))->diff($visitor->getBirthDate()))->y;
-            $price = $visitor->getDiscount() ? 10 : $this->getPriceFromAge($age);
+            $price = $visitor->getDiscount() ? ($this->getPriceFromAge($age) ? 10 : 0) : $this->getPriceFromAge($age);
             $order->setTotalPrice($order->getTotalPrice() + $price);
             $price = $this->em->getRepository('QSBookingBundle:Price')->findOneByEur($price);
             $ticketPrice = $this->em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicketPrice($ticket, $price);
