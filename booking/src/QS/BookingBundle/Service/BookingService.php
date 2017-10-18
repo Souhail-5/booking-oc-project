@@ -3,16 +3,21 @@
 namespace QS\BookingBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use QS\BookingBundle\Service\PeriodService;
+use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\Order;
 use QS\BookingBundle\Entity\Price;
+use QS\BookingBundle\Entity\TicketPeriod;
 
 class BookingService
 {
     private $em;
+    private $periodService;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, PeriodService $periodService)
     {
         $this->em = $em;
+        $this->periodService = $periodService;
     }
 
     public function calcOrderPrice(Order $order)
@@ -34,5 +39,24 @@ class BookingService
         if ($age <= 12) return 8;
         if ($age < 60) return 16;
         return 12;
+    }
+
+    public function getAvailableTicketsByEventDate(Event $event, \DateTime $date)
+    {
+        $tickets = [];
+
+        foreach ($this->em->getRepository('QSBookingBundle:Ticket')->getAllByEvent($event) as $t) {
+            foreach ($t->getTicketPeriods() as $tp) {
+                if (
+                    ($tp->getAction() == TicketPeriod::ACTION_INCLUDE && !$this->periodService->isDateMatchPeriod($date, $tp->getPeriod()))
+                    || ($tp->getAction() == TicketPeriod::ACTION_EXCLUDE && $this->periodService->isDateMatchPeriod($date, $tp->getPeriod()))
+                ) {
+                    continue 2;
+                }
+            }
+            $tickets[] = $t;
+        }
+
+        return $tickets;
     }
 }
