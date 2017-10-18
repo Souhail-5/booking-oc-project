@@ -146,7 +146,7 @@
 
   & [data-toggle="datepicker-container"] {
     padding: 2rem;
-    border: 1px solid color(var(--light-gray) l(80%));
+    border: 1px solid color(var(--light-gray) l(95%));
   }
 
   & [data-toggle="datepicker-container"] > div {
