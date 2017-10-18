@@ -12,31 +12,33 @@ use QS\BookingBundle\Entity\Event;
  */
 class TicketRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getAllByIds($tickets)
+    public function getAllByIds(array $tickets)
     {
-        $qb = $this->createQueryBuilder('t');
+        $ids = [];
         foreach ($tickets as $ticket) {
-            $where = "t.id = '".$ticket->getId()."'";
-            $qb->orWhere($where);
+            $ids[] = $ticket->getId();
         }
-        return $qb
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id IN (:ids)')
+            ->setParameters([
+                'ids' => $ids,
+            ])
             ->getQuery()
             ->getResult()
         ;
     }
 
-    public function getAllByIdsEvent($tickets, Event $event)
+    public function getAllByIdsEvent(array $tickets, Event $event)
     {
-        $qb = $this->createQueryBuilder('t');
-        $where = [];
+        $ids = [];
         foreach ($tickets as $ticket) {
-            $where[] = "t.id = '".$ticket->getId()."'";
+            $ids[] = $ticket->getId();
         }
-        return $qb
-            ->andWhere(implode(' OR ', $where))
-            ->innerJoin('t.events', 'e', 'WITH', 'e = :event')
+        return $this->createQueryBuilder('t')
+            ->innerJoin('t.events', 'e', 'WITH', 'e = :event AND t.id IN (:ids)')
             ->setParameters([
                 'event' => $event,
+                'ids' => $ids,
             ])
             ->getQuery()
             ->getResult()
