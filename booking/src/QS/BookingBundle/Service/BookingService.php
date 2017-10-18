@@ -43,6 +43,13 @@ class BookingService
         return 12;
     }
 
+    public function isFullEvent(Event $event, \DateTime $date)
+    {
+        if ($this->em->getRepository('QSBookingBundle:Event')->getTotalQtyResvByEventDate($event, $date)
+            >= $event->getMaxResvDay()) return true;
+        return false;
+    }
+
     public function getAvailableTicketsByEventDate(Event $event, \DateTime $date)
     {
         $tickets = [];
