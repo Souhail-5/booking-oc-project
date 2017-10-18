@@ -17,6 +17,7 @@ $.fn.datepicker.setDefaults({
 
 function getTickets(date) {
   if (!window.location.href.match(guichetEventRegex)[1]) return false;
+  $('#qs_bookingbundle_order_tickets').empty();
   $.post("/billetterie/ajax", {
       eventSlug: window.location.href.match(guichetEventRegex)[1],
       date: moment(date).format('YYYY-MM-DD'),
