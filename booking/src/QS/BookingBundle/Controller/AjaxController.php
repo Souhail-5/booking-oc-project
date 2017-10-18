@@ -47,7 +47,7 @@ class AjaxController extends Controller
         $bookingService = $this->get('qs_booking.bookingService');
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
         $date = (new \Datetime(null, new \DateTimeZone($event->getTimeZone())))->modify($date);
-        if ($bookingService->isFullEvent($event, $date)) return new JsonResponse(0);
+        if ($bookingService->isFullEventDate($event, $date)) return new JsonResponse(0);
         $tickets = [];
         foreach ($bookingService->getAvailableTicketsByEventDate($event, $date) as $key => $ticket) {
             $tickets[$key]['id'] = $ticket->getId();

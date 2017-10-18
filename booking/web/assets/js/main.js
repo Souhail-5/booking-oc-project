@@ -85,11 +85,10 @@ function getTickets(date) {
       date: moment(date).format('YYYY-MM-DD'),
       action: 'getTickets'
     }, function( data ) {
-      console.log( data );
       $collectionHolder.children('.ticket').remove();
       $collectionHolder.children('.alert').addClass('hide');
       if (data == 0 || !data.length) $collectionHolder.children('.alert').removeClass('hide');
-      if (!data.length) $collectionHolder.children('.alert').html("La participation à cet évènement <b>ne requiert pas</b> de billet pour cette date.");
+      if ($.isArray(data) && !data.length) $collectionHolder.children('.alert').html("La participation à cet évènement ne requiert pas de billet pour cette date.");
       if (data === 0) $collectionHolder.children('.alert').html("Malheureusement tous les billets ont été vendus pour cette date. Merci de choisir une autre date si possible.");
       $(data).each(function (i, ticket) {
         addTicketForm($collectionHolder, ticket)

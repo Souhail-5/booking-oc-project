@@ -7,7 +7,7 @@ services:
     arguments: ["@doctrine.orm.entity_manager"]
   qs_booking.validator.bookOrder:
     class: QS\BookingBundle\Validator\Constraints\BookOrderValidator
-    arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@qs_booking.periodService"]
+    arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@qs_booking.bookingService", "@qs_booking.periodService"]
     tags:
       - { name: validator.constraint_validator, alias: qs_booking_bookOrder }
   qs_booking.validator.bookTicket:

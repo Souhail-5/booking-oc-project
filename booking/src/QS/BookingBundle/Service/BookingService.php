@@ -43,10 +43,13 @@ class BookingService
         return 12;
     }
 
-    public function isFullEvent(Event $event, \DateTime $date)
+    public function isFullEventDate(Event $event, \DateTime $date)
     {
-        if ($this->em->getRepository('QSBookingBundle:Event')->getTotalQtyResvByEventDate($event, $date)
-            >= $event->getMaxResvDay()) return true;
+        $totalQtyResv = $this->em->getRepository('QSBookingBundle:Order')->getTotalQtyResvByEventDateStatus($event, $date, [
+            Order::STATUS_PAID,
+            Order::STATUS_PENDING,
+        ]);
+        if ($totalQtyResv >= $event->getMaxResvDay()) return true;
         return false;
     }
 

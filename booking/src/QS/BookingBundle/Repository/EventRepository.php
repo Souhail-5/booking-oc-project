@@ -2,9 +2,6 @@
 
 namespace QS\BookingBundle\Repository;
 
-use QS\BookingBundle\Entity\Order;
-use QS\BookingBundle\Entity\Event;
-
 /**
  * EventRepository
  *
@@ -13,22 +10,4 @@ use QS\BookingBundle\Entity\Event;
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getTotalQtyResvByEventDate(Event $event, \DateTime $date)
-    {
-        $qb = $this->createQueryBuilder('e')
-            ->innerJoin('e.orders', 'o', 'WITH', 'o.status != :status AND o.eventDate = :date')
-            ->select('SUM(o.qtyResv) totalQtyResv')
-            ->addGroupBy('o.eventDate')
-            ->andHaving('totalQtyResv >= :maxResvDay')
-                ->setParameters([
-                    'status' => Order::STATUS_CANCELED,
-                    'date' => $date,
-                    'maxResvDay' => $event->getMaxResvDay(),
-                ])
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-
-        return $qb ? $qb['totalQtyResv'] : 0;
-    }
 }

@@ -2,6 +2,9 @@
 
 namespace QS\BookingBundle\Repository;
 
+use QS\BookingBundle\Entity\Order;
+use QS\BookingBundle\Entity\Event;
+
 /**
  * OrderRepository
  *
@@ -10,4 +13,20 @@ namespace QS\BookingBundle\Repository;
  */
 class OrderRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTotalQtyResvByEventDateStatus(Event $event, \DateTime $date, array $statuses)
+    {
+        $qb = $this->createQueryBuilder('o')
+            ->innerJoin('o.event', 'e', 'WITH', 'o.event = :event AND o.eventDate = :date AND o.status IN (:statuses)')
+            ->select('SUM(o.qtyResv) totalQtyResv')
+            ->addGroupBy('o.eventDate')
+                ->setParameters([
+                    'event' => $event,
+                    'date' => new \Datetime($date->format('Y-m-d'), new \DateTimeZone($event->getTimeZone())),
+                    'statuses' => $statuses,
+                ])
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+        return $qb ? $qb['totalQtyResv'] : 0;
+    }
 }
