@@ -18,7 +18,6 @@ class BookTicketValidator extends ConstraintValidator
     }
 
     public function validate($tickets, Constraint $constraint) {
-        // Are tickets exists, for this event ? and available for this date ?
         if ((count($this->em->getRepository('QSBookingBundle:Ticket')->getAllByIdsEvent($tickets, $constraint->order->getEvent()))
             != count($tickets))
             && $this->periodService->isDateMatchTickets($constraint->order->getEventDate(), $tickets)) {
