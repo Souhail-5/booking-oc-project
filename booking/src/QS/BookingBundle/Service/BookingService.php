@@ -8,6 +8,8 @@ use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\Order;
 use QS\BookingBundle\Entity\Price;
 use QS\BookingBundle\Entity\TicketPeriod;
+use QS\BookingBundle\Entity\Reservation;
+use Symfony\Component\Form;
 
 class BookingService
 {
@@ -58,5 +60,29 @@ class BookingService
         }
 
         return $tickets;
+    }
+
+    public function bookOrder(Form $form)
+    {
+        $order = $form->getData();
+
+        if ($this->periodService->isDateMatchTickets($order->getEventDate(), $form->get('tickets')->getData())) {
+            foreach ($form->get('tickets') as $ticket) {
+                $qty = $ticket->get('qty')->getData();
+                $order->setQtyResv($order->getQtyResv() + $qty);
+                $ticket = $this->em->getRepository('QSBookingBundle:Ticket')->find($ticket->getData()->getId());
+                $ticketPrice = $this->em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicket($ticket);
+                for ($i=0; $i < $qty; $i++) {
+                    $order->addReservation((new Reservation)->setTicketPrice($ticketPrice));
+                }
+            }
+
+            $this->em->persist($order);
+            $this->em->flush();
+
+            return true;
+        }
+
+        return false;
     }
 }

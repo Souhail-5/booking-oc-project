@@ -33,39 +33,19 @@ class BookingController extends Controller
     public function guichetAction(Request $request, $slug)
     {
         $em = $this->getDoctrine()->getManager();
+        $bookingService = $this->get('qs_booking.bookingService');
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
-
         $order = new Order;
         $order->setEvent($event);
-        $order->setEventDate(new \DateTime(null, new \DateTimeZone($event->getTimeZone())));
         $order->setStatus(Order::STATUS_PENDING);
         $form = $this->createForm(OrderGuichetType::class, $order);
         $form->handleRequest($request);
-
         $isTicketsAvailable = false;
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $periodService = $this->get('qs_booking.periodService');
-            $isTicketsAvailable = $periodService->isDateMatchTickets($order->getEventDate(), $form->get('tickets')->getData());
-
-            if ($isTicketsAvailable) {
-                foreach ($form->get('tickets') as $ticket) {
-                    $qty = $ticket->get('qty')->getData();
-                    $order->setQtyResv($order->getQtyResv() + $qty);
-                    $ticket = $em->getRepository('QSBookingBundle:Ticket')->find($ticket->getData()->getId());
-                    $ticketPrice = $em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicket($ticket);
-                    for ($i=0; $i < $qty; $i++) {
-                        $order->addReservation((new Reservation)->setTicketPrice($ticketPrice));
-                    }
-                }
-                $em->persist($order);
-                $em->flush();
-                return $this->redirectToRoute('qs_booking_information', [
-                    'orderId' => $order->getId(),
-                ]);
-            }
+        if ($form->isSubmitted() && $form->isValid() && $bookingService->bookOrder($form)) {
+            return $this->redirectToRoute('qs_booking_information', [
+                'orderId' => $order->getId(),
+            ]);
         }
-
         return $this->render('QSBookingBundle:Booking:guichet.html.twig', [
             'event' => $event,
             'form' => $form->createView(),

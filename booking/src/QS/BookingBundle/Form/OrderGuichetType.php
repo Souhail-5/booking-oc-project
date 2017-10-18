@@ -33,6 +33,7 @@ class OrderGuichetType extends AbstractType
                     'format' => 'yyyy-MM-dd',
                     'class' => 'hide',
                 ],
+                'data' => new \DateTime(null, new \DateTimeZone($order->getEvent()->getTimeZone())),
                 'model_timezone' => $order->getEvent()->getTimeZone(),
                 'view_timezone' => $order->getEvent()->getTimeZone(),
                 'invalid_message' => "La date fournie \"{{ value }}\" n'est pas au bon format et n'a pas pu être évaluée.",
