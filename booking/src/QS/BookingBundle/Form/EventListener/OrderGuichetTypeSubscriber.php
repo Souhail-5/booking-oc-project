@@ -26,7 +26,7 @@ class OrderGuichetTypeSubscriber implements EventSubscriberInterface
 
         foreach ($form->get('tickets') as $ticket) {
             $order->setQtyResv($order->getQtyResv() + $ticket->get('qty')->getData());
-            if ($order->getQtyResv() <= 0 || $order->getQtyResv() >= 20) $form->addError(new FormError('Le nombre total de billet doit être compris entre 1 et 20.'));
         }
+        if ($form->get('tickets') && ($order->getQtyResv() <= 0 || $order->getQtyResv() >= 20)) $form->addError(new FormError('Le nombre total de billet doit être compris entre 1 et 20.'));
     }
 }
