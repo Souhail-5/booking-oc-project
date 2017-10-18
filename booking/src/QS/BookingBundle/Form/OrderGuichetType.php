@@ -23,7 +23,7 @@ class OrderGuichetType extends AbstractType
                 'error_bubbling' => true,
                 'attr' => [
                     'placeholder' => 'email@lorem.com',
-                ]
+                ],
             ])
             ->add('eventDate', FT\DateType::class, [
                 'widget' => 'single_text',

@@ -21,9 +21,7 @@ class OrderGuichetTypeSubscriber implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $order = $event->getData();
-
         if (null === $order) return;
-
         foreach ($form->get('tickets') as $ticket) {
             $order->setQtyResv($order->getQtyResv() + $ticket->get('qty')->getData());
         }
