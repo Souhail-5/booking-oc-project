@@ -40,7 +40,6 @@ class BookingController extends Controller
         $order->setStatus(Order::STATUS_PENDING);
         $form = $this->createForm(OrderGuichetType::class, $order);
         $form->handleRequest($request);
-        $isTicketsAvailable = false;
         if ($form->isSubmitted() && $form->isValid()) {
             $bookingService->bookOrder($form);
             return $this->redirectToRoute('qs_booking_information', [
@@ -50,7 +49,6 @@ class BookingController extends Controller
         return $this->render('QSBookingBundle:Booking:guichet.html.twig', [
             'event' => $event,
             'form' => $form->createView(),
-            'isTicketsAvailable' => $isTicketsAvailable,
         ]);
     }
 
