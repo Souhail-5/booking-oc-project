@@ -13,7 +13,7 @@ use QS\BookingBundle\Entity\Event;
  */
 class OrderRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getTotalQtyResvByEventDateStatus(Event $event, \DateTime $date, array $statuses)
+    public function getTotalQtyResvByEventDateStatuses(Event $event, \DateTime $date, array $statuses)
     {
         $qb = $this->createQueryBuilder('o')
             ->innerJoin('o.event', 'e', 'WITH', 'o.event = :event AND o.eventDate = :date AND o.status IN (:statuses)')

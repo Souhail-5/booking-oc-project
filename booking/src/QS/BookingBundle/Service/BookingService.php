@@ -45,7 +45,7 @@ class BookingService
 
     public function isFullEventDate(Event $event, \DateTime $date)
     {
-        $totalQtyResv = $this->em->getRepository('QSBookingBundle:Order')->getTotalQtyResvByEventDateStatus($event, $date, [
+        $totalQtyResv = $this->em->getRepository('QSBookingBundle:Order')->getTotalQtyResvByEventDateStatuses($event, $date, [
             Order::STATUS_PAID,
             Order::STATUS_PENDING,
         ]);
