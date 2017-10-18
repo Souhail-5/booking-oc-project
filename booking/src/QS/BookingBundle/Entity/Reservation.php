@@ -3,6 +3,7 @@
 namespace QS\BookingBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reservation
@@ -34,6 +35,7 @@ class Reservation
 
     /**
      * @ORM\OneToOne(targetEntity="QS\BookingBundle\Entity\Visitor", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $visitor;
 

@@ -1,8 +1,7 @@
 {% form_theme form _self %}
 {% if form_errors(form) %}
     <div class="form-errors">
-        <p><span class="font-900">ATTENTION !</span> Veuillez vérifier que le formulaire a été correctement renseigné :</p>
-        {{ form_errors(form) }}
+        <p><span class="font-900">ATTENTION !</span> Veuillez vérifier que tous les champs du formulaire ont été correctement renseignés.</p>
     </div>
 {% endif %}
 {{ form_start(form, {'attr': {'id': 'information-wrap'}}) }}

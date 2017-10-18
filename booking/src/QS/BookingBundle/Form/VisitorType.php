@@ -19,13 +19,15 @@ class VisitorType extends AbstractType
                 'label' => 'Nom',
                 'attr' => [
                     'placeholder' => 'Nom du visiteur',
-                ]
+                ],
+                'error_bubbling' => true,
             ])
             ->add('firstName', FT\TextType::class, [
                 'label' => 'Prénom',
                 'attr' => [
                     'placeholder' => 'Prénom du visiteur',
-                ]
+                ],
+                'error_bubbling' => true,
             ])
             ->add('birthDate', FT\BirthdayType::class, [
                 'label' => 'Date de naissance',
@@ -35,17 +37,20 @@ class VisitorType extends AbstractType
                     'day' => 'Jour',
                 ],
                 'format' => 'yyyy MM dd',
+                'error_bubbling' => true,
             ])
             ->add('country', FT\ChoiceType::class , [
                 'label' => 'Pays de résidence',
                 'choices' => [
                     'France' => 'france',
                     'Autre' => 'other',
-                ]
+                ],
+                'error_bubbling' => true,
             ])
             ->add('discount', FT\CheckboxType::class, [
                 'label' => 'Tarif réduit ?',
-                'required' => false
+                'required' => false,
+                'error_bubbling' => true,
             ])
         ;
     }
