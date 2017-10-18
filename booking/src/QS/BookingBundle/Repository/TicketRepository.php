@@ -25,6 +25,24 @@ class TicketRepository extends \Doctrine\ORM\EntityRepository
         ;
     }
 
+    public function getAllByIdsEvent($tickets, Event $event)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $where = [];
+        foreach ($tickets as $ticket) {
+            $where[] = "t.id = '".$ticket->getId()."'";
+        }
+        return $qb
+            ->andWhere(implode(' OR ', $where))
+            ->innerJoin('t.events', 'e', 'WITH', 'e = :event')
+            ->setParameters([
+                'event' => $event,
+            ])
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function getAllByEvent(Event $event)
     {
         return $this->createQueryBuilder('t')

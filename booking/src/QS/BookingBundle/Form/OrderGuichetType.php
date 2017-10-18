@@ -46,7 +46,9 @@ class OrderGuichetType extends AbstractType
                 'mapped' => false,
                 'label' => false,
                 'constraints' => [
-                    new BookTicket(),
+                    new BookTicket([
+                        'order' => $order,
+                    ]),
                 ],
                 'error_bubbling' => true,
             ])

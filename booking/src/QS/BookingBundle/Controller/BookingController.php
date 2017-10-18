@@ -41,7 +41,8 @@ class BookingController extends Controller
         $form = $this->createForm(OrderGuichetType::class, $order);
         $form->handleRequest($request);
         $isTicketsAvailable = false;
-        if ($form->isSubmitted() && $form->isValid() && $bookingService->bookOrder($form)) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bookingService->bookOrder($form);
             return $this->redirectToRoute('qs_booking_information', [
                 'orderId' => $order->getId(),
             ]);

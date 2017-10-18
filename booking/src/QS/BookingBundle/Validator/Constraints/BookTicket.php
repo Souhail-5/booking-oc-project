@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraint;
 class BookTicket extends Constraint
 {
     public $message = "Vos billets n'ont pas pu être commandés. Veuillez réessayer.";
+    public $order;
 
     public function validatedBy()
     {
@@ -19,5 +20,10 @@ class BookTicket extends Constraint
     public function getTargets()
     {
         return self::CLASS_CONSTRAINT;
+    }
+
+    public function getRequiredOptions()
+    {
+        return ['order'];
     }
 }
