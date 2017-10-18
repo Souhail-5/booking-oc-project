@@ -52,9 +52,17 @@ class Visitor
     /**
      * @var boolean
      *
-     * @ORM\Column(name="discount", type="boolean", options={"default" : 0})
+     * @ORM\Column(name="discount", type="boolean")
      */
-    private $discount = false;
+    private $discount;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->discount = false;
+    }
 
 
     /**
