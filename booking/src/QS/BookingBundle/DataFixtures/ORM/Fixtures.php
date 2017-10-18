@@ -180,7 +180,25 @@ class Fixtures extends Fixture
 
         // create orders
         $orders = [];
-        for ($i=0; $i < 10; $i++) {
+        for ($i=0; $i < 5; $i++) {
+            $orders[] = new Order;
+            $orders[$i]->setEventDate(new \Datetime('2017-10-26'));
+            $orders[$i]->setQtyResv(100);
+            $orders[$i]->setStatus(0);
+            $orders[$i]->setEvent($event);
+            $manager->persist($orders[$i]);
+        }
+
+        for ($i=5; $i < 10; $i++) {
+            $orders[] = new Order;
+            $orders[$i]->setEventDate(new \Datetime('2017-10-26'));
+            $orders[$i]->setQtyResv(100);
+            $orders[$i]->setStatus(1);
+            $orders[$i]->setEvent($event);
+            $manager->persist($orders[$i]);
+        }
+
+        for ($i=10; $i < 15; $i++) {
             $orders[] = new Order;
             $orders[$i]->setEventDate(new \Datetime('2017-10-26'));
             $orders[$i]->setQtyResv(100);
@@ -189,7 +207,7 @@ class Fixtures extends Fixture
             $manager->persist($orders[$i]);
         }
 
-        for ($i=10; $i < 16; $i++) {
+        for ($i=15; $i < 20; $i++) {
             $orders[] = new Order;
             $date = new \Datetime('2017-11-11');
             $orders[$i]->setEventDate($date);
