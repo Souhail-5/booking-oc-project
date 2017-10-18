@@ -41,12 +41,13 @@ class AjaxController extends Controller
     public function getTicketsAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
         $date = $request->request->get('date');
         $slug = $request->request->get('eventSlug');
         $bookingService = $this->get('qs_booking.bookingService');
+        $periodService = $this->get('qs_booking.periodService');
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
         $date = (new \Datetime(null, new \DateTimeZone($event->getTimeZone())))->modify($date);
+        if (!$periodService->isDateMatchEvent($date, $event)) return new JsonResponse(false);
         if ($bookingService->isFullEventDate($event, $date)) return new JsonResponse(0);
         $tickets = [];
         foreach ($bookingService->getAvailableTicketsByEventDate($event, $date) as $key => $ticket) {

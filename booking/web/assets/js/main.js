@@ -87,9 +87,10 @@ function getTickets(date) {
     }, function( data ) {
       $collectionHolder.children('.ticket').remove();
       $collectionHolder.children('.alert').addClass('hide');
-      if (data == 0 || !data.length) $collectionHolder.children('.alert').removeClass('hide');
-      if ($.isArray(data) && !data.length) $collectionHolder.children('.alert').html("La participation à cet évènement ne requiert pas de billet pour cette date.");
+      if (data == 0 || ($.isArray(data) && !data.length)) $collectionHolder.children('.alert').removeClass('hide');
+      if (data === false) $collectionHolder.children('.alert').html("Cet évènement n'a pas lieu à la date sélectionnée, merci de choisir une autre date.");
       if (data === 0) $collectionHolder.children('.alert').html("Malheureusement tous les billets ont été vendus pour cette date. Merci de choisir une autre date si possible.");
+      if ($.isArray(data) && !data.length) $collectionHolder.children('.alert').html("La participation à cet évènement ne requiert pas de billet pour cette date.");
       $(data).each(function (i, ticket) {
         addTicketForm($collectionHolder, ticket)
       });
