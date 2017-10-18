@@ -34,7 +34,7 @@ class VisitorType extends AbstractType
                     'month' => 'Mois',
                     'day' => 'Jour',
                 ],
-                'format' => 'dd MM yyyy',
+                'format' => 'yyyy MM dd',
             ])
             ->add('country', FT\ChoiceType::class , [
                 'label' => 'Pays de résidence',
