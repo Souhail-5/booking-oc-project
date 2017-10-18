@@ -12,16 +12,17 @@ use QS\BookingBundle\Entity\Event;
  */
 class TicketRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function areExists($tickets)
+    public function getAllByIds($tickets)
     {
-        $qb = $this->createQueryBuilder('t')->select('COUNT(t)');
+        $qb = $this->createQueryBuilder('t');
         foreach ($tickets as $ticket) {
-            $test = "t.id = '".$ticket->getId()."'";
-            $qb->orWhere($test);
+            $where = "t.id = '".$ticket->getId()."'";
+            $qb->orWhere($where);
         }
-        $r = $qb->getQuery()->getSingleScalarResult();
-
-        return count($tickets) == $r;
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     public function getAllByEvent(Event $event)

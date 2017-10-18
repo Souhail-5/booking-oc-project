@@ -15,7 +15,7 @@ class BookTicketValidator extends ConstraintValidator
     }
 
     public function validate($tickets, Constraint $constraint) {
-        if (!$this->em->getRepository('QSBookingBundle:Ticket')->areExists($tickets)) {
+        if (count($this->em->getRepository('QSBookingBundle:Ticket')->getAllByIds($tickets)) != count($tickets)) {
             $this->context
                 ->buildViolation($constraint->message)
                 ->addViolation()
