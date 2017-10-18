@@ -19,6 +19,11 @@ var $collectionHolder;
 $(document).ready(function() {
   $collectionHolder = $('#guichet-tickets');
   $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
+  $('[data-toggle="datepicker"]').datepicker({
+    inline: true,
+    container: $('[data-toggle="datepicker-container"]'),
+    startDate: new Date()
+  });
   // $.post( "/billetterie/ajax/event/visite-musee-louvre/unavailability", function( unavailableEventPeriods ) {
   //   $('[data-toggle="datepicker"]').datepicker({
   //     inline: true,
@@ -51,9 +56,9 @@ $(document).ready(function() {
   //       return r;
   //     }
   //   });
-  //   $initialDate = $('[data-toggle="datepicker"]').datepicker('getDate');
-  //   getTickets($initialDate);
   // });
+  $initialDate = $('[data-toggle="datepicker"]').datepicker('getDate');
+  getTickets($initialDate);
 
   $(':submit.stripe-checkout').on('click', function(event) {
       event.preventDefault();
@@ -92,6 +97,7 @@ function addTicketForm($collectionHolder, ticket) {
     $collectionHolder.data('index', index + 1);
 
     $newForm.addClass('ticket');
+    $newForm.prepend('<p class="font-095 meta-color">'+ ticket.description +'.</p>');
     $newForm.prepend('<h4 class="font-700">Billet '+ ticket.name +'</h4>');
     $newForm.children('#qs_bookingbundle_order_tickets_'+ index +'_id').val(ticket.id)
     $newForm.appendTo($collectionHolder);

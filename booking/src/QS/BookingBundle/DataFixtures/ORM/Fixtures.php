@@ -130,6 +130,7 @@ class Fixtures extends Fixture
         // Add journée ticket
         $ticket1 = new Ticket;
         $ticket1->setName('journée');
+        $ticket1->setDescription('Ce billet vous permettra de visiter le Musée du Louvre toute la journée');
         $manager->persist($ticket1);
         $event->addTicket($ticket1);
 
@@ -155,6 +156,7 @@ class Fixtures extends Fixture
         // Add demi-journée ticket
         $ticket2 = new Ticket;
         $ticket2->setName('demi-journée');
+        $ticket2->setDescription('Ce billet vous permettra de visiter le Musée du Louvre à partir de 14h00');
         $manager->persist($ticket2);
         $event->addTicket($ticket2);
 

@@ -29,6 +29,13 @@ class Ticket
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
      * @ORM\OneToMany(targetEntity="QS\BookingBundle\Entity\TicketPeriod", mappedBy="ticket")
      */
     private $ticketPeriods;
@@ -95,6 +102,30 @@ class Ticket
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Tickets
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**

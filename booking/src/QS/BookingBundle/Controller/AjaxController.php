@@ -53,6 +53,7 @@ class AjaxController extends Controller
         foreach ($availableTickets as $key => $ticket) {
             $tickets[$key]['id'] = $ticket->getId();
             $tickets[$key]['name'] = $ticket->getName();
+            $tickets[$key]['description'] = $ticket->getDescription();
         }
 
         return new JsonResponse($tickets);
