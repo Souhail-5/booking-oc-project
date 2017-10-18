@@ -1,7 +1,10 @@
 {% form_theme form _self %}
-<div class="information-errors">
-    {{ form_errors(form) }} <br>
-</div>
+{% if form_errors(form) %}
+    <div class="form-errors">
+        <p><span class="font-900">ATTENTION !</span> Veuillez vérifier que le formulaire a été correctement renseigné :</p>
+        {{ form_errors(form) }}
+    </div>
+{% endif %}
 {{ form_start(form, {'attr': {'id': 'information-wrap'}}) }}
         {% for reservation in form.reservations %}
             {% set reservationNbr = loop.index %}

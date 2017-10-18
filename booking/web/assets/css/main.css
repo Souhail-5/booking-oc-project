@@ -121,6 +121,13 @@
   }
 }
 
+.form-errors {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background-color: var(--secondary-color);
+}
+
 #guichet-wrap {
   display: grid;
   grid-template-columns: auto 1fr;
