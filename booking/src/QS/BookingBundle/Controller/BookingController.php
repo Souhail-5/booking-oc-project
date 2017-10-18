@@ -5,7 +5,6 @@ namespace QS\BookingBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\FormError;
-use Stripe;
 use QS\BookingBundle\Entity\Event;
 use QS\BookingBundle\Entity\Period;
 use QS\BookingBundle\Entity\Ticket;
@@ -79,37 +78,21 @@ class BookingController extends Controller
     public function checkoutAction(Request $request, $orderId)
     {
         $em = $this->getDoctrine()->getManager();
-
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
         $bookingService = $this->get('qs_booking.bookingService');
         $bookingService->calcOrderPrice($order);
-
+        if ($request->isMethod('POST')) {
+            if (!$bookingService->stripeCheckout($order, $request->request->get('stripeToken'))) {
+                $request->getSession()->getFlashBag()->add('stripe', "Une erreur est surevenue et le paiement n'a pas pû être enregistré. Merci de réessayer.");
+            } else {
+                $order->setStatus(Order::STATUS_PAID);
+                return $this->redirectToRoute('qs_booking_confirmation', [
+                    'orderId' => $order->getId(),
+                ]);
+            }
+        }
         $em->persist($order);
         $em->flush();
-
-        if ($request->isMethod('POST')) {
-            $stripe = array(
-              "secret_key"      => "sk_test_Ykxr69WDKpbHjWWq4v6Zw8Lm",
-              "publishable_key" => "pk_test_fdVRc4edwV2ceJjan6KzQFQT"
-            );
-            Stripe\Stripe::setApiKey($stripe['secret_key']);
-
-            $token  = $request->request->get('stripeToken');
-            $customer = Stripe\Customer::create(array(
-                'email' => $order->getEmail(),
-                'source'  => $token
-            ));
-            $charge = Stripe\Charge::create(array(
-                'customer' => $customer->id,
-                'amount'   => $order->getTotalPrice() * 100,
-                'currency' => 'eur'
-            ));
-
-            return $this->redirectToRoute('qs_booking_confirmation', [
-                'orderId' => $order->getId(),
-            ]);
-        }
-
         return $this->render('QSBookingBundle:Booking:checkout.html.twig', [
             'event' => $order->getEvent(),
             'order' => $order,

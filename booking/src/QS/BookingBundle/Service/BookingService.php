@@ -10,6 +10,7 @@ use QS\BookingBundle\Entity\Price;
 use QS\BookingBundle\Entity\TicketPeriod;
 use QS\BookingBundle\Entity\Reservation;
 use Symfony\Component\Form\Form;
+use Stripe;
 
 class BookingService
 {
@@ -90,5 +91,28 @@ class BookingService
 
         $this->em->persist($order);
         $this->em->flush();
+    }
+
+    public function stripeCheckout(Order $order, $token)
+    {
+        try {
+            $stripe = array(
+              "secret_key"      => "sk_test_Ykxr69WDKpbHjWWq4v6Zw8Lm",
+              "publishable_key" => "pk_test_fdVRc4edwV2ceJjan6KzQFQT"
+            );
+            Stripe\Stripe::setApiKey($stripe['secret_key']);
+            $customer = Stripe\Customer::create([
+                'email' => $order->getEmail(),
+                'source'  => $token,
+            ]);
+            Stripe\Charge::create([
+                'customer' => $customer->id,
+                'amount'   => $order->getTotalPrice() * 100,
+                'currency' => 'eur',
+            ]);
+            return true;
+        } catch(Stripe\Error\Card $e) {
+            return false;
+        }
     }
 }

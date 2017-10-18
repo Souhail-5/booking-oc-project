@@ -6,6 +6,11 @@
 {% block qsbookingTitle %}{{ event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Vos coordonnées de paiement</h3>
+    {% for message in app.session.flashbag.get('stripe') %}
+        <div class="form-errors">
+                <p><span class="font-900">ATTENTION !</span> {{ message }}</p>
+        </div>
+    {% endfor %}
     <form method="POST" id="checkout-wrap">
         {% for reservation in reservations %}
             <div class="reservation">
