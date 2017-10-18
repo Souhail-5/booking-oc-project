@@ -19,7 +19,9 @@ class TicketType extends AbstractType
             ->add('qty', FT\ChoiceType::class, [
                 'choices' => range(0, 10),
                 'mapped' => false,
-                'label' => 'Quantité'
+                'label' => false,
+                'placeholder' => 'Quantité',
+                'data' => 0,
             ])
         ;
     }
