@@ -152,7 +152,7 @@
 }
 
 .breadcrumb {
-  display: flex;
+  display: none;
   justify-content: space-around;
   border: 1px solid color(var(--light-gray) l(90%));
   border-radius: 100px;
@@ -169,6 +169,10 @@
       background-color: var(--primary-color);
     }
   }
+
+  @media (--tablet) {
+    display: flex;
+  }
 }
 
 .form-errors {
@@ -179,19 +183,28 @@
 }
 
 #guichet-wrap {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
+  display: block;
   margin-top: 3rem;
   margin-bottom: 3rem;
+
+  & + .text-right {
+    text-align: center;
+  }
+
+  @media (--tablet) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+
+    & + .text-right {
+      text-align: right;
+    }
+  }
 }
 
 #guichet-date {
   grid-column: 1 / 2;
   grid-row: 1 / 3;
-  margin-right: 2rem;
-  padding-right: 2rem;
-  border-right: 1px solid color(var(--light-gray) l(95%));
   background-color: #fff;
 
   & [data-toggle="datepicker-container"] {
@@ -231,16 +244,24 @@
       text-decoration: line-through;
     }
   }
+
+  @media (--tablet) {
+    margin-right: 2rem;
+    padding-right: 2rem;
+    border-right: 1px solid color(var(--light-gray) l(95%));
+  }
 }
 
 #guichet-tickets {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
-  display: flex;
+  display: block;
   align-content: flex-start;
   flex-wrap: wrap;
   margin-bottom: 2rem;
-  padding-bottom: 2rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid color(var(--light-gray) l(95%));
   border-bottom: 1px solid color(var(--light-gray) l(95%));
 
   & * {
@@ -255,14 +276,24 @@
     padding-left: 1rem;
     border: 1px solid color(var(--light-gray) l(95%));
 
-    &:nth-child(odd) {
-      margin-right: 2rem;
-    }
+    @media (--tablet) {
+      &:nth-child(odd) {
+        margin-right: 2rem;
+      }
 
-    &:last-child,
-    &:nth-last-child(2) {
-      margin-bottom: 0;
+      &:last-child,
+      &:nth-last-child(2) {
+        margin-bottom: 0;
+      }
     }
+  }
+
+  @media (--tablet) {
+    display: flex;
+    margin-top: none;
+    padding-top: none;
+    padding-bottom: 2rem;
+    border-top: none;
   }
 }
 
