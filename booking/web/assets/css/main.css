@@ -182,6 +182,11 @@
   background-color: var(--secondary-color);
 }
 
+#event-wrap .event {
+  padding: 2rem;
+  border: 1px solid color(var(--light-gray) l(95%));
+}
+
 #guichet-wrap {
   display: block;
   margin-top: 3rem;
