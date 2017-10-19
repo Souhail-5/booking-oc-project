@@ -21,6 +21,7 @@ class Fixtures extends Fixture
         $event = new Event;
         $event->setSlug('visite-musee-louvre');
         $event->setName('Visite du Musée du Louvre');
+        $event->setDescription('Visitez le musée des musées. Ancien palais des rois, le Louvre épouse l’histoire de France depuis huit siècles. Conçu dès sa création en 1793 comme un musée universel, ses collections, qui figurent parmi les plus belles au monde, couvrent plusieurs millénaires et un territoire qui s’étend de l’Amérique aux frontières de l’Asie.');
         $event->setMaxResvDay(1000);
         $event->setTimeZone('Europe/Paris');
         $manager->persist($event);
