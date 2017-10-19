@@ -1,0 +1,26 @@
+<h1>Musée du Louvre</h1>
+<img src="{{ absolute_url(asset('assets/images/logo-louvre.jpg')) }}">
+
+<h2>Merci !</h2>
+
+<p>Votre commande pour "{{ order.event.name }}" a bien été validée et payée.</p>
+
+<h4>Informations importantes</h4>
+<ul>
+    <li>Date de votre réservation : {{ order.eventDate|date('d/m/Y') }}</li>
+    <li>Total payé : {{ order.totalPrice|number_format(2, ',') }}€</li>
+    <li>Numéro de commande : {{ order.id }}</li>
+</ul>
+<hr>
+<h4>Récapitulatif de votre commande</h4>
+{% for reservation in order.reservations %}
+    <div style="border: 1px solid #eee; padding-left: 20px;">
+        <h4><span>Billet #{{ loop.index }} - </span><span>Billet {{ reservation.ticketPrice.ticket.name }}</span></h4>
+        <div>
+            <p>Au nom de {{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }} et au tarif {{ reservation.ticketPrice.price.name }} de {{ reservation.ticketPrice.price.eur|number_format(2, ',') }} €</p>
+        </div>
+    </div>
+{% endfor %}
+<p>
+    <a href="{{ url('qs_booking_home') }}">À bientôt !</a>
+</p>

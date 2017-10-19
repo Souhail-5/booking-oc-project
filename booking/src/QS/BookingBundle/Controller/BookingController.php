@@ -103,20 +103,16 @@ class BookingController extends Controller
     public function confirmationAction(Request $request, $orderId)
     {
         $em = $this->getDoctrine()->getManager();
-
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
-
-        $message = (new \Swift_Message('Hello Email'))
+        $message = (new \Swift_Message('Musée du Louvre - Confirmation de commande'))
             ->setFrom('contact@qanops.com')
             ->setTo($order->getEmail())
             ->setBody(
-                'TEST',
+                $this->renderView('QSBookingBundle:Booking:Emails/order-confirmation.html.twig',['order' => $order]),
                 'text/html'
             )
         ;
-
         $this->get('mailer')->send($message);
-
         return $this->render('QSBookingBundle:Booking:confirmation.html.twig', [
             'event' => $order->getEvent(),
             'order' => $order,
