@@ -295,8 +295,8 @@
 
   @media (--tablet) {
     display: flex;
-    margin-top: none;
-    padding-top: none;
+    margin-top: 0;
+    padding-top: 0;
     padding-bottom: 2rem;
     border-top: none;
   }
