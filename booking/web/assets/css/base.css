@@ -6,15 +6,22 @@
   --light-gray: #888;
 }
 
+@custom-media --phone (min-width: 544px);
+@custom-media --tablet (min-width: 768px);
+@custom-media --desktop (min-width: 992px);
+@custom-media --large-desktop (min-width: 1200px);
+
 * {
   box-sizing: border-box;
 }
 
 html {
   height: 100%;
+  overflow: auto;
 }
 
 body {
+  overflow: auto;
   min-height: 100%;
   display: grid;
   grid-template-columns: 1fr;
@@ -47,8 +54,15 @@ li {
 }
 
 .boxed {
-  width: 980px;
+  width: 100%;
   margin: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
+
+  @media (--desktop) {
+    width: 980px;
+    padding: 0;
+  }
 }
 
 .display-i {
