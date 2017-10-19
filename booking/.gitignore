@@ -16,6 +16,7 @@
 /vendor/
 /web/bundles/
 /web/build
+/web/test-coverage
 
 ### Node ###
 # Logs
