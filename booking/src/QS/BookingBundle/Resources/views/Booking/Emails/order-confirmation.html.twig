@@ -17,7 +17,7 @@
     <div style="border: 1px solid #eee; padding-left: 20px;">
         <h4><span>Billet #{{ loop.index }} - </span><span>Billet {{ reservation.ticketPrice.ticket.name }}</span></h4>
         <div>
-            <p>Au nom de {{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }} et au tarif {{ reservation.ticketPrice.price.name }} de {{ reservation.ticketPrice.price.eur|number_format(2, ',') }} €</p>
+            <p>Au nom de {{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }} et au tarif {{ reservation.ticketPrice.price.name }} de {{ reservation.ticketPrice.price.eur|number_format(2, ',') }}€</p>
         </div>
     </div>
 {% endfor %}

@@ -59,7 +59,6 @@ class BookingService
     public function getAvailableTicketsByEventDate(Event $event, \DateTime $date)
     {
         $tickets = [];
-
         foreach ($this->em->getRepository('QSBookingBundle:Ticket')->getAllByEvent($event) as $t) {
             foreach ($t->getTicketPeriods() as $tp) {
                 if (
@@ -71,14 +70,12 @@ class BookingService
             }
             $tickets[] = $t;
         }
-
         return $tickets;
     }
 
     public function bookOrder(Form $form)
     {
         $order = $form->getData();
-
         foreach ($form->get('tickets') as $ticket) {
             $qty = $ticket->get('qty')->getData();
             $order->setQtyResv($order->getQtyResv() + $qty);
@@ -88,7 +85,6 @@ class BookingService
                 $order->addReservation((new Reservation)->setTicketPrice($ticketPrice));
             }
         }
-
         $this->em->persist($order);
         $this->em->flush();
     }

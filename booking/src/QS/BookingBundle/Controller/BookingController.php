@@ -54,12 +54,9 @@ class BookingController extends Controller
     public function informationAction(Request $request, $orderId)
     {
         $em = $this->getDoctrine()->getManager();
-
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
-
         $form = $this->createForm(OrderInformationType::class, $order);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($order);
             $em->flush();
@@ -68,7 +65,6 @@ class BookingController extends Controller
                 'orderId' => $order->getId(),
             ]);
         }
-
         return $this->render('QSBookingBundle:Booking:information.html.twig', [
             'event' => $order->getEvent(),
             'form' => $form->createView(),

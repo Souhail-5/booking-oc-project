@@ -16,13 +16,13 @@
             <div class="reservation">
                 <h4><span class="primary-color font-900">Réservation {{ loop.index }} - </span><span class="primary-color">Billet {{ reservation.ticketPrice.ticket.name }}</span></h4>
                 <div class="information-reservation">
-                    <p>Au nom de {{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }} et au tarif {{ reservation.ticketPrice.price.name }} de {{ reservation.ticketPrice.price.eur|number_format(2, ',') }} €</p>
+                    <p>Au nom de {{ reservation.visitor.firstName }} {{ reservation.visitor.lastName }} et au tarif {{ reservation.ticketPrice.price.name }} de {{ reservation.ticketPrice.price.eur|number_format(2, ',') }}€</p>
                 </div>
             </div>
         {% endfor %}
     </form>
     <div class="text-right">
-        <span>Total à payer : {{ order.totalPrice|number_format(2, ',') }} €</span>
+        <span>Total à payer : {{ order.totalPrice|number_format(2, ',') }}€</span>
         <button
             data-key="pk_test_fdVRc4edwV2ceJjan6KzQFQT"
             data-amount="{{ order.totalPrice * 100 }}"
