@@ -16,11 +16,15 @@ class BookingService
 {
     private $em;
     private $periodService;
+    private $stripePKey;
+    private $stripeSKey;
 
-    public function __construct(EntityManager $em, PeriodService $periodService)
+    public function __construct(EntityManager $em, PeriodService $periodService, $stripePKey, $stripeSKey)
     {
         $this->em = $em;
         $this->periodService = $periodService;
+        $this->stripePKey = $stripePKey;
+        $this->stripeSKey = $stripeSKey;
     }
 
     public function calcOrderPrice(Order $order)
@@ -92,11 +96,7 @@ class BookingService
     public function stripeCheckout(Order $order, $token)
     {
         try {
-            $stripe = array(
-              "secret_key"      => "sk_test_Ykxr69WDKpbHjWWq4v6Zw8Lm",
-              "publishable_key" => "pk_test_fdVRc4edwV2ceJjan6KzQFQT"
-            );
-            Stripe\Stripe::setApiKey($stripe['secret_key']);
+            Stripe\Stripe::setApiKey($this->stripeSKey);
             $customer = Stripe\Customer::create([
                 'email' => $order->getEmail(),
                 'source'  => $token,
