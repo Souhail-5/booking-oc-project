@@ -1,0 +1,15 @@
+{% extends '::layout.html.twig' %}
+
+{% block pageTitle %}Oups - {{ parent() }}{% endblock %}
+
+{% block mainContent %}
+    <div class="text-center">
+        <h1>Page non trouvée :/</h1>
+        <h2>Oups ! Une erreur est survenue.</h2>
+
+        <div>
+          <p>Vous êtes ici car vous avez demandé une page qui n'existe plus, ou pas du tout.</p>
+          <p><a href="{{ path('qs_booking_home') }}">Revenir à l'accueil</a></p>
+        </div>
+    </div>
+{% endblock %}
