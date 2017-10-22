@@ -1,3 +1,7 @@
+qs_core:
+    resource: "@QSCoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
 qs_booking:
     resource: "@QSBookingBundle/Resources/config/routing.yml"
     prefix:   /billetterie

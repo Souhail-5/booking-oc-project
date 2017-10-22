@@ -1,4 +1,4 @@
-{% extends '::layout.html.twig' %}
+{% extends 'QSCoreBundle::layout.html.twig' %}
 
 {% block pageTitle %}Oups - {{ parent() }}{% endblock %}
 
@@ -9,7 +9,7 @@
 
         <div>
           <p>Vous êtes ici car vous avez demandé une page qui n'existe plus, ou pas du tout.</p>
-          <p><a href="{{ path('qs_booking_home') }}">Revenir à l'accueil</a></p>
+          <p><a href="{{ path('qs_core_home') }}">Revenir à l'accueil</a></p>
         </div>
     </div>
 {% endblock %}

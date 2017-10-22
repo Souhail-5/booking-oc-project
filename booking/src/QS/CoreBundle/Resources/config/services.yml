@@ -1,0 +1,4 @@
+services:
+#    qs_core.example:
+#        class: QS\CoreBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

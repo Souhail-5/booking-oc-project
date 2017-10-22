@@ -1,0 +1,15 @@
+{% extends 'QSCoreBundle::layout.html.twig' %}
+
+{% block pageTitle %}Accueil - {{ parent() }}{% endblock %}
+
+{% block mainContent %}
+    <div class="text-center">
+        <h1>Accueil</h1>
+        <h2>Musée du Louvre</h2>
+
+        <div>
+          <p>Bienvenue sur le site du Musée du Louvre.</p>
+          <p><a href="{{ path('qs_booking_home') }}">Accéder à notre billetterie</a>.</p>
+        </div>
+    </div>
+{% endblock %}

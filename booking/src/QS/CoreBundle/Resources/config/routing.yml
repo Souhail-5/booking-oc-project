@@ -1,0 +1,3 @@
+qs_core_home:
+    path:     /
+    defaults: { _controller: QSCoreBundle:Default:index }
