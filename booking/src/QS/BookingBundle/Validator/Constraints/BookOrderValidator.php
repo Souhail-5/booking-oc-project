@@ -24,7 +24,7 @@ class BookOrderValidator extends ConstraintValidator
     }
 
     public function validate($order, Constraint $constraint) {
-        if (!$this->periodService->isDateMatchEvent($order->getEventDate(), $order->getEvent())) {
+        if ($order->getEventDate() < (new \DateTime(null, new \DateTimeZone($order->getEvent()->getTimeZone()))) || !$this->periodService->isDateMatchEvent($order->getEventDate(), $order->getEvent())) {
             $this->context
                 ->buildViolation("Cet évènement n'a pas lieu à la date sélectionnée, merci de choisir une autre date.")
                 ->addViolation()
