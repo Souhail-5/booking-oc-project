@@ -11,14 +11,10 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class BookOrderValidator extends ConstraintValidator
 {
-    private $requestStack;
-    private $em;
     private $bookingService;
     private $periodService;
 
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, BookingService $bookingService, PeriodService $periodService) {
-        $this->requestStack = $requestStack;
-        $this->em = $em;
+    public function __construct(BookingService $bookingService, PeriodService $periodService) {
         $this->bookingService = $bookingService;
         $this->periodService = $periodService;
     }

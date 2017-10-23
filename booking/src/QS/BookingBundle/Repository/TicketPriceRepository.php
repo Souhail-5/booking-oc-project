@@ -15,7 +15,7 @@ class TicketPriceRepository extends \Doctrine\ORM\EntityRepository
 {
     public function getOneByTicket(Ticket $ticket)
     {
-        return $qb = $this->createQueryBuilder('tp')
+        return $this->createQueryBuilder('tp')
             ->andWhere('tp.ticket = :ticket')
             ->setParameters([
                 'ticket' => $ticket,
@@ -28,7 +28,7 @@ class TicketPriceRepository extends \Doctrine\ORM\EntityRepository
 
     public function getOneByTicketPrice(Ticket $ticket, Price $price)
     {
-        return $qb = $this->createQueryBuilder('tp')
+        return $this->createQueryBuilder('tp')
             ->andWhere('tp.ticket = :ticket')
             ->andWhere('tp.price = :price')
             ->setParameters([

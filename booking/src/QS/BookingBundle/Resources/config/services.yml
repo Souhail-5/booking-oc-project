@@ -5,14 +5,13 @@ services:
       - "@doctrine.orm.entity_manager"
       - "@qs_booking.periodService"
       - "%qs_booking.orderLimitTime%"
-      - "%qs_booking.stripe.pkey%"
       - "%qs_booking.stripe.skey%"
   qs_booking.periodService:
     class: QS\BookingBundle\Service\PeriodService
     arguments: ["@doctrine.orm.entity_manager"]
   qs_booking.validator.bookOrder:
     class: QS\BookingBundle\Validator\Constraints\BookOrderValidator
-    arguments: ["@request_stack", "@doctrine.orm.entity_manager", "@qs_booking.bookingService", "@qs_booking.periodService"]
+    arguments: ["@qs_booking.bookingService", "@qs_booking.periodService"]
     tags:
       - { name: validator.constraint_validator, alias: qs_booking_bookOrder }
   qs_booking.validator.bookTicket:
