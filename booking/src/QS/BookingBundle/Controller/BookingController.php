@@ -121,19 +121,4 @@ class BookingController extends Controller
             'order' => $order,
         ]);
     }
-
-    public function cgvAction()
-    {
-        return $this->render('QSBookingBundle:Booking:cgv.html.twig');
-    }
-
-    public function cguAction()
-    {
-        return $this->render('QSBookingBundle:Booking:cgu.html.twig');
-    }
-
-    public function legalAction()
-    {
-        return $this->render('QSBookingBundle:Booking:mentions-legales.html.twig');
-    }
 }

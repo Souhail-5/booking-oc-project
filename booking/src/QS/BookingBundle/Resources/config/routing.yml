@@ -27,18 +27,6 @@ qs_booking_confirmation:
     requirements:
         orderId: '[\w-]+'
 
-qs_booking_cgv:
-    path:     /cgv
-    defaults: { _controller: QSBookingBundle:Booking:cgv }
-
-qs_booking_cgu:
-    path:     /cgu
-    defaults: { _controller: QSBookingBundle:Booking:cgu }
-
-qs_booking_legal:
-    path:     /mentions-legales
-    defaults: { _controller: QSBookingBundle:Booking:legal }
-
 qs_booking_404:
     path:     /404
     defaults: { _controller: QSBookingBundle:Booking:404 }

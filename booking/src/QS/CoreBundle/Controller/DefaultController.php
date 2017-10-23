@@ -10,4 +10,19 @@ class DefaultController extends Controller
     {
         return $this->render('QSCoreBundle:Default:index.html.twig');
     }
+
+    public function cgvAction()
+    {
+        return $this->render('QSCoreBundle:Default:cgv.html.twig');
+    }
+
+    public function cguAction()
+    {
+        return $this->render('QSCoreBundle:Default:cgu.html.twig');
+    }
+
+    public function legalAction()
+    {
+        return $this->render('QSCoreBundle:Default:mentions-legales.html.twig');
+    }
 }
