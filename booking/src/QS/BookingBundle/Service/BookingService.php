@@ -89,7 +89,7 @@ class BookingService
     public function isCanceledOrder(Order $order)
     {
         if ($order->getStatus() == Order::STATUS_CANCELED) return true;
-        if ((new \DateTime('-'.$this->orderLimitTime.' minutes')) > $order->getCreatedAt()) {
+        if ($order->getStatus() != Order::STATUS_PAID && (new \DateTime('-'.$this->orderLimitTime.' minutes')) > $order->getCreatedAt()) {
             $order->setStatus(Order::STATUS_CANCELED);
             $this->em->persist($order);
             $this->em->flush();
