@@ -36,7 +36,7 @@ class BookingService
         foreach ($order->getReservations() as $reservation) {
             $visitor = $reservation->getVisitor();
             $ticket = $reservation->getTicketPrice()->getTicket();
-            $price = getPriceFromOrderVisitor($order, $visitor);
+            $price = $this->getPriceFromOrderVisitor($order, $visitor);
             $order->setTotalPrice($order->getTotalPrice() + $price);
             $price = $this->em->getRepository('QSBookingBundle:Price')->findOneByEur($price);
             $ticketPrice = $this->em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicketPrice($ticket, $price);
@@ -46,7 +46,7 @@ class BookingService
 
     public function getPriceFromOrderVisitor(Order $order, Visitor $visitor)
     {
-        $age = ((new \DateTime($order->getEventDate(), new \DateTimeZone($order->getEvent()->getTimeZone())))->diff($visitor->getBirthDate()))->y;
+        $age = ((new \DateTime($order->getEventDate()->format('Y-m-d'), new \DateTimeZone($order->getEvent()->getTimeZone())))->diff($visitor->getBirthDate()))->y;
         if ($age < 4):
             $price = 0;
         elseif ($age <= 12):
