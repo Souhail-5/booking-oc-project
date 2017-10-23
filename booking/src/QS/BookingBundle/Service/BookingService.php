@@ -9,6 +9,7 @@ use QS\BookingBundle\Entity\Order;
 use QS\BookingBundle\Entity\Price;
 use QS\BookingBundle\Entity\TicketPeriod;
 use QS\BookingBundle\Entity\Reservation;
+use QS\BookingBundle\Entity\Visitor;
 use Symfony\Component\Form\Form;
 use Stripe;
 
@@ -35,8 +36,7 @@ class BookingService
         foreach ($order->getReservations() as $reservation) {
             $visitor = $reservation->getVisitor();
             $ticket = $reservation->getTicketPrice()->getTicket();
-            $age = ((new \DateTime(null, new \DateTimeZone($order->getEvent()->getTimeZone())))->diff($visitor->getBirthDate()))->y;
-            $price = $visitor->getDiscount() ? ($this->getPriceFromAge($age) ? 10 : 0) : $this->getPriceFromAge($age);
+            $price = getPriceFromOrderVisitor($order, $visitor);
             $order->setTotalPrice($order->getTotalPrice() + $price);
             $price = $this->em->getRepository('QSBookingBundle:Price')->findOneByEur($price);
             $ticketPrice = $this->em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicketPrice($ticket, $price);
@@ -44,12 +44,19 @@ class BookingService
         }
     }
 
-    public function getPriceFromAge($age)
+    public function getPriceFromOrderVisitor(Order $order, Visitor $visitor)
     {
-        if ($age < 4) return 0;
-        if ($age <= 12) return 8;
-        if ($age < 60) return 16;
-        return 12;
+        $age = ((new \DateTime($order->getEventDate(), new \DateTimeZone($order->getEvent()->getTimeZone())))->diff($visitor->getBirthDate()))->y;
+        if ($age < 4):
+            $price = 0;
+        elseif ($age <= 12):
+            $price = 8;
+        elseif ($age < 60):
+            $price = 16;
+        else:
+            $price = 12;
+        endif;
+        return $visitor->getDiscount() ? ($price >= 10 ? 10 : $price) : $price;
     }
 
     public function isFullEventDate(Event $event, \DateTime $date)
