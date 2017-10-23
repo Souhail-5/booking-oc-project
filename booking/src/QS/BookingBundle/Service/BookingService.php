@@ -79,6 +79,18 @@ class BookingService
         return $tickets;
     }
 
+    public function isCanceledOrder(Order $order)
+    {
+        if ($order->getStatus() == Order::STATUS_CANCELED) return true;
+        if ((new \DateTime('-'.$this->orderLimitTime.' minutes')) > $order->getCreatedAt()) {
+            $order->setStatus(Order::STATUS_CANCELED);
+            $this->em->persist($order);
+            $this->em->flush();
+            return true;
+        }
+        return false;
+    }
+
     public function bookOrder(Form $form)
     {
         $order = $form->getData();

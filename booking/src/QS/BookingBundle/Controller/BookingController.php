@@ -24,9 +24,7 @@ class BookingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $events = $em->getRepository('QSBookingBundle:Event')->findAll();
-        return $this->render('QSBookingBundle:Booking:index.html.twig', [
-            'events' => $events,
-        ]);
+        return $this->render('QSBookingBundle:Booking:index.html.twig', ['events' => $events]);
     }
 
     public function guichetAction(Request $request, $slug)
@@ -41,9 +39,7 @@ class BookingController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $bookingService->bookOrder($form);
-            return $this->redirectToRoute('qs_booking_information', [
-                'orderId' => $order->getId(),
-            ]);
+            return $this->redirectToRoute('qs_booking_information', ['orderId' => $order->getId()]);
         }
         return $this->render('QSBookingBundle:Booking:guichet.html.twig', [
             'event' => $event,
@@ -55,15 +51,14 @@ class BookingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
+        $bookingService = $this->get('qs_booking.bookingService');
+        if ($bookingService->isCanceledOrder($order)) return $this->render('QSBookingBundle:Booking:order-canceled.html.twig');
         $form = $this->createForm(OrderInformationType::class, $order);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($order);
             $em->flush();
-
-            return $this->redirectToRoute('qs_booking_checkout', [
-                'orderId' => $order->getId(),
-            ]);
+            return $this->redirectToRoute('qs_booking_checkout', ['orderId' => $order->getId()]);
         }
         return $this->render('QSBookingBundle:Booking:information.html.twig', [
             'event' => $order->getEvent(),
@@ -76,15 +71,18 @@ class BookingController extends Controller
         $em = $this->getDoctrine()->getManager();
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
         $bookingService = $this->get('qs_booking.bookingService');
+        if ($bookingService->isCanceledOrder($order)) return $this->render('QSBookingBundle:Booking:order-canceled.html.twig');
+        $validator = $this->get('validator');
+        if (count($validator->validate($order)) > 0) return $this->redirectToRoute('qs_booking_information', ['orderId' => $order->getId()]);
         $bookingService->calcOrderPrice($order);
         if ($request->isMethod('POST')) {
             if (!$bookingService->stripeCheckout($order, $request->request->get('stripeToken'))) {
                 $request->getSession()->getFlashBag()->add('stripe', "Une erreur est surevenue et le paiement n'a pas pû être enregistré. Merci de réessayer.");
             } else {
                 $order->setStatus(Order::STATUS_PAID);
-                return $this->redirectToRoute('qs_booking_confirmation', [
-                    'orderId' => $order->getId(),
-                ]);
+                $em->persist($order);
+                $em->flush();
+                return $this->redirectToRoute('qs_booking_confirmation', ['orderId' => $order->getId()]);
             }
         }
         $em->persist($order);
@@ -100,6 +98,11 @@ class BookingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
+        $bookingService = $this->get('qs_booking.bookingService');
+        if ($bookingService->isCanceledOrder($order)) return $this->render('QSBookingBundle:Booking:order-canceled.html.twig');
+        $validator = $this->get('validator');
+        if (count($validator->validate($order)) > 0) return $this->redirectToRoute('qs_booking_information', ['orderId' => $order->getId()]);
+        if ($order->getStatus() != Order::STATUS_PAID) return $this->redirectToRoute('qs_booking_checkout', ['orderId' => $order->getId()]);
         $message = (new \Swift_Message('Musée du Louvre - Confirmation de commande'))
             ->setFrom('contact@qanops.com')
             ->setTo($order->getEmail())

@@ -35,6 +35,7 @@ class Reservation
 
     /**
      * @ORM\OneToOne(targetEntity="QS\BookingBundle\Entity\Visitor", cascade={"persist", "remove"})
+     * @Assert\NotBlank()
      * @Assert\Valid()
      */
     private $visitor;

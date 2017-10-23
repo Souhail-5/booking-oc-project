@@ -37,6 +37,9 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        qs_booking:
+            orderLimitTime: '%qs_booking.orderLimitTime%'
 
 # Doctrine Configuration
 doctrine:
