@@ -3,7 +3,7 @@
 {% block breadcrumb %}
     {{ include('QSBookingBundle:Booking:breadcrumb.html.twig', {route: 'qs_booking_confirmation'}) }}
 {% endblock %}
-{% block qsbookingTitle %}{{ event.name }}{% endblock %}
+{% block qsbookingTitle %}{{ order.event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Votre paiement a bien été pris en compte</h3>
     <p class="text-center mt-3">

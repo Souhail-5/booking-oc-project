@@ -3,7 +3,7 @@
 {% block breadcrumb %}
     {{ include('QSBookingBundle:Booking:breadcrumb.html.twig', {route: 'qs_booking_checkout'}) }}
 {% endblock %}
-{% block qsbookingTitle %}{{ event.name }}{% endblock %}
+{% block qsbookingTitle %}{{ order.event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Vos coordonnées de paiement</h3>
     {% for message in app.session.flashbag.get('stripe') %}
@@ -27,7 +27,7 @@
             data-key="pk_test_fdVRc4edwV2ceJjan6KzQFQT"
             data-amount="{{ order.totalPrice * 100 }}"
             data-name="Musée du Louvre"
-            data-description="{{ event.name }}"
+            data-description="{{ order.event.name }}"
             data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
             data-locale="auto"
             data-currency="eur"

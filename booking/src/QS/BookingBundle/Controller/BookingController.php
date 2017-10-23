@@ -63,7 +63,7 @@ class BookingController extends Controller
             return $this->redirectToRoute('qs_booking_checkout', ['orderId' => $order->getId()]);
         }
         return $this->render('QSBookingBundle:Booking:information.html.twig', [
-            'event' => $order->getEvent(),
+            'order' => $order,
             'form' => $form->createView(),
         ]);
     }
@@ -91,7 +91,6 @@ class BookingController extends Controller
         $em->persist($order);
         $em->flush();
         return $this->render('QSBookingBundle:Booking:checkout.html.twig', [
-            'event' => $order->getEvent(),
             'order' => $order,
             'reservations' => $order->getReservations(),
         ]);
@@ -117,7 +116,6 @@ class BookingController extends Controller
         ;
         $this->get('mailer')->send($message);
         return $this->render('QSBookingBundle:Booking:confirmation.html.twig', [
-            'event' => $order->getEvent(),
             'order' => $order,
         ]);
     }
