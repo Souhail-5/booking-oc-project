@@ -15,6 +15,22 @@ $.fn.datepicker.setDefaults({
   language: 'fr-FR'
 });
 
+function countDownOrder() {
+  var $countDown = $('.order-chrono');
+  if ($countDown.length <= 0) return false;
+  var countDownDate = moment($countDown.attr('data-created-at')).add($countDown.attr('data-order-limit-time'), 'm');
+  var x = setInterval(function() {
+      var now = moment();
+      var distance = countDownDate.diff(now);
+      $countDown.html(moment(distance).format('mm:ss'));
+      if (distance <= 0) {
+          clearInterval(x);
+          alert("Vous avez dépassé la limite de temps ; votre réservation a été libérée. Cette limite de temps existe pour garantir la disponibilité de l'inscription au plus grand nombre de personnes possible. Nous nous excusons des désagréments éventuels.");
+          window.location.reload();
+      }
+  }, 1000);
+}
+
 function getTickets(date) {
   if (!window.location.href.match(guichetEventRegex)[1]) return false;
   $('#qs_bookingbundle_order_tickets').empty();
@@ -109,6 +125,7 @@ $(document).ready(function() {
     });
     StripeCheckout.open(opts);
   });
+  countDownOrder();
 });
 
 $(document).on('pick.datepicker', function (e) {

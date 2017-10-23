@@ -6,6 +6,7 @@
 {% block qsbookingTitle %}{{ order.event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Vos coordonnées de paiement</h3>
+    {{ include('QSBookingBundle:Booking:order-chrono.html.twig') }}
     {% for message in app.session.flashbag.get('stripe') %}
         <div class="form-errors">
                 <p><span class="font-900">ATTENTION !</span> {{ message }}</p>

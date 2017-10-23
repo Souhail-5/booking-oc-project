@@ -1,0 +1,12 @@
+<div class="order-chrono-wrap text-center">
+    <p>
+        Il vous reste
+        <span class="order-chrono display-b font-900 font-230"
+            data-created-at="{{ order.createdAt|date('Y-m-d H:i:s') }}"
+            data-order-limit-time="{{ qs_booking.orderLimitTime }}">
+            --:--
+        </span>
+        pour finaliser votre commande.<br>
+        Au-delà de cette période, la réservation que nous retenons sera à nouveau disponible pour les autres.
+    </p>
+</div>

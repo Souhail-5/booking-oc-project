@@ -175,6 +175,24 @@
   }
 }
 
+.order-chrono-wrap {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid color(var(--light-gray) l(95%));
+
+  & .order-chrono {
+    margin-top: 0.7em;
+    margin-bottom: 0.7em;
+  }
+
+  @media (--tablet) {
+    width: 40%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
 .form-errors {
   margin-top: 3rem;
   margin-bottom: 3rem;

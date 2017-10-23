@@ -6,6 +6,6 @@
 {% block qsbookingTitle %}{{ order.event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Renseignez les coordonnées de chaque billet</h3>
-    <div class="order-chrono"></div>
+    {{ include('QSBookingBundle:Booking:order-chrono.html.twig') }}
     {{ include('QSBookingBundle:Booking/Form:information.html.twig') }}
 {% endblock %}

@@ -6,6 +6,7 @@
 {% block qsbookingTitle %}{{ order.event.name }}{% endblock %}
 {% block qsbookingContent %}
     <h3 class="text-center meta-color">Votre paiement a bien été pris en compte</h3>
+    {{ include('QSBookingBundle:Booking:order-chrono.html.twig') }}
     <p class="text-center mt-3">
         Merci ! Nous avons bien reçu votre paiement.<br>
         Vos billets ont été envoyés à <i>{{ order.email }}</i>.<br>
