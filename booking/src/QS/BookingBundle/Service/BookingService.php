@@ -84,7 +84,6 @@ class BookingService
         $order = $form->getData();
         foreach ($form->get('tickets') as $ticket) {
             $qty = $ticket->get('qty')->getData();
-            $order->setQtyResv($order->getQtyResv() + $qty);
             $ticket = $this->em->getRepository('QSBookingBundle:Ticket')->find($ticket->getData()->getId());
             $ticketPrice = $this->em->getRepository('QSBookingBundle:TicketPrice')->getOneByTicket($ticket);
             for ($i=0; $i < $qty; $i++) {
