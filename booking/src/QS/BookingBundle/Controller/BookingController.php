@@ -32,7 +32,7 @@ class BookingController extends Controller
         $em = $this->getDoctrine()->getManager();
         $bookingService = $this->get('qs_booking.bookingService');
         $event = $em->getRepository('QSBookingBundle:Event')->findOneBySlug($slug);
-        if (!$event) $this->createNotFoundException("L'évènement n'existe pas");
+        if (!$event) throw $this->createNotFoundException("L'évènement n'existe pas");
         $order = new Order;
         $order->setEvent($event);
         $order->setStatus(Order::STATUS_PENDING);
@@ -52,7 +52,7 @@ class BookingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
-        if (!$order) $this->createNotFoundException("La commande n'existe pas");
+        if (!$order) throw $this->createNotFoundException("La commande n'existe pas");
         $bookingService = $this->get('qs_booking.bookingService');
         if ($bookingService->isCanceledOrder($order)) return $this->render('QSBookingBundle:Booking:order-canceled.html.twig');
         $form = $this->createForm(OrderInformationType::class, $order);
@@ -72,7 +72,7 @@ class BookingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
-        if (!$order) $this->createNotFoundException("La commande n'existe pas");
+        if (!$order) throw $this->createNotFoundException("La commande n'existe pas");
         $bookingService = $this->get('qs_booking.bookingService');
         if ($bookingService->isCanceledOrder($order)) return $this->render('QSBookingBundle:Booking:order-canceled.html.twig');
         $validator = $this->get('validator');
@@ -101,7 +101,7 @@ class BookingController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $order = $em->getRepository('QSBookingBundle:Order')->find($orderId);
-        if (!$order) $this->createNotFoundException("La commande n'existe pas");
+        if (!$order) throw $this->createNotFoundException("La commande n'existe pas");
         $bookingService = $this->get('qs_booking.bookingService');
         if ($bookingService->isCanceledOrder($order)) return $this->render('QSBookingBundle:Booking:order-canceled.html.twig');
         $validator = $this->get('validator');
