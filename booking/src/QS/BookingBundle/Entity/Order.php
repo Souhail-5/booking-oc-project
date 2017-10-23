@@ -17,9 +17,9 @@ use QS\BookingBundle\Validator\Constraints as QSAssert;
  */
 class Order
 {
-    const STATUS_CANCELED = 0; // Ordering this ticket IS NOT possible for this period
-    const STATUS_PENDING = 1; // Ordering this ticket IS possible for this period
-    const STATUS_PAID = 2; // Access IS possible with this ticket for this period
+    const STATUS_CANCELED = 0;
+    const STATUS_PENDING = 1;
+    const STATUS_PAID = 2;
 
     /**
      * @var guid
