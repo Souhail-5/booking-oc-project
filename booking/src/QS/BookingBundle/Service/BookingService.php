@@ -16,13 +16,15 @@ class BookingService
 {
     private $em;
     private $periodService;
+    private $orderLimitTime;
     private $stripePKey;
     private $stripeSKey;
 
-    public function __construct(EntityManager $em, PeriodService $periodService, $stripePKey, $stripeSKey)
+    public function __construct(EntityManager $em, PeriodService $periodService, $orderLimitTime, $stripePKey, $stripeSKey)
     {
         $this->em = $em;
         $this->periodService = $periodService;
+        $this->orderLimitTime = $orderLimitTime;
         $this->stripePKey = $stripePKey;
         $this->stripeSKey = $stripeSKey;
     }
@@ -110,5 +112,10 @@ class BookingService
         } catch(Stripe\Error\Card $e) {
             return false;
         }
+    }
+
+    public function cancelExpiredOrders()
+    {
+        $this->em->getRepository('QSBookingBundle:Order')->updateCancelExpiredOrders($this->orderLimitTime);
     }
 }

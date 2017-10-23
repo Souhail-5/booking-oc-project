@@ -29,4 +29,23 @@ class OrderRepository extends \Doctrine\ORM\EntityRepository
         ;
         return $qb ? $qb['totalQtyResv'] : 0;
     }
+
+    public function updateCancelExpiredOrders($orderLimitTime)
+    {
+        return $this->_em->createQueryBuilder()
+            ->update('QSBookingBundle:Order', 'o')
+            ->set('o.status', ':newStatus')
+            ->set('o.modifiedAt', ':modifiedAt')
+            ->andWhere('o.status = :status')
+            ->andWhere(':expiryDate > o.createdAt')
+                ->setParameters([
+                    'newStatus' => Order::STATUS_CANCELED,
+                    'modifiedAt' => new \DateTime(),
+                    'status' => Order::STATUS_PENDING,
+                    'expiryDate' => new \DateTime('-'.$orderLimitTime.' minutes'),
+                ])
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }

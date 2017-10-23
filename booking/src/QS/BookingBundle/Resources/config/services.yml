@@ -4,6 +4,7 @@ services:
     arguments:
       - "@doctrine.orm.entity_manager"
       - "@qs_booking.periodService"
+      - "%qs_booking.orderLimitTime%"
       - "%qs_booking.stripe.pkey%"
       - "%qs_booking.stripe.skey%"
   qs_booking.periodService:
