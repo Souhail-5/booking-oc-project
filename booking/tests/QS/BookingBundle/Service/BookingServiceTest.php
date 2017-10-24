@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\QS\BookingBundle\Controller;
+namespace Tests\QS\BookingBundle\Service;
 
 use PHPUnit\Framework\TestCase;
 use QS\BookingBundle\Service\BookingService;
