@@ -83,7 +83,7 @@ class BookingServiceTest extends TestCase
         $event->setTimeZone('Europe/Paris');
         $o = new Order;
         $o->setEvent($event);
-        $o->setEventDate('2017-10-10');
+        $o->setEventDate(new \DateTime('2017-10-10'));
         $v = new Visitor;
         $v->setBirthDate(new \DateTime($visitor['birthDate'], new \DateTimeZone($o->getEvent()->getTimeZone())));
         $v->setDiscount($visitor['discount']);
