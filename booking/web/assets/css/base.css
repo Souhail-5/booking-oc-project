@@ -77,6 +77,18 @@ li {
   display: block !important;
 }
 
+.max-w-50p {
+  max-width: 50%;
+}
+
+.mr-a {
+  margin-right: auto;
+}
+
+.ml-a {
+  margin-left: auto;
+}
+
 .mt-3 {
   margin-top: 3rem;
 }

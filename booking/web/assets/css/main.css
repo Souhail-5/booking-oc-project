@@ -176,20 +176,27 @@
 }
 
 .order-chrono-wrap {
+  align-items: stretch;
   margin-top: 3rem;
-  margin-bottom: 1rem;
   padding: 1rem;
-  border: 1px solid color(var(--light-gray) l(95%));
+  border: 1px solid var(--tertiary-color);
 
-  & .order-chrono {
-    margin-top: 0.7em;
-    margin-bottom: 0.7em;
+  & > .order-chrono {
+    padding-top: 1.2rem;
+    padding-right: 1rem;
+    padding-bottom: 1.2rem;
+    padding-left: 1rem;
+    background-color: var(--tertiary-color);
+    text-align: center;
   }
 
-  @media (--tablet) {
-    width: 40%;
-    margin-right: auto;
-    margin-left: auto;
+  @media (--desktop) {
+    display: flex;
+    margin-bottom: 3rem;
+
+    & > .order-chrono {
+      margin-right: 1.5rem;
+    }
   }
 }
 
@@ -352,6 +359,11 @@
   }
 
   @media (--tablet) {
+    & .reservation {
+      padding: 2rem;
+      border: 1px solid color(var(--light-gray) l(95%));
+    }
+
     & + .text-right {
       text-align: right;
     }
