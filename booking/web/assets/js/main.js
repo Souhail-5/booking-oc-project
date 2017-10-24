@@ -25,7 +25,6 @@ function countDownOrder() {
       $countDown.html(moment(distance).format('mm:ss'));
       if (distance <= 0) {
           clearInterval(x);
-          alert("Vous avez dépassé la limite de temps ; votre réservation a été libérée. Cette limite de temps existe pour garantir la disponibilité de l'inscription au plus grand nombre de personnes possible. Nous nous excusons des désagréments éventuels.");
           window.location.reload();
       }
   }, 1000);
