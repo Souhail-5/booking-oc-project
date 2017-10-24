@@ -7,7 +7,7 @@
         <div class="event">
             <h2>{{ event.name }}</h2>
             <p>{{ event.description }}</p>
-            <a href="{{ path('qs_booking_guichet', {'slug': event.slug}) }}" alt="Commander vos billets pour {{ event.name }}">Commander vos billets</a>
+            <a class="font-700" href="{{ path('qs_booking_guichet', {'slug': event.slug}) }}" alt="Commander vos billets pour {{ event.name }}">> Commander vos billets</a>
         </div>
     {% else %}
         <p>La billetterie ne contient aucun évènement.</p>
