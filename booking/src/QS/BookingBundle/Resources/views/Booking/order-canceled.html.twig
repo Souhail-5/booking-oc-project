@@ -2,12 +2,17 @@
 
 {% block qsbookingTitle %}Commande expirée{% endblock %}
 {% block qsbookingContent %}
-    <h3 class="text-center meta-color">Malheureuseument cette commande a expiré</h3>
-    <p class="text-center mt-3">
-        Votre commande et vos billets vous sont réservés pendant <span class="font-700">{{ qs_booking.orderLimitTime }} minutes</span>,<br>
-        au delà de ce temps votre commande est annulée.
-    </p>
-    <p class="text-center mt-3">
-        Vous pouvez toutefois créer une nouvelle commande depuis la <a href="{{ path('qs_booking_home') }}">billetterie</a>.
-    </p>
+    <h3 class="text-center meta-color">Vos réservations ont été libérées</h3>
+    <div class="max-w-50p mr-a ml-a text-center">
+        <p class="mt-3">
+            Votre commande et vos billets vous sont réservés pendant <span class="font-700">{{ qs_booking.orderLimitTime }} minutes</span>,
+            au delà de ce temps vos réservations sont libérés.
+        </p>
+        <p class="mt-3">
+            Cette limite de temps existe pour garantir la disponibilité de l'inscription au plus grand nombre de personnes possible. Nous nous excusons des désagréments éventuels.
+        </p>
+        <p class="mt-3">
+            Vous pouvez toutefois créer une nouvelle commande depuis la <a href="{{ path('qs_booking_home') }}" class="font-700">billetterie</a>.
+        </p>
+    </div>
 {% endblock %}
