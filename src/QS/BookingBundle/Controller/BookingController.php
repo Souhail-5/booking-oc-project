@@ -14,9 +14,9 @@ use QS\BookingBundle\Entity\Reservation;
 use QS\BookingBundle\Entity\EventPeriod;
 use QS\BookingBundle\Entity\TicketPrice;
 use QS\BookingBundle\Entity\EventTicket;
-use QS\BookingBundle\Form\OrderGuichetType;
-use QS\BookingBundle\Form\OrderInformationType;
-use QS\BookingBundle\Form\ReservationType;
+use QS\BookingBundle\Form\Type\OrderGuichetType;
+use QS\BookingBundle\Form\Type\OrderInformationType;
+use QS\BookingBundle\Form\Type\ReservationType;
 
 class BookingController extends Controller
 {

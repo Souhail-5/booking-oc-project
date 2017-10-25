@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type as FT;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use QS\BookingBundle\Form\EventListener\OrderGuichetTypeSubscriber;
 use QS\BookingBundle\Validator\Constraints\BookTicket;
 
 class OrderGuichetType extends AbstractType
@@ -53,7 +54,7 @@ class OrderGuichetType extends AbstractType
                 'error_bubbling' => true,
             ])
         ;
-        $builder->addEventSubscriber(new EventListener\OrderGuichetTypeSubscriber());
+        $builder->addEventSubscriber(new OrderGuichetTypeSubscriber());
     }
 
     /**
