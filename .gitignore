@@ -17,6 +17,7 @@
 /web/bundles/
 /web/build/manifest.json
 /web/test-coverage
+/web/config.php
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
