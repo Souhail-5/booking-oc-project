@@ -1,29 +1,34 @@
 qs_booking_home:
     path:     /
     defaults: { _controller: QSBookingBundle:Booking:index }
+    methods:  [GET, HEAD]
 
 qs_booking_guichet:
     path:     /guichet/{slug}
     defaults:
         _controller: QSBookingBundle:Booking:guichet
+    methods:  [GET, HEAD, POST]
     requirements:
         slug: '[\w-]+'
 
 qs_booking_information:
     path:     /informations-visiteurs/{orderId}
     defaults: { _controller: QSBookingBundle:Booking:information }
+    methods:  [GET, HEAD, POST]
     requirements:
         orderId: '[\w-]+'
 
 qs_booking_checkout:
     path:     /paiement/{orderId}
     defaults: { _controller: QSBookingBundle:Booking:checkout }
+    methods:  [GET, HEAD, POST]
     requirements:
         orderId: '[\w-]+'
 
 qs_booking_confirmation:
     path:     /confirmation/{orderId}
     defaults: { _controller: QSBookingBundle:Booking:confirmation }
+    methods:  [GET, HEAD]
     requirements:
         orderId: '[\w-]+'
 
@@ -31,3 +36,4 @@ qs_booking_ajax:
     path:     /ajax
     defaults:
         _controller: QSBookingBundle:Ajax:root
+    methods:  [POST]

@@ -5,7 +5,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "QS\\BookingBundle\\": "src/QS/BookingBundle",
+            "QS\\CoreBundle\\": "src/QS/CoreBundle"
         },
         "classmap": [
             "app/AppKernel.php",

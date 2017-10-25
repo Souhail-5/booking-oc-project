@@ -1,15 +1,19 @@
 qs_core_home:
     path:     /
     defaults: { _controller: QSCoreBundle:Default:index }
+    methods:  [GET, HEAD]
 
 qs_core_cgv:
     path:     /cgv
     defaults: { _controller: QSCoreBundle:Default:cgv }
+    methods:  [GET, HEAD]
 
 qs_core_cgu:
     path:     /cgu
     defaults: { _controller: QSCoreBundle:Default:cgu }
+    methods:  [GET, HEAD]
 
 qs_core_legal:
     path:     /mentions-legales
     defaults: { _controller: QSCoreBundle:Default:legal }
+    methods:  [GET, HEAD]
