@@ -15,7 +15,7 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-/web/build
+/web/build/manifest.json
 /web/test-coverage
 
 ### Node ###
