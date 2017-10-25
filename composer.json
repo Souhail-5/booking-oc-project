@@ -1,5 +1,6 @@
 {
     "name": "souhailmoussaoui/booking",
+    "description": "Recode concept for Louvre Ticketing. A project done as part of an Openclassrooms training.",
     "license": "proprietary",
     "type": "project",
     "autoload": {
