@@ -1,13 +1,13 @@
 <?php
 
-namespace QS\BookingBundle\Form;
+namespace QS\BookingBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type as FT;
 
-class ReservationType extends AbstractType
+class OrderInformationType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -15,7 +15,13 @@ class ReservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('visitor', VisitorType::class)
+            ->add('reservations', FT\CollectionType::class, [
+                'label' => false,
+                'entry_type' => ReservationType::class,
+                'entry_options' => [
+                    'label' => false,
+                ],
+            ])
         ;
     }
 
@@ -25,7 +31,7 @@ class ReservationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'QS\BookingBundle\Entity\Reservation'
+            'data_class' => 'QS\BookingBundle\Entity\Order'
         ));
     }
 
@@ -34,8 +40,6 @@ class ReservationType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'qs_bookingbundle_reservation';
+        return 'qs_bookingbundle_order';
     }
-
-
 }

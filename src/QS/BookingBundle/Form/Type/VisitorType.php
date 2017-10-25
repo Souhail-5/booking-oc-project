@@ -1,6 +1,6 @@
 <?php
 
-namespace QS\BookingBundle\Form;
+namespace QS\BookingBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
