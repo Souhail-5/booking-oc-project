@@ -14,7 +14,7 @@ parameters:
     mailer_auth_mode: login
     mailer_user: email@email.com
     mailer_password: ~
-    secret: ThisTokenIsNotSoSecretChangeIt
+    secret: ThisTokenIsNotSoSecretChangeItc1bfa011e69df3847f28d7962b74ec1e76b4dfb0
     qs_booking.orderLimitTime: 12
     qs_booking.stripe.pkey: ~
     qs_booking.stripe.skey: ~

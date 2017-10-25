@@ -27,10 +27,6 @@ qs_booking_confirmation:
     requirements:
         orderId: '[\w-]+'
 
-qs_booking_404:
-    path:     /404
-    defaults: { _controller: QSBookingBundle:Booking:404 }
-
 qs_booking_ajax:
     path:     /ajax
     defaults:
