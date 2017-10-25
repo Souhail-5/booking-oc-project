@@ -1,4 +1,3 @@
-booking
-=======
+# Booking OC Project
 
-A Symfony project created on August 15, 2017, 8:34 pm.
+A Symfony project. This project was done as part of a training ([OpenClassrooms](https://openclassrooms.com/)).
