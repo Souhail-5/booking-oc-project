@@ -225,6 +225,7 @@ class Order
      */
     public function getCreatedAt()
     {
+        if ($this->getEvent()->getTimeZone()) return $this->createdAt->setTimeZone(new \DateTimeZone($this->getEvent()->getTimeZone()));
         return $this->createdAt;
     }
 
@@ -249,6 +250,7 @@ class Order
      */
     public function getModifiedAt()
     {
+        if ($this->getEvent()->getTimeZone()) return $this->modifiedAt->setTimeZone(new \DateTimeZone($this->getEvent()->getTimeZone()));
         return $this->modifiedAt;
     }
 
