@@ -25,8 +25,11 @@ function countDownOrder() {
       $countDown.html(moment(distance).format('mm:ss'));
       if (distance <= 0) {
         console.log( 'ok' );
+        console.log( countDownDate );
+        console.log( now );
+        console.log( distance );
         clearInterval(x);
-        window.location.reload();
+        // window.location.reload();
       }
   }, 1000);
 }
