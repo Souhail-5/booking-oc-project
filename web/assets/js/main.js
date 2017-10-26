@@ -98,23 +98,25 @@ var $collectionHolder;
 $(document).ready(function() {
   $collectionHolder = $('#guichet-tickets');
   $collectionHolder.data('index', $collectionHolder.find('.ticket').length);
-  if (window.location.href.match(guichetEventRegex)) $.post( "/billetterie/ajax", {
-      eventSlug: window.location.href.match(guichetEventRegex)[1],
-      action: 'getUnavailablePeriodsByEvent'
-    },
-    function( periods ) {
-      $('#qs_bookingbundle_order_eventDate').datepicker({
-        inline: true,
-        container: $('[data-toggle="datepicker-container"]'),
-        startDate: new Date(),
-        filter: function (date) {
-          return isDateMatchPeriods(date, periods);
-        }
-      });
-      $initialDate = $('#qs_bookingbundle_order_eventDate').datepicker('getDate');
-      getTickets($initialDate);
-    }
-  );
+  if (window.location.href.match(guichetEventRegex)) {
+    $.post( "/billetterie/ajax", {
+        eventSlug: window.location.href.match(guichetEventRegex)[1],
+        action: 'getUnavailablePeriodsByEvent'
+      },
+      function( periods ) {
+        $('#qs_bookingbundle_order_eventDate').datepicker({
+          inline: true,
+          container: $('[data-toggle="datepicker-container"]'),
+          startDate: new Date(),
+          filter: function (date) {
+            return isDateMatchPeriods(date, periods);
+          }
+        });
+        $initialDate = $('#qs_bookingbundle_order_eventDate').datepicker('getDate');
+        getTickets($initialDate);
+      }
+    );
+  }
   $(':submit.stripe-checkout').on('click', function(event) {
     event.preventDefault();
     var opts = $.extend({}, $(this).data(), {
