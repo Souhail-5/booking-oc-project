@@ -24,8 +24,9 @@ function countDownOrder() {
       var distance = countDownDate.diff(now);
       $countDown.html(moment(distance).format('mm:ss'));
       if (distance <= 0) {
-          clearInterval(x);
-          window.location.reload();
+        console.log( 'ok' );
+        clearInterval(x);
+        window.location.reload();
       }
   }, 1000);
 }
@@ -116,8 +117,7 @@ $(document).ready(function() {
   );
   $(':submit.stripe-checkout').on('click', function(event) {
     event.preventDefault();
-    var $button = $(this);
-    var opts = $.extend({}, $button.data(), {
+    var opts = $.extend({}, $(this).data(), {
         token: function(result) {
             $('#checkout-wrap').append($('<input>').attr({ type: 'hidden', name: 'stripeToken', value: result.id })).submit();
         }
