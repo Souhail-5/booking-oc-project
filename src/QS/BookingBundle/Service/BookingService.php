@@ -114,6 +114,7 @@ class BookingService
     public function stripeCheckout(Order $order, $token)
     {
         try {
+            if ($order->getTotalPrice() == 0) return true;
             Stripe\Stripe::setApiKey($this->stripeSKey);
             $customer = Stripe\Customer::create([
                 'email' => $order->getEmail(),
