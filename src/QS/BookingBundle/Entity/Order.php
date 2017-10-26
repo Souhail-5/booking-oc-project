@@ -65,7 +65,7 @@ class Order
      */
     public function onPrePersistSetCreatedAt()
     {
-        $this->setCreatedAt(new \Datetime());
+        $this->setCreatedAt(new \Datetime(null, (new \DateTimeZone($this->getEvent()->getTimeZone()))));
     }
 
     /**
@@ -80,7 +80,7 @@ class Order
      */
     public function onPreUpdateSetModifiedAt()
     {
-        $this->setModifiedAt(new \Datetime());
+        $this->setModifiedAt(new \Datetime(null, (new \DateTimeZone($this->getEvent()->getTimeZone()))));
     }
 
     /**
